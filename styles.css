@@ -10,6 +10,7 @@ html {
 
 body {
     margin: 0;
+    background-image: url(images/sonaBackgroundTexture.jpg);
 }
 
 a {
@@ -21,7 +22,7 @@ header {
 }
 
 nav {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 nav ul {
@@ -49,6 +50,9 @@ footer {
     text-align: center;
     font-size: .8em;
     background-color: maroon;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 h1 {
@@ -61,4 +65,11 @@ h1 {
     text-align: center;
     text-transform: lowercase;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.navItem:hover {
+    text-decoration: underline;
+}
+footer p:hover {
+    text-transform: uppercase;
 }
