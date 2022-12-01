@@ -1,0 +1,70 @@
+html {
+    box-sizing: border-box;
+    font-size: 100%;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    background-image: url(images/sonaBackgroundTexture.jpg);
+    text-decoration: none;
+}
+
+header {
+    background-color: darkkhaki;
+}
+
+nav {
+    font-family: "Roboto", sans-serif;
+    ul {
+        display: flex;
+        justify-content: center;
+        list-style-type: none;
+        li {
+            font-size: 8em;
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            a {
+                display: block;
+                padding: .5em 1em;
+                margin: .5em;
+                border: 1px solid;
+                border-radius: .5em;
+            }
+        }
+    }
+}
+
+footer {
+    padding: 1em;
+    text-align: center;
+    font-size: .8em;
+    background-color: maroon;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    p:hover {
+        text-transform: uppercase;
+    }
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-transform: uppercase;
+}
+
+#testParagraph {
+    text-align: center;
+    text-transform: lowercase;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.navItem:hover {
+    text-decoration: underline;
+}
+
+
