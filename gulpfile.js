@@ -7,6 +7,7 @@ const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const replace = require('gulp-replace');
+const sourcemaps = require('gulp-sourcemaps');
 const browsersync = require('browser-sync').create();
 
 // File paths
@@ -17,70 +18,71 @@ const files = {
 
 // Sass task: compiles .scss to .css
 function scssTask() {
-    return src(files.scssPath, {sourcemaps: true})
+    return src(files.scssPath)
+        .pipe(sourcemaps.init())
         .pipe(sass())   // Compiles to .css
         .pipe(postcss([autoprefixer(), cssnano()])) // Optimize with postprocessor
-        .pipe(dest('dist', {sourcemaps: '.'})); // Put final CSS in dist folder
+        .pipe(sourcemaps.write('.'))
+        .pipe(dest('dist')); // Put final CSS in dist folder
 }
 
 // JS task: concatenates and minifies scripts
 function jsTask() {
-    return src([files.jsPath], {sourcemaps: true})
+    return src(files.jsPath)
         .pipe(concat('all.js'))
         .pipe(terser())
-        .pipe(dest('dist', {sourcemaps: '.'}));
+        .pipe(dest('dist'));
 }
 
+const cbString = new Date().getTime;
 function cacheBustTask() {
-    var cbString = new Date().getTime
-    return src([index.html])
+    return src(['index.html'])
         .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
         .pipe(dest('.'));
 }
 
 // Browsersync to spin up a local server
-function browserSyncServe(cb) {
-    // Initializes browsersync server
-    browsersync.init({
-        server: {
-            baseDir: '.',
-        },
-        notify: {
-            styles: {
-                top: 'auto',
-                bottom: 0,
-            },
-        },
-    });
-    cb();
-}
+// function browserSyncServe(cb) {
+//     // Initializes browsersync server
+//     browsersync.init({
+//         server: {
+//             baseDir: '.',
+//         },
+//         notify: {
+//             styles: {
+//                 top: 'auto',
+//                 bottom: 0,
+//             },
+//         },
+//     });
+//     cb();
+// }
 
-function browsersyncReload(cb) {
-    browsersync.reload();
-    cb();
-}
+// function browsersyncReload(cb) {
+//     browsersync.reload();
+//     cb();
+// }
 
 // Watch CSCC and JS files for changes
 // When changed, run scss and js tasks simultaneously
 function watchTask() {
     watch(
         [files.jsPath, files.scssPath],
-        { interval: 1000, userPolling: true }, // Makes docker work (?)
-        series(parallel(scssTask, jsTask), cacheBustTask, browsersyncReload)
-    );
+        // { interval: 1000, userPolling: true }, // Makes docker work (?)
+        parallel(scssTask, jsTask));
 }
 
 // Browsersync Watch task
 // Watch HTML file for changes and reload browsersync server
-// Watch SCSS and JS files for changes, run scss and js tasks simultaneously, update browsersync
-function bsWatchTask() {
-    watch('index.html', browsersyncReload);
-    watch(
-        [files.jsPath, files.scssPath],
-        { interval: 1000, userPolling: true },
-        series(parallel(scssTask, jsTask), cacheBustTask, browsersyncReload)
-    );
-}
+// // Watch SCSS and JS files for changes, run scss and js tasks simultaneously, update browsersync
+// function bsWatchTask() {
+//     watch('index.html', browsersyncReload);
+//     watch(
+//         [files.jsPath, files.scssPath],
+//         // { interval: 1000, userPolling: true },
+//         series(parallel(scssTask, jsTask), cacheBustTask, browsersyncReload)
+//     );
+// }
 
 // Export the default Gulp task, so it can be run
 // Runs the scss and js tasks simultaneously
@@ -93,10 +95,10 @@ exports.default = series(
 
 // Runs all of the above but also spins up a local Browsersync server
 // Run by typing in "gulp bs" on the command line
-exports.browsersync = series(
-    parallel(scssTask, jsTask),
-    cacheBustTask,
-    browserSyncServe,
-    bsWatchTask
-)
+// exports.browsersync = series(
+//     parallel(scssTask, jsTask),
+//     cacheBustTask,
+//     browserSyncServe,
+//     bsWatchTask
+// );
 
