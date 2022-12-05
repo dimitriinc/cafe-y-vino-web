@@ -1,31 +1,14 @@
-html {
-    box-sizing: border-box;
-    font-size: 100%;
-}
+@import "variables";
+@import "globals";
+@import "header";
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
 
-body {
-    margin: 0;
-    padding: 0;
-    background-image: url(images/sonaBackgroundTexture.jpg);
-    text-decoration: none;
-    transition: text-decoration 300ms ease-in-out;
-}
 
 header {
-    background-color: darkkhaki;
+    background-color: transparent;
 }
-img {
-    size: 50px;
-}
-p {
-    font-family: "Arial";
-}
+
 nav {
-    font-family: "Roboto", sans-serif;
     display: flex;
     justify-content: center;
     
@@ -54,25 +37,19 @@ footer {
     text-align: center;
     font-size: .8em;
     background-color: maroon;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    p:hover {
-        padding: 20px;
-        background-color: aqua;
-    }
+    color: beige;
 }
 
 h1 {
     text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Tangerine';
     text-transform: uppercase;
 }
 
 #testParagraph {
     text-align: center;
     text-transform: lowercase;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: serif;
 }
 
 .navItem:hover {
