@@ -42,26 +42,26 @@ function cacheBustTask() {
 }
 
 // Browsersync to spin up a local server
-// function browserSyncServe(cb) {
-//     // Initializes browsersync server
-//     browsersync.init({
-//         server: {
-//             baseDir: '.',
-//         },
-//         notify: {
-//             styles: {
-//                 top: 'auto',
-//                 bottom: 0,
-//             },
-//         },
-//     });
-//     cb();
-// }
+function browserSyncServe(cb) {
+    // Initializes browsersync server
+    browsersync.init({
+        server: {
+            baseDir: '.',
+        },
+        notify: {
+            styles: {
+                top: 'auto',
+                bottom: 0,
+            },
+        },
+    });
+    cb();
+}
 
-// function browsersyncReload(cb) {
-//     browsersync.reload();
-//     cb();
-// }
+function browsersyncReload(cb) {
+    browsersync.reload();
+    cb();
+}
 
 // Watch CSCC and JS files for changes
 // When changed, run scss and js tasks simultaneously
@@ -75,14 +75,14 @@ function watchTask() {
 // Browsersync Watch task
 // Watch HTML file for changes and reload browsersync server
 // // Watch SCSS and JS files for changes, run scss and js tasks simultaneously, update browsersync
-// function bsWatchTask() {
-//     watch('index.html', browsersyncReload);
-//     watch(
-//         [files.jsPath, files.scssPath],
-//         // { interval: 1000, userPolling: true },
-//         series(parallel(scssTask, jsTask), cacheBustTask, browsersyncReload)
-//     );
-// }
+function bsWatchTask() {
+    watch('index.html', browsersyncReload);
+    watch(
+        [files.jsPath, files.scssPath],
+        // { interval: 1000, userPolling: true },
+        series(parallel(scssTask, jsTask), cacheBustTask, browsersyncReload)
+    );
+}
 
 // Export the default Gulp task, so it can be run
 // Runs the scss and js tasks simultaneously
@@ -90,7 +90,8 @@ function watchTask() {
 exports.default = series(
     parallel(scssTask, jsTask),
     cacheBustTask,
-    watchTask
+    browserSyncServe,
+    bsWatchTask
 );
 
 // Runs all of the above but also spins up a local Browsersync server

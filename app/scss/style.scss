@@ -9,22 +9,32 @@ html {
 
 body {
     margin: 0;
+    padding: 0;
     background-image: url(images/sonaBackgroundTexture.jpg);
     text-decoration: none;
+    transition: text-decoration 300ms ease-in-out;
 }
 
 header {
     background-color: darkkhaki;
 }
-
+img {
+    size: 50px;
+}
+p {
+    font-family: "Arial";
+}
 nav {
     font-family: "Roboto", sans-serif;
+    display: flex;
+    justify-content: center;
+    
     ul {
         display: flex;
         justify-content: center;
         list-style-type: none;
         li {
-            font-size: 8em;
+            font-size: 1em;
             text-transform: uppercase;
             letter-spacing: .2em;
             a {
@@ -33,6 +43,7 @@ nav {
                 margin: .5em;
                 border: 1px solid;
                 border-radius: .5em;
+                text-decoration: none;
             }
         }
     }
@@ -47,7 +58,8 @@ footer {
     bottom: 0;
     width: 100%;
     p:hover {
-        text-transform: uppercase;
+        padding: 20px;
+        background-color: aqua;
     }
 }
 
@@ -64,7 +76,9 @@ h1 {
 }
 
 .navItem:hover {
+
     text-decoration: underline;
 }
+
 
 
