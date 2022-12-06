@@ -4,10 +4,6 @@
 
 
 
-header {
-    background-color: transparent;
-}
-
 nav {
     display: flex;
     justify-content: center;
@@ -17,7 +13,6 @@ nav {
         justify-content: center;
         list-style-type: none;
         li {
-            font-size: 1em;
             text-transform: uppercase;
             letter-spacing: .2em;
             a {
