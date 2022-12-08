@@ -1,6 +1,8 @@
 @import "variables";
+@import "mixins";
 @import "globals";
 @import "header";
+
 
 
 
@@ -42,15 +44,20 @@ h1 {
 }
 
 #testParagraph {
-    text-align: center;
     text-transform: lowercase;
     font-family: serif;
+    margin: 1.5rem;
+    border: 2px solid;
+    padding: 1em;
+    border-color: $hamburger_menu;
+    border-radius: .5rem;
 }
 
 .navItem:hover {
 
     text-decoration: underline;
 }
+
 
 
 
