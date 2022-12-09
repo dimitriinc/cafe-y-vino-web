@@ -1,0 +1,26 @@
+@keyframes slide-in-from-top {
+    from {
+        bottom: 100%;
+    }
+    
+    to {
+        bottom: 0%;
+    }
+}
+
+.slide-in {
+    animation: slide-in-from-top 300ms ease-in-out forwards;
+}
+
+@keyframes slide-out-from-bottom {
+    from {
+        bottom: 0%
+    }
+    to {
+        bottom: 100%
+    }
+}
+
+.slide-out {
+    animation: slide-out-from-bottom 300ms ease-in-out forwards;
+}
