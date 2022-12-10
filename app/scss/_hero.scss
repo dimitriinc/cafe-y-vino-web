@@ -1,4 +1,17 @@
-.main {
+.hero {
+
+    &__image {
+        background-image: url(/images/throwaway_image.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        min-height: 23.5rem;
+    }
+
+    &__text {
+        padding: 2rem;
+        letter-spacing: 3px;
+    }
 
     .bottom-image {
         background-image: url(/images/overview.jpg);
@@ -17,7 +30,7 @@
 
     h1 {
         text-align: center;
-        font-family: 'Tangerine';
+        font-family: Futura;
         text-transform: uppercase;
     }
     
