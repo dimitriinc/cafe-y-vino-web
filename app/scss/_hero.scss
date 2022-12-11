@@ -26,6 +26,29 @@
         overflow: hidden;
         outline: 1px solid;
         outline-offset: -10px;
+
+        button {
+            border: 1px solid;
+            // border-radius: 2rem;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 45%;
+            margin: auto;
+            background-color: transparent;
+            letter-spacing: 2px;
+            padding: 1rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: $overlay;
+            transition: all 300ms ease-in-out;
+
+            &:active {
+                background-color: $overlay;
+                color: $hamburger_menu;
+                border-color: $hamburger_menu;
+            }
+        }
     }
 
     h1 {
