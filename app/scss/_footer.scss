@@ -1,7 +1,16 @@
 footer {
-    padding: 1em;
+    display: inline-block;
+    width: 100%;
     text-align: center;
-    font-size: .8em;
-    background-color: $hamburger_menu;
+    font-size: $font_small;
+    background-color: $nav_links;
     color: beige;
+
+    .address {
+        text-transform: uppercase;
+    }
+
+    .dimitriinc {
+        border: 1px solid $overlay;
+    }
 }

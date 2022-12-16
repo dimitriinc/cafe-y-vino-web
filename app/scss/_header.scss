@@ -100,17 +100,45 @@
         bottom: 100%;
         z-index: 2;
         background-color: $overlay;
+    }
+
+    .mobile-links-canvas {
+        display: block;
+        visibility: hidden;
+        position: absolute;
+        z-index: 3;
+        top: 200px;
+        left: 0;
+        right: 0;
+        margin: auto;    
         
-        a {
-            display: none;
+        a:not(:last-child) {
+            visibility: hidden ;
+            display: block;
             font-family: Futura, sans-serif;
             padding: 1rem .625rem;
             color: $nav_links;
             font-size: 1.2rem;
             font-weight: 400;
             text-align: center;
+            z-index: 3;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        a#insta-link {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            margin-top: 8rem;
+
+            img {
+                position: absolute;
+                right: 0;
+                left: 0;
+                margin: auto;
+                visibility: hidden;
+            }
         }
     }
 }
