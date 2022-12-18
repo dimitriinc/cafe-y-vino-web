@@ -3,6 +3,13 @@ const header = document.querySelector('.header');
 const overlay = document.querySelector('.mobile-nav-menu');
 const body = document.querySelector('body');
 const mobileNav = document.querySelectorAll('.slider-links');
+const revealables = document.querySelectorAll('.revealable');
+
+window.onload = (event) => {
+    revealables.forEach(function(element) {
+        element.classList.add('revealed');
+    })
+};
 
 btnHamburger.addEventListener('click', function() {
     if (header.classList.contains('open')) { // Hamburger closes
