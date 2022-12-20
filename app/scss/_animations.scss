@@ -1,28 +1,33 @@
 @keyframes slide-in-from-top {
     from {
         bottom: 100%;
+        visibility: hidden;
     }
     
     to {
         bottom: 0%;
+        visibility: visible;
     }
 }
 
 .slide-in {
-    animation: slide-in-from-top 300ms ease-in-out forwards;
+    animation: slide-in-from-top 400ms ease-in-out forwards;
 }
 
 @keyframes slide-out-from-bottom {
     from {
-        bottom: 0%
+        bottom: 0%;
+        visibility: visible;
+        
     }
     to {
-        bottom: 100%
+        bottom: 100%;
+        visibility: hidden;
     }
 }
 
 .slide-out {
-    animation: slide-out-from-bottom 600ms ease-in-out forwards;
+    animation: slide-out-from-bottom 500ms ease-in-out forwards;
 }
 
 @keyframes fade-in-from-top {
