@@ -1,7 +1,9 @@
 .header {
 
+    z-index: 3;
+
     nav {
-        padding: 1.065rem 1.5rem;
+        padding: .4rem 1.5rem;
         background-image: linear-gradient(to bottom, rgba(212,202,161,.5), rgba(212,202,161,.3) 65%, rgba(212,202,161,0));
         
 
@@ -118,7 +120,7 @@
             font-family: Futura, sans-serif;
             padding: 1rem .625rem;
             color: $nav_links;
-            font-weight: 600;
+            font-weight: 400;
             text-align: center;
             z-index: 3;
             text-transform: uppercase;
@@ -138,6 +140,23 @@
                 margin: auto;
                 visibility: hidden;
             }
+        }
+    }
+}
+
+.scroll {
+    background-color: $overlay;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    
+
+    .header__logo {
+        
+        img {
+            transition: all 500ms ease-in-out;
+            width: 5rem;
         }
     }
 }

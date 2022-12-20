@@ -10,11 +10,12 @@ footer {
     .address {
         text-transform: uppercase;
         letter-spacing: 2px;
+        padding-bottom: .5rem;
     }
 
     .dimitriinc {
         display: inline-block;
-        padding: .5rem;
+        padding: .3rem;
         margin: 0;
         border: 1px solid $hamburger_menu;
         border-radius: .5rem 0.5rem 0 0;

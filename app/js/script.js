@@ -11,6 +11,15 @@ window.onload = (event) => {
     })
 };
 
+window.addEventListener('scroll', function() {
+    if (window.scrollY != 0) {
+        header.classList.add('scroll');
+    } else {
+        header.classList.remove('scroll');
+    }
+})
+
+
 btnHamburger.addEventListener('click', function() {
     if (header.classList.contains('open')) { // Hamburger closes
         body.classList.remove('noscroll');

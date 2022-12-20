@@ -94,6 +94,8 @@ button {
         position: relative;
 
         .header {
+            position: fixed;
+            display: block;
             &__toggle {
                 display: block;
                 position: absolute;
@@ -102,6 +104,7 @@ button {
             }
             &__logo {
                 img {
+                    transition: width 300ms ease-in;
                     width: 7rem;
                 }
             }
