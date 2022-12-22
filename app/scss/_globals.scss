@@ -7,6 +7,7 @@
 html {
     box-sizing: border-box;
     font-size: 100%;
+
 }
 
 *, *:before, *:after {
@@ -46,16 +47,12 @@ button {
 .flex {
     display: flex;
 
-    &-jc-sb {
-        justify-content: space-between;
-
-        @media (max-width: 640px) {
-            justify-content: center;
-        }
+    @include breakpoint-down(tablet) {
+        justify-content: center;
     }
 
-    &-jc-c {
-        justify-content: center;
+    @include breakpoint-up(laptop) {
+        justify-content: space-between;
     }
 
     &-ai-c {
@@ -65,48 +62,24 @@ button {
 
 // Visibility
 .hide-for-mobile {
-    @include breakpoint-down(small) {
+    @include breakpoint-down(tablet) {
         display: none;
     };
 }
 
 .hide-for-desktop {
-    @include breakpoint-up(medium) {
+    @include breakpoint-up(laptop) {
         display: none;
     };
 }
 
 .revealable {
     opacity: 0;
-    transform: translateY(-30px);
-    transition: 1s ease all;
+    transform: translateY(-50px);
+    transition: 1.5s ease all;
 }
 
 .revealed {
     opacity: 1;
     transform: translateY(0px);
-}
-
-@media (max-width: 640px) {
-    .flex {
-        justify-content: center;
-        position: relative;
-
-        .header {
-            position: fixed;
-            display: block;
-            &__toggle {
-                display: block;
-                position: absolute;
-                right: 0%;
-                margin-right: 2rem;
-            }
-            &__logo {
-                img {
-                    transition: width 300ms ease-in;
-                    width: 7rem;
-                }
-            }
-        }
-    }
 }

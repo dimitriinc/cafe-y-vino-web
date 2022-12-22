@@ -12,7 +12,7 @@ main {
             background-size: cover;
             background-repeat: no-repeat;
             background-position: 50% 50%;
-            min-height: 23.5rem;
+            min-height: 25.3rem;
             width: 100%;
             transform: translateY(7.5rem);
         }
@@ -33,21 +33,23 @@ main {
         button {
             margin: 3rem 0;
             font-size: 1rem;
-            
-            @media (max-width: 779px) {
+
+            @include breakpoint-down(tablet) {
                 &:active {
                     background-color: $nav_links;
                     color: $overlay;
                 }
             }
-            @media (min-width: 780px) {
+            
+            @include breakpoint-up(laptop) {
                 &:hover {
-                    background-color: $nav_links;
+                    background-color: $hamburger_menu;
                     color: $overlay;
                 }
                 &:active {
                     background-color: $overlay;
-                    color: $nav_links;
+                    color: $hamburger_menu;
+                    transform: scale(80%);
                 }
             }
         }
