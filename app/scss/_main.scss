@@ -4,27 +4,68 @@ main {
     text-align: center;
 
     .hero {
+        
+        width: 100%;
+        position: relative;
+        height: calc(100vh - 15rem);
 
-        height: calc(100vh - 17.5rem);
+        @include breakpoint-up(tablet) {
+            height: calc(100vh - 10rem);
+        }
+
+        @include breakpoint-up(laptop) {
+            height: 100vh;
+        }
 
         &__image {
+            position: absolute;
             background-image: url(/images/throwaway_image.png);
             background-size: cover;
             background-repeat: no-repeat;
-            background-position: 50% 50%;
+            background-position: center;
             min-height: 25.3rem;
             width: 100%;
-            transform: translateY(7.5rem);
+            top: 50%;
+
+            @include breakpoint-up(laptop) {
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+                margin-bottom: .6rem;
+                width: 80%;
+                min-height: calc(100vh - 166px);
+            }
+
+            @include breakpoint-down(tablet) {
+                transform: translateY(-40%);
+            }
         }
     }
 
     .main-text {
 
+        text-align: center;
         border: 2rem solid #fff;
         border-image: url(/images/art_border_slightly_orange.png);
         border-image-repeat: round;
         border-image-slice: 88;
         padding: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+
+        @include breakpoint-up(laptop) {
+            width: 80%;
+        }
+
+        p.main-message {
+            @include breakpoint-up(laptop) {
+                max-width: 640px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
 
         h2 {
             text-transform: uppercase;
@@ -67,6 +108,10 @@ main {
         overflow: hidden;
         outline: 1px solid;
         outline-offset: -10px;
+
+        @include breakpoint-up(laptop) {
+            min-height: 33rem;
+        }
 
         button {
             position: absolute;

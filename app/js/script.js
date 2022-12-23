@@ -12,10 +12,12 @@ window.onload = (event) => {
 };
 
 window.addEventListener('scroll', function() {
-    if (window.scrollY != 0) {
-        header.classList.add('scroll');
-    } else {
-        header.classList.remove('scroll');
+    if (this.document.documentElement.clientWidth < 769) {
+        if (window.scrollY != 0) {
+            header.classList.add('scroll');
+        } else {
+            header.classList.remove('scroll');
+        }
     }
 })
 
