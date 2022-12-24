@@ -23,6 +23,7 @@ body {
     letter-spacing: 1px;
     color: $nav_links;
     text-decoration: none;
+    list-style: none;
     background-image: url(/images/sonaBackgroundTexture.jpg);
 
     &.noscroll {
