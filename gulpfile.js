@@ -89,10 +89,14 @@ function bsWatchTask() {
 // Then runs cacheBust, then watch task
 exports.default = series(
     parallel(scssTask, jsTask),
-    cacheBustTask,
+    // cacheBustTask,
     browserSyncServe,
     bsWatchTask
 );
+
+exports.build = series(
+    scssTask, jsTask
+)
 
 // Runs all of the above but also spins up a local Browsersync server
 // Run by typing in "gulp bs" on the command line
