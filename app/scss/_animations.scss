@@ -62,3 +62,28 @@
 .fade-out {
     animation: fade-out-from-bottom 300ms ease-in-out forwards;
 }
+
+@keyframes submerge {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: -30px;
+    }
+}
+
+@keyframes emerge {
+    from {
+        bottom: -30px;
+    }
+    to {
+        bottom: 0px;
+    }
+}
+
+.submerged {
+    animation: submerge 500ms ease-in forwards;
+}
+.emerged {
+    animation: emerge 500ms ease-out 800ms forwards;
+}
