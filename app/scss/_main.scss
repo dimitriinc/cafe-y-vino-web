@@ -120,6 +120,7 @@ main {
             top: 45%;
             margin: auto;
             color: $overlay;
+            width: fit-content;
 
             &:active {
                 background-color: $overlay;
