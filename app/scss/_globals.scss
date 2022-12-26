@@ -3,6 +3,16 @@
     src: url(/fonts/FuturaLT-Light.ttf);
 }
 
+@font-face {
+    font-family: 'Saveur Sans';
+    src: url(/fonts/SaveurSansRound-Light.otf);
+}
+
+@font-face {
+    font-family: 'Cesso';
+    src: url(/fonts/Cesso-Regular.otf);
+}
+
 
 html {
     box-sizing: border-box;
@@ -17,6 +27,7 @@ html {
 body {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
     font-family: Futura;
     font-size: $font_medium;
     line-height: 1.5;
@@ -24,6 +35,7 @@ body {
     color: $nav_links;
     text-decoration: none;
     list-style: none;
+    text-align: center;
     background-image: url(/images/sonaBackgroundTexture.jpg);
 
     &.noscroll {

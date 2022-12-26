@@ -34,12 +34,6 @@ function jsTask() {
         .pipe(dest('dist'));
 }
 
-const cbString = new Date().getTime;
-function cacheBustTask() {
-    return src(['index.html'])
-        .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
-        .pipe(dest('.'));
-}
 
 // Browsersync to spin up a local server
 function browserSyncServe(cb) {
@@ -76,11 +70,11 @@ function watchTask() {
 // Watch HTML file for changes and reload browsersync server
 // // Watch SCSS and JS files for changes, run scss and js tasks simultaneously, update browsersync
 function bsWatchTask() {
-    watch('index.html', browsersyncReload);
+    watch(['index.html', 'hours.html'], browsersyncReload);
     watch(
         [files.jsPath, files.scssPath],
         // { interval: 1000, userPolling: true },
-        series(parallel(scssTask, jsTask), cacheBustTask, browsersyncReload)
+        series(parallel(scssTask, jsTask), browsersyncReload)
     );
 }
 
@@ -89,7 +83,6 @@ function bsWatchTask() {
 // Then runs cacheBust, then watch task
 exports.default = series(
     parallel(scssTask, jsTask),
-    // cacheBustTask,
     browserSyncServe,
     bsWatchTask
 );
@@ -98,12 +91,4 @@ exports.build = series(
     scssTask, jsTask
 )
 
-// Runs all of the above but also spins up a local Browsersync server
-// Run by typing in "gulp bs" on the command line
-// exports.browsersync = series(
-//     parallel(scssTask, jsTask),
-//     cacheBustTask,
-//     browserSyncServe,
-//     bsWatchTask
-// );
 
