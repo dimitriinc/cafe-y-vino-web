@@ -80,6 +80,8 @@
         text-align: center;
         padding-top: .5rem;
 
+        
+
         a {
             
             font-size: $font_small;
@@ -89,8 +91,10 @@
             letter-spacing: 2px;
             color: $nav_links;
             position: relative;
-            padding: 0;
+            padding: 2px;
             transition: color 300ms ease-in-out;
+
+            
 
             
             &::before {
@@ -106,20 +110,7 @@
                 transition: width 300ms ease-in-out;
             }
 
-            &.isActive {
-                ::after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    bottom: -10px;
-                    display: block;
-                    height: 1px;
-                    background-color: $nav_links_hover;
-                    width: 100%;
-                    z-index: 5;
-                }
-            }
+            
 
 
             &:hover {
@@ -167,11 +158,19 @@
             top: 100px;
             left: 0;
             right: 0;
-            margin: auto;    
+            margin: auto;  
+            
+            .is-active {
+                border: 1px $nav_links_hover solid;
+            }
+            
             
             a:not(:last-child) {
                 visibility: hidden ;
                 display: block;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
                 padding: 1rem .625rem;
                 color: $nav_links;
                 font-weight: 400;
@@ -213,4 +212,8 @@
             padding: 0;
         }
     }
+}
+
+.is-active {
+    border: 1px $nav_links_hover solid;
 }
