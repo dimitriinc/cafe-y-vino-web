@@ -159,6 +159,10 @@
             left: 0;
             right: 0;
             margin: auto;  
+
+            @media (max-height: 676px) {
+                top: 100px;
+            }
             
             .is-active {
                 border: 1px $nav_links_hover solid;
