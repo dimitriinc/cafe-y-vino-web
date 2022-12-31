@@ -34,7 +34,7 @@
                                 
         </div>
         
-        <nav class="flex flex-ai-c">
+        <nav class="flex flex-ai-c non-main">
             
             <a href="/" class="header__logo">
                 <img src="images/logo_inline_black.svg" alt="Cafè y Vino">
@@ -69,22 +69,34 @@
             </h2>
 
             <p>
-                El tiempo de la espera para las reservaciones es 10 minutos.
+                Llena el formulario y envíanos una solicitud.<br>Nos contactaremos pronto.
             </p>
 
         </section>
 
-        <section class="reserv-form revealable">
+        <form action="/future-reserv-script.php" method="post">
 
-        </section>
+            <section class="reserv-form revealable">
 
-        <section class="reserv-calendar revealable">
+                <input class="input-control" type="text" placeholder="nombre" name="userName">
 
-        </section>
+                <input class="input-control" type="text" placeholder="número de teléfono" name="userPhone">
 
-        <section class="reserv-button revealable">
+                <input type="text" class="input-control" placeholder="cantidad de personas" name="pax">
 
-        </section>
+            </section>
+    
+            <section class="reserv-calendar revealable">
+    
+            </section>
+    
+            <section class="reserv-button revealable">
+    
+            </section>
+
+        </form>
+
+        
 
     </main>
 

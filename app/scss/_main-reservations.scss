@@ -1,6 +1,7 @@
 .main-reservations {
     min-height: 100vh;
     overflow-x: hidden;
+    text-align: center;
 
     .reserv-text {
         margin-left: auto;
@@ -11,6 +12,34 @@
         h2 {
             font-size: 30px;
             letter-spacing: 3px;
+
+            @include breakpoint-down(mobile) {
+                font-size: 22px;
+            }
+        }
+
+        p {
+            @include breakpoint-down(mobile) {
+                font-size: $font_small;
+            }
+        }
+    }
+
+    .reserv-form {
+        
+        .input-control {
+            padding: 1rem;
+            text-transform: uppercase;
+            border: 2px solid $nav_links;
+            width: 100%;
+            margin: 0 2rem;
+            margin-bottom: 1rem;
+            max-width: 640px;
+            background: transparent;
+
+            @include breakpoint-down(tablet) {
+                width: 300px;
+            }
         }
     }
 }
