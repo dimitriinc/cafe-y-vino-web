@@ -25,40 +25,43 @@
         }
     }
 
-    .reserv-form {
-        
-        .input-control {
-            padding: 1rem;
-            border: 2px solid $nav_links;
-            width: 100%;
-            margin: 0 2rem;
-            margin-bottom: 1rem;
-            max-width: 640px;
-            background: transparent;
+     .input-control {
+        padding: 1rem;
+        border: 2px solid $nav_links;
+        width: 100%;
+        margin: 0 2rem;
+        margin-bottom: 1rem;
+        max-width: 640px;
+        background: transparent;
 
-            @include breakpoint-down(tablet) {
-                width: 300px;
-            }
+        @include breakpoint-down(tablet) {
+            width: 300px;
         }
+    }
 
-        
-     }
 
      .button-control {
         padding: 1rem;
         width: 100%;
         max-width: 640px;
-        background-color: $nav_links;
         margin: 0 2rem;
-        margin-bottom: 2rem;
-        color: $overlay;
+        font-weight: 500;
+        margin-bottom: 6rem;
+        background: transparent;
+        color: $nav_links;
+        border: 1px solid $nav_links;
         font-family: 'Saveur Sans';
-        font-size: 22px;
+        font-size: 18px;
         letter-spacing: 5px;
         transition: all 300ms ease-in-out;
 
         @include breakpoint-down(tablet) {
             width: 300px;
+        }
+
+        &:hover {
+            background-color: $nav_links;
+            color: $overlay;
         }
 
         &:active {

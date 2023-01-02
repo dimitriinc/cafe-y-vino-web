@@ -82,13 +82,15 @@
 
                 <input class="input-control" type="tel" placeholder="Número de teléfono" name="userPhone">
 
-                <input type="text" class="input-control" placeholder="Cantidad de personas" name="pax">
+                <input type="number" min="1" max="15" class="input-control" placeholder="Cantidad de personas" name="pax">
 
                 <textarea name="comment" rows="5" class="input-control" placeholder="Información adicional"></textarea>
 
             </section>
     
             <section class="reserv-calendar revealable">
+
+                <input type="datetime-local" name="date" class="input-control">
     
             </section>
     
