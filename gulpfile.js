@@ -70,7 +70,7 @@ function watchTask() {
 // Watch HTML file for changes and reload browsersync server
 // // Watch SCSS and JS files for changes, run scss and js tasks simultaneously, update browsersync
 function bsWatchTask() {
-    watch(['index.html', 'hours.html', 'reservations.html'], browsersyncReload);
+    watch(['index.html', 'hours.html', 'reservations.html', 'contact.html', 'signup.html'], browsersyncReload);
     watch(
         [files.jsPath, files.scssPath],
         // { interval: 1000, userPolling: true },

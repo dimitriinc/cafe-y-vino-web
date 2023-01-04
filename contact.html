@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservaciones | Café y Vino</title>
+    <title>Contacto | Café y Vino</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="dist/style.css">
 </head>
@@ -17,7 +17,7 @@
             <div class="slider-links mobile-links-canvas">
                 <a href="/hours.html" class="slider-links">horas & ubicación</a>
                 <a href="" class="slider-links">carta</a>
-                <a href="/reservations.html" class="is-active slider-links">reservaciones</a>
+                <a href="/reservations.html" class="slider-links">reservaciones</a>
                 <a href="" class="slider-links">nuestra historia</a>
                 <a href="" class="slider-links">carreras</a>
                 <a href="" class="slider-links">contacto</a>
@@ -49,79 +49,36 @@
             <div class="header__links hide-for-mobile">
                 <a href="/hours.html">Horas & Ubicación</a>
                 <a href="/">Carta</a>
-                <a class="is-active" href="/reservations.html">Reservaciones</a>
+                <a href="/reservations.html">Reservaciones</a>
                 <a href="/">Nuestra historia</a>
-                
             </div>
 
         </nav>
 
     </header>
 
-    <main class="main-reservations">
+    <main class="main-contact revealable">
 
         <div class="header-spacer"></div>
 
-        <section class="reserv-text revealable">
+        <h2 class="aux_title">
+            Envíanos un mensaje
+        </h2>
 
-            <h2 class="aux_title">
-                Reservaciones  
-            </h2>
+        <p>
+            Déjanos saber tu opinión o sugerencia, o cualquier cosa
+        </p>
 
-            <p>
-                Llena el formulario y envíanos una solicitud.<br>Nos contactaremos pronto.
-            </p>
+        <form action="/future-contact-script.php" method="post">
 
-        </section>
+            <input type="text" class="input-control" placeholder="Nombre" name="userName">
 
-        <form action="/future-reserv-script.php" method="post">
+            <textarea name="userMsg" rows="7" placeholder="Mensaje" class="input-control"></textarea>
 
-            <section class="reserv-form revealable">
-
-                <input class="input-control" type="text" placeholder="Nombre" name="userName">
-
-                <input class="input-control" type="tel" placeholder="Número de teléfono" name="userPhone">
-
-                <input type="number" min="1" max="15" class="input-control" placeholder="Cantidad de personas" name="pax">
-
-                <textarea name="comment" rows="5" class="input-control" placeholder="Información adicional"></textarea>
-
-            </section>
-    
-            <section class="calendar revealable">
-
-                <div class="calendar-header">
-
-                    <div class="arrows prev-mth">&lt;</div>
-                    <div class="mth"></div>
-                    <div class="arrows next-mth">&gt;</div>
-
-                </div>
-
-                <div class="calendar-week">
-                    <span class="day-of-week">Lun</span>
-                    <span class="day-of-week">Mar</span>
-                    <span class="day-of-week">Mie</span>
-                    <span class="day-of-week">Jue</span>
-                    <span class="day-of-week">Vie</span>
-                    <span class="day-of-week">Sab</span>
-                    <span class="day-of-week">Dom</span>
-                </div>
-
-                <div class="calendar-days"></div>
-    
-            </section>
-    
-            <section class="reserv-button revealable">
-
-                <input type="submit" class="button-control" value="ENVIAR">
-    
-            </section>
+            <input type="submit" class="button-control-round" value="enviar">
 
         </form>
-
         
-
     </main>
 
     <footer>
@@ -166,7 +123,6 @@
     </footer>
 
     <script src="dist/all.js"></script>
-    <script src="/date-picker.js"></script>
-
+    
 </body>
 </html>

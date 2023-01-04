@@ -1,0 +1,18 @@
+.main-signup {
+
+    min-height: 100vh;
+
+    h2 {
+        margin-top: 5rem;
+        @include breakpoint-down(tablet) {
+            font-size: 35px;
+        }
+        @include breakpoint-down(mobile) {
+            font-size: 30px;
+        }
+    }
+
+    p {
+        margin-bottom: 3rem;
+    }
+}

@@ -10,11 +10,11 @@
         padding: 3rem 2rem;
 
         h2 {
-            font-size: 30px;
+            font-size: 35px;
             letter-spacing: 3px;
 
             @include breakpoint-down(mobile) {
-                font-size: 22px;
+                font-size: 27px;
             }
         }
 
@@ -25,20 +25,7 @@
         }
     }
 
-     .input-control {
-        padding: 1rem;
-        border: 2px solid $nav_links;
-        width: 100%;
-        margin: 0 2rem;
-        margin-bottom: 1rem;
-        max-width: 640px;
-        background: transparent;
-
-        @include breakpoint-down(tablet) {
-            width: 300px;
-        }
-    }
-
+    
     .calendar {
 
         text-align: center;
@@ -60,11 +47,15 @@
             align-items: center;
             padding: 1rem;
             transition: all 300ms ease-in-out;
-            cursor: pointer;
+
+            .mth {
+                cursor: default;
+            }
 
             .arrows {
                 font-size: 22px;
                 font-weight: 900;
+                cursor: pointer;
 
                 &:hover {
                     // color: rgb(180, 164, 164);
