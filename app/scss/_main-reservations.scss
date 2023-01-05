@@ -1,7 +1,6 @@
 .main-reservations {
     min-height: 100vh;
     overflow-x: hidden;
-    text-align: center;
 
     .reserv-text {
         margin-left: auto;
@@ -28,7 +27,6 @@
     
     .calendar {
 
-        text-align: center;
         position: relative;
         width: 100%;
         max-width: 640px;
@@ -97,6 +95,7 @@
             align-items: center;
             text-align: center;
             font-family: 'Saveur Sans';
+            margin-bottom: 2rem;
 
             .day {
                 padding: 1rem;
@@ -110,7 +109,17 @@
         }
     }
 
-     .button-control {
+    .time {
+
+        p {
+            margin-bottom: .5rem;
+            font-size: 1rem;
+        }
+
+        margin-bottom: 3rem;
+    }
+
+    .button-control {
         padding: 1rem;
         width: 100%;
         max-width: 640px;

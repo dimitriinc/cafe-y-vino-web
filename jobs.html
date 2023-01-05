@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto | Café y Vino</title>
+    <title>Carreras | Café y Vino</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="dist/style.css">
 </head>
@@ -19,8 +19,8 @@
                 <a href="" class="slider-links">carta</a>
                 <a href="/reservations.html" class="slider-links">reservaciones</a>
                 <a href="" class="slider-links">nuestra historia</a>
-                <a href="" class="slider-links">carreras</a>
-                <a href="" class="slider-links">contacto</a>
+                <a href="" class="slider-links is-active">carreras</a>
+                <a href="/contact.html" class="slider-links">contacto</a>
             </div>
 
             <div class="slider-links social-links">
@@ -57,28 +57,34 @@
 
     </header>
 
-    <main class="main-contact revealable">
+    <main class="main-jobs">
 
         <div class="header-spacer"></div>
 
         <h2 class="aux_title">
-            Envíanos un mensaje
+            Trabaja con nosotros
         </h2>
 
         <p>
-            Déjanos saber tu opinión o sugerencia, o cualquier cosa
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi labore consectetur adipisci cumque delectus.
         </p>
 
-        <form action="/future-contact-script.php" method="post">
+        <form action="/future-jobs-script.php" method="post">
 
-            <input type="text" class="input-control" placeholder="Nombre" name="userName">
+            <input type="text" name="userName" placeholder="Nombre" class="input-control">
 
-            <textarea name="userMsg" rows="7" placeholder="Mensaje" class="input-control"></textarea>
+            <input type="tel" name="userPhone" placeholder="Número de teléfono" class="input-control">
 
-            <input type="submit" class="button-control-round" value="enviar">
+            <select name="position" class="input-control">
+                <option class="position-default" value="" selected="" disabled="">Posisión deseada</option>
+                <option value="mesero">Mesero</option>
+                <option value="bartender">Bartender</option>
+                <option value="cocinero">Cocinero</option>
+            </select>
 
+            <textarea name="cover-letter" placeholder="Información adicional" rows="10" class="input-control"></textarea>
         </form>
-        
+
     </main>
 
     <footer>
@@ -88,7 +94,7 @@
             </p>
             <div class="bottom-navigation hide-for-mobile">
                 <span>
-                    <a href="/jobs.html">carreras</a>
+                    <a href="">carreras</a>
                 </span>
                 <span>
                     <a href="">mercaderes 142, arequipa</a>
