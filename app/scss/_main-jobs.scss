@@ -20,6 +20,19 @@
 
     form {
         padding-bottom: 4rem;
+
+        .input-file {
+
+            font-size: $font_small;
+            display: block;
+            margin-bottom: 3rem;
+
+            .label-file {
+                font-style: italic;
+            }
+        }
+
+        
     }
 
     .position-default {
