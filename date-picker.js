@@ -4,6 +4,7 @@ const btn_prev_mth = document.querySelector('.prev-mth');
 const days_element = document.querySelector('.calendar-days');
 
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Deciembre'];
+const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 let date = new Date();
 let day = date.getDay();
