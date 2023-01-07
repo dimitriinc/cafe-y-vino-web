@@ -77,33 +77,39 @@ function renderCalendar(month, year) {
         for (let j = 0; j < 7; j++) {
             cells[j].innerHTML = '&nbsp;';
             
-            if (day <= monthLength && (i > 0 || j >= startingDay)) {
+            if (day <= monthLength && (i > 0 || j + 1 >= startingDay)) {
 
                 // add day class to add padding
                 cells[j].classList.add('day');
 
                 // set the element's value
-                // if the day is one digit, prefix it with 0
-                let dayString = day;
-                if (day < 10) {
-                    dayString = '0' + day;
-                }
                 cells[j].innerHTML = day;
 
-                // check if the cell contains the selected date
-                // if it does, add a border around it
-                if (day == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear) {
-                    cells[j].classList.add('day-selected');
+                // block unavailable days
+                let thisDate = new Date(currentYear, currentMonth, day);
+                // if (thisDate.getDay() === 0) {
+                //     cells[j].classList.add('domingo');
+                // }
+                if (j === 6) {
+                    cells[j].classList.add('day-blocked');
                 }
 
-                cells[j].addEventListener('click', function() {
-                    selectedDay = cells[j].innerHTML;
-                    selectedMonth = currentMonth;
-                    selectedYear = currentYear;
-                    renderCalendar(currentMonth, currentYear);
-                    console.log(`selectedDay: ${selectedDay}\nday: ${day}\nselected month: ${selectedMonth}\nselected year: ${selectedYear}`)
-                });
-                
+                if (!cells[j].classList.contains('day-blocked')) {
+                    // check if the cell contains the selected date
+                    // if it does, add a border around it
+                    if (day == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear) {
+                        cells[j].classList.add('day-selected');
+                    }
+
+                    // set the selected day
+                    cells[j].addEventListener('click', function() {
+                        selectedDay = cells[j].innerHTML;
+                        selectedMonth = currentMonth;
+                        selectedYear = currentYear;
+                        renderCalendar(currentMonth, currentYear);
+                    });
+                }
+
                 day++;
             }
         }

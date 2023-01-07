@@ -93,6 +93,13 @@
 
             .day-selected {
                 border: 1px solid;
+                border-radius: 100% 50%;
+            }
+
+            .day-blocked {
+                color: grey;
+                text-decoration: line-through;
+                cursor: default;
             }
             
         }
