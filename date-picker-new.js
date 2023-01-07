@@ -4,6 +4,10 @@ let currentYear = today.getFullYear();
 let currentDay = today.getDate();
 let numDaysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
+let selectedDay = currentDay;
+let selectedMonth = currentMonth;
+let selectedYear = currentYear;
+
 const calendar = document.querySelector('.calendar');
 const calendarHeader = document.querySelector('.calendar-header');
 const monthYearLabel = document.querySelector('.mth');
@@ -16,8 +20,12 @@ let daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 renderCalendar(currentMonth, currentYear);
 
-btn_next_mth.addEventListener('click', changeMonth(1));
-btn_prev_mth.addEventListener('click', changeMonth(-1));    
+btn_next_mth.addEventListener('click', function() {
+    changeMonth(1);
+});
+btn_prev_mth.addEventListener('click', function() {
+    changeMonth(-1);
+});    
 
 function changeMonth(offset) {
     currentMonth += offset;
@@ -38,7 +46,7 @@ function renderCalendar(month, year) {
     calendarDates.innerHTML = '';
 
     // create the table rows and cells for the days of the month
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         let row = document.createElement('tr');
         for (let j = 0; j < 7; j++) {
             let cell = document.createElement('td');
@@ -49,7 +57,7 @@ function renderCalendar(month, year) {
     }
 
     // get the first day of the month
-    let firstDay = new Date(currentYear, currentMonth +1, 1);
+    let firstDay = new Date(currentYear, currentMonth, 1);
     let startingDay = firstDay.getDay();
     
     let monthLength = daysInMonth[currentMonth];
@@ -64,16 +72,38 @@ function renderCalendar(month, year) {
     // fill in the calendar
     let day = 1;
     let rows = calendarDates.getElementsByTagName('tr');
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         let cells = rows[i].getElementsByTagName('td');
         for (let j = 0; j < 7; j++) {
             cells[j].innerHTML = '&nbsp;';
+            
             if (day <= monthLength && (i > 0 || j >= startingDay)) {
+
+                // add day class to add padding
+                cells[j].classList.add('day');
+
+                // set the element's value
+                // if the day is one digit, prefix it with 0
                 let dayString = day;
                 if (day < 10) {
                     dayString = '0' + day;
                 }
-                cells[j].innerHTML = dayString;
+                cells[j].innerHTML = day;
+
+                // check if the cell contains the selected date
+                // if it does, add a border around it
+                if (day == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear) {
+                    cells[j].classList.add('day-selected');
+                }
+
+                cells[j].addEventListener('click', function() {
+                    selectedDay = cells[j].innerHTML;
+                    selectedMonth = currentMonth;
+                    selectedYear = currentYear;
+                    renderCalendar(currentMonth, currentYear);
+                    console.log(`selectedDay: ${selectedDay}\nday: ${day}\nselected month: ${selectedMonth}\nselected year: ${selectedYear}`)
+                });
+                
                 day++;
             }
         }

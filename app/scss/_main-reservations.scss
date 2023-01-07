@@ -9,6 +9,7 @@
         padding: 3rem 2rem;
 
         h2 {
+        
             font-size: 35px;
             letter-spacing: 3px;
 
@@ -24,6 +25,10 @@
         }
     }
 
+    form {
+        padding: 0 1rem;
+    }
+
     
     .calendar {
 
@@ -32,14 +37,15 @@
         max-width: 640px;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 2rem;
 
         &-header {
 
             width: 100%;
             max-width: 640px;
-            color: $overlay;
-            background-color: $nav_links;
+            color: $nav_links;
+            margin-bottom: 1rem;
+            background-color: $overlay;
+            border: 1px solid; 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -56,7 +62,6 @@
                 cursor: pointer;
 
                 &:hover {
-                    // color: rgb(180, 164, 164);
                     scale: 110%;
                 }
 
@@ -66,44 +71,28 @@
             }
 
         }
+        
+        #calendar-body {
+            width: 100%;
 
-        &-week {
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.8rem;
-            text-align: center;
-
-            @include breakpoint-down(tablet) {
-                padding: 1rem 1rem;
-            }
-
-            @include breakpoint-down(mobile) {
-                padding: 1rem 0.5rem;
-            }
-
+            .week-day {
+                padding-bottom: 1rem;
+                cursor: default;
+            }  
             
-
-        }
-
-        &-days {
-
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-            font-family: 'Saveur Sans';
-            margin-bottom: 2rem;
-
             .day {
                 padding: 1rem;
+                font-family: 'Saveur Sans';
+                font-weight: 900;
                 cursor: pointer;
+
+                @include breakpoint-down(mobile) {
+                    padding: .5rem;
+                }
             }
 
             .day-selected {
-                border: 1px solid $nav_links;
+                border: 1px solid;
             }
             
         }
@@ -120,10 +109,11 @@
     }
 
     .button-control {
+        display: block;
         padding: 1rem;
         width: 100%;
         max-width: 640px;
-        margin: 0 2rem;
+        margin: 0 auto;
         font-weight: 900;
         margin-bottom: 6rem;
         background: transparent;
@@ -133,10 +123,6 @@
         font-size: 18px;
         letter-spacing: 5px;
         transition: all 300ms ease-in-out;
-
-        @include breakpoint-down(tablet) {
-            width: 300px;
-        }
 
         &:hover {
             background-color: $nav_links;

@@ -111,21 +111,14 @@ button {
 }
 
 .input-control {
+    display: block;
     padding: 1rem;
-    border: 2px solid $nav_links;
+    border: 1px solid $nav_links;
     width: 100%;
-    margin: 0 2rem;
+    margin: 0 auto;
     margin-bottom: 1rem;
     max-width: 640px;
     background: transparent;
-
-    @include breakpoint-down(tablet) {
-        width: 450px;
-    }
-
-    @include breakpoint-down(mobile) {
-        width: 300px;
-    }
 }
 
 .input-control-round {
@@ -140,26 +133,26 @@ button {
 
 .button-control-round {
     display: block;
-        padding: 1rem;
-        text-transform: uppercase;
-        font-family: 'Saveur Sans';
-        letter-spacing: 3px;
-        background: none;
-        border: 1px solid $nav_links;
-        margin-left: auto;
-        margin-right: auto;
-        font-weight: 900;
-        border-radius: 40px;
-        margin-bottom: 5rem;
-        margin-top: 2rem;
-        transition: all 300ms ease-in-out;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-family: 'Saveur Sans';
+    letter-spacing: 3px;
+    background: none;
+    border: 1px solid $nav_links;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 900;
+    border-radius: 40px;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+    transition: all 300ms ease-in-out;
 
-        &:hover {
-            background-color: $nav_links;
-            color: $overlay;
-        }
+    &:hover {
+        background-color: $nav_links;
+        color: $overlay;
+    }
 
-        &:active {
-            scale: 90%;
-        }
+    &:active {
+        scale: 90%;
+    }
 }
