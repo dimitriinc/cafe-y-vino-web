@@ -83,7 +83,7 @@
             .day {
                 padding: 1rem;
                 font-family: 'Saveur Sans';
-                font-weight: 900;
+                font-weight: 500;
                 cursor: pointer;
 
                 @include breakpoint-down(mobile) {
