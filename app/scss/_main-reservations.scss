@@ -27,6 +27,24 @@
 
     form {
         padding: 0 1rem;
+
+        #pax-input {
+            padding-top: 0;
+        }
+
+        #pax-display {
+            margin: 0;
+            text-align: start;
+            padding-left: 0;
+            font-size: 1rem;
+        }
+
+        // input[type="range"]::-moz-range-progress {
+        //     background-color: $nav_links; 
+        // }
+        // input[type="range"]::-moz-range-track {  
+        //     // background-color: #9a905d;
+        // }
     }
 
     
