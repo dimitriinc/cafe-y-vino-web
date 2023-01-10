@@ -201,17 +201,11 @@
             text-align: center;
             display: flex;
             justify-content: center;
+            align-items: center;
 
             a {
                 margin: 0 1.3rem;
             }
-
-            // a:not(:last-child) {
-            //     display: block;
-            //     margin-left: auto;
-            //     margin-right: auto;
-            //     margin-bottom: 0.6rem;
-            // }
 
             img {
                 visibility: hidden;

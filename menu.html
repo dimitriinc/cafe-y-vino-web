@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carta | Café y Vino</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <!-- <link rel="stylesheet" href="/materialize/_carousel.scss"
+    <link rel="stylesheet" href="/materialize/_variables.scss" -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="stylesheet" href="dist/style.css">
+
 </head>
 <body>
 
@@ -68,6 +74,32 @@
         <h2 class="aux_title">
             Carta
         </h2>
+
+        <div class="carousel">
+            <div class="carousel-item active">
+                <div class="carousel-item-container">
+                    <div class="item-title">
+                        Canelones de la casa
+                    </div>
+                </div>
+                <img src="/images/platos/canelones.jpg" alt="canelones">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/platos/cordero.jpg" alt="cordero">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/platos/cordon bleu.jpeg" alt="cordon bleu">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/platos/lasagna.jpg" alt="lasagna">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/platos/pollo.jpg" alt="pollo">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/platos/tortilla.jpg" alt="tortilla">
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -112,6 +144,7 @@
     </footer>
 
     <script src="dist/all.js"></script>
+    <script src="/carousel.js"></script>
     
 </body>
 </html>

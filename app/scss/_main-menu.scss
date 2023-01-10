@@ -1,3 +1,16 @@
 .main-menu {
     min-height: 100vh;
+
+    @include breakpoint-up(laptop) {
+        h2 {
+            display: none;
+        }
+    }
+
+    @include breakpoint-down(tablet) {
+        .aux_title {
+            padding-top: 3rem;
+        }
+    }
+    
 }
