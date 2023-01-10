@@ -49,11 +49,16 @@ $carousel-item-width: 300px !default;
 
   .carousel-item {
     visibility: hidden;
-    width: $carousel-item-width;
-    height: $carousel-item-height;
+    width: 300px;
+    height: 300px;
     position: absolute;
     top: 0;
     left: 0;
+
+    // @include breakpoint-down(tablet) {
+    //   width: 250px;
+    //   height: 250px;
+    // }
     // padding: 0;
     // border: 1px solid;
     // border-radius: 10px;
