@@ -75,6 +75,7 @@ main {
         button {
             margin: 3rem 0;
             font-size: 1rem;
+            cursor: pointer;
 
             @include breakpoint-down(tablet) {
                 &:active {
@@ -85,15 +86,24 @@ main {
             
             @include breakpoint-up(laptop) {
                 &:hover {
-                    background-color: $hamburger_menu;
+                    background-color: $nav_links;
                     color: $overlay;
                 }
                 &:active {
                     background-color: $overlay;
-                    color: $hamburger_menu;
+                    color: $overlay;
                     transform: scale(80%);
                 }
             }
+
+            // a {
+            //     text-decoration: none;
+            //     color: $nav_links;
+
+            //     &:hover {
+            //         color: $overlay;
+            //     }
+            // }
         }
     }
     
