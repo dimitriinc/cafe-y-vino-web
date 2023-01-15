@@ -1,4 +1,6 @@
 const categories = document.querySelectorAll('.menu-category');
+const container = document.querySelector('.menu-categories-container');
+
 
 function resetActive() {
     categories.forEach(function(element) {
