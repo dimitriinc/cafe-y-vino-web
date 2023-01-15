@@ -37,14 +37,7 @@
                 flex-wrap: nowrap;
                 justify-content: flex-start;
                 overflow-x: scroll;
-                padding-bottom: 1rem;
-                
-                ::-webkit-scrollbar {
-                    width: 0;
-                    height: 0;
-                }
-
-                
+                padding-bottom: 1rem; 
             }
     
             .menu-category {
