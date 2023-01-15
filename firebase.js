@@ -1,5 +1,12 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+let firebaseLoaded = new Promise(resolve => {
+    let firebaseInterval = setInterval(() => {
+        if (typeof firebase !== 'undefined') {
+            clearInterval(firebaseInterval);
+            resolve();
+        }
+        console.log('waiting for the firebase sdk to load...')
+    }, 50);
+});
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
@@ -12,15 +19,19 @@ const firebaseConfig = {
     measurementId: "G-D0VKYKE89E"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+async function main() {
 
-async function getPlatos(db) {
-    const platosCollection = collection(db, 'menu/01.platos/platos'); // reference 
-    const platosSnapshot = await getDocs(platosCollection); // query snapshot
-    platosSnapshot.forEach(plato => console.log(plato.get('nombre')));
-    const platosList = platosSnapshot.docs.map(doc => doc.data());
-    return platosList;
+    await firebaseLoaded;
+
+    firebase.initializeApp(firebaseConfig); 
+    const db = firebase.firestore();
+
+    const platosCollection = db.collection('menu/01.platos/platos');
+    platosCollection.get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            console.log(doc.get('nombre'))
+        });
+    });
 }
 
-const platos = getPlatos(db);
+main();

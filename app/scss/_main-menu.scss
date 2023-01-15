@@ -16,7 +16,7 @@
     .categories-carousel {
 
         @include breakpoint-up(laptop) {
-            margin-top: 4rem;
+            margin-top: 1rem;
         }
 
         .carousel {
@@ -31,16 +31,33 @@
             
             padding: 2rem;
             margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
     
             .menu-category {
                 padding: .5rem;
-                border: 1px solid;
-                font-size: 25px;
-                color: $overlay;
-                background-color: $nav_links;
+                border: 1.2rem solid #fff;
+                border-image: url(/images/art_border_slightly_orange.png);
+                border-image-repeat: round;
+                border-image-slice: 88;
+                font-size: 20px;
+                margin: 10px;
+                color: $nav_links;
                 border-radius: 10px;
                 overflow: hidden;
                 cursor: pointer;
+                transition: all 200ms ease-in-out;
+
+                @include breakpoint-down(tablet) {
+                    font-size: 18px;
+                    padding: .2rem;
+                }
+            }
+
+            .active {
+                scale: 120%;
+                box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
             }
         }
     }

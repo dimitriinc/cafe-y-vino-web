@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="/materialize/_variables.scss" -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="stylesheet" href="dist/style.css">
+    <script src="https://www.gstatic.com/firebasejs/7.22.0/firebase-app.js" async></script>
+    <script src="https://www.gstatic.com/firebasejs/7.22.0/firebase-firestore.js" async></script>
+
+    <!-- <script src="/carousel-material.js"></script> -->
 
 </head>
 <body>
@@ -76,15 +80,15 @@
         </h2>
 
         <div class="categories-carousel">
-            <div class="menu-categories-container carousel">
-                <div class="menu-category carousel-item active">Platos</div>
-                <div class="menu-category carousel-item">Piqueos</div>
-                <div class="menu-category carousel-item">Vinos</div>
-                <div class="menu-category carousel-item">Cocteles</div>
-                <div class="menu-category carousel-item">Cervezas</div>
-                <div class="menu-category carousel-item bebidas">Bebidas calientes</div>
-                <div class="menu-category carousel-item">Postres</div>
-                <div class="menu-category carousel-item">Ofertas</div>
+            <div class="menu-categories-container">
+                <div class="menu-category active">Platos</div>
+                <div class="menu-category">Piqueos</div>
+                <div class="menu-category">Vinos</div>
+                <div class="menu-category">Cocteles</div>
+                <div class="menu-category">Cervezas</div>
+                <div class="menu-category">Bebidas calientes</div>
+                <div class="menu-category">Postres</div>
+                <div class="menu-category">Ofertas</div>
             </div>
         </div>
         
@@ -189,8 +193,11 @@
         
     </footer>
 
+    
     <script src="dist/all.js"></script>
     <script src="/carousel.js"></script>
+    <script src="/firebase.js"></script>
+    <script src="/menu-cat.js"></script>
     
 </body>
 </html>
