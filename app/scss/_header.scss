@@ -27,7 +27,7 @@
 
         @include breakpoint-up(laptop) {
             display: block;
-            background: linear-gradient(to bottom, #f4f5f0 0%, #f4f5f0 32%, rgba(244,245,240,0.85) 70%, rgba(244,245,240,0.82) 71%, rgba(244,245,240,0) 100%);
+            background: linear-gradient(to bottom, #fcfaeb 0%, #fcfaeb 32%, rgba(252,250,235,0.85) 70%, rgba(252,250,235,0.82) 71%, rgba(252,250,235,0) 100%);
             padding-bottom: 5rem;
         }
 
