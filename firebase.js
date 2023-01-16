@@ -21,14 +21,9 @@ const firebaseConfig = {
     measurementId: "G-D0VKYKE89E"
 };
 
-function renewCarousel() {
-    let elems = document.querySelectorAll('.carousel');
-    let instances = M.Carousel.init(elems, { 
-    });
-    console.log('carousel is renewed!')
-}
 
-function main() {
+
+ function main() {
 
     // await firebaseLoaded;
 
@@ -37,7 +32,7 @@ function main() {
     const storage = firebase.storage();
     const storageRef = storage.ref();
 
-    console.log(storageRef);
+    renewCarousel('menu/01.platos/platos');
 
     menuCategoryElements.forEach(function(element) {
         const category = element.innerHTML;
@@ -46,12 +41,11 @@ function main() {
                 return;
             }
             let collectionPath = convertCategoryToCollectionPath(category);
-            console.log(collectionPath);
-            loadMenuItems(collectionPath);
-            // renewCarousel();
+            renewCarousel(collectionPath);
         });
     });
 
+    // Takes the inner HTML of the clicked category and returns a path to the appropriate collection
     function convertCategoryToCollectionPath(category) {
         switch(category) {
             case 'Platos': 
@@ -75,14 +69,22 @@ function main() {
         }
     }
 
-    function loadMenuItems(collectionPath) {
+    async function downloadImage(imgPath, menuItemImage) {
+        let imageReference = storageRef.child(imgPath);
+        await imageReference.getDownloadURL().then(function(url) {
+            menuItemImage.src = url;
+        });
+    }
+
+    async function loadMenuItems(collectionPath) {
         
         menuContainer.innerHTML = '';
 
         const collectionReference = db.collection(collectionPath);
+        const query = collectionReference.where('isPresent', '==', true);
         let index = 0;
 
-        collectionReference.get().then(querySnapshot => {
+        await query.get().then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
 
                 let menuItemElement = document.createElement('div');
@@ -101,17 +103,10 @@ function main() {
 
                 let imagePath = documentSnapshot.get('image');
 
-                console.log(imagePath);
-
                 let menuItemImage = document.createElement('img');
                 menuItemImage.alt = documentSnapshot.get('nombre');
-                let imageRef = storageRef.child(imagePath);
 
-                imageRef.getDownloadURL().then(function(url) {
-                    menuItemImage.src = url;
-                }).catch(function(error) {
-                    console.log('There was an error loading the image: ' + error);
-                })
+                downloadImage(imagePath, menuItemImage);
 
                 menuItemContainer.appendChild(menuItemTitle);
                 menuItemElement.appendChild(menuItemContainer);
@@ -121,7 +116,15 @@ function main() {
             });
         });
     }
+
+    async function renewCarousel(collectionPath) {
+
+        await loadMenuItems(collectionPath);
+
+        let elems = document.querySelectorAll('.carousel');
+        let instances = M.Carousel.init(elems);
+             
+    }
 }
 
 main();
-renewCarousel();
