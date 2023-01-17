@@ -127,12 +127,12 @@
 }
 
 .blanket {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: -100%;
     z-index: 500;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: $overlay;
     transition: all 300ms ease-in-out;
 }
@@ -140,7 +140,7 @@
 .exit-btn {
     display: block;
     z-index: 999;
-    position: absolute;
+    position: fixed;
     right: -50%;
     top: 0;
     margin: 2rem;
