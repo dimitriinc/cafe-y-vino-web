@@ -13,7 +13,6 @@
     src: url(/fonts/Cesso-Regular.otf);
 }
 
-
 html {
     box-sizing: border-box;
     font-size: 100%;
@@ -41,6 +40,14 @@ body {
     &.noscroll {
         overflow: hidden;
     }
+
+    .blanket-focused {
+        top: 0;
+    }
+    .exit-focused {
+        right: 0;
+    }
+
 }
 
 a, a:visited, a:hover {

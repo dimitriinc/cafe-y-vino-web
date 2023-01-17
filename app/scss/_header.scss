@@ -42,6 +42,10 @@
 
     &__logo {
 
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+
         @include breakpoint-up(laptop) {
             display: block;
             text-align: center;

@@ -10,6 +10,8 @@
 const menuCategoryElements = document.querySelectorAll('.menu-category');
 const menuContainer = document.querySelector('.carousel');
 const vinosCategories = document.querySelectorAll('.vino-category');
+const blanket = document.querySelector('.blanket');
+const exitBtn = document.querySelector('.exit-btn');
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
@@ -21,6 +23,8 @@ const firebaseConfig = {
     appId: "1:1096226926741:web:d5c23cb2bbba3fb4796b9c",
     measurementId: "G-D0VKYKE89E"
 };
+
+let screenFocused = false;
 
 
 
@@ -104,6 +108,7 @@ const firebaseConfig = {
         await query.get().then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
 
+                // Create the parent item element
                 let menuItemElement = document.createElement('div');
                 menuItemElement.classList.add('carousel-item');
                 if (index === 0) {
@@ -111,24 +116,58 @@ const firebaseConfig = {
                 }
                 index++;
 
+                // Create a container div for the title
                 let menuItemContainer = document.createElement('div');
                 menuItemContainer.classList.add('carousel-item-container');
 
+                // Create the title div to put it inside the container
                 let menuItemTitle = document.createElement('div');
                 menuItemTitle.classList.add('item-title');
                 menuItemTitle.innerHTML = documentSnapshot.get('nombre');
 
+                // Create the image element and load the image there
                 let imagePath = documentSnapshot.get('image');
-
+                if (imagePath === '' || imagePath == null) {
+                    imagePath = 'lg.png'
+                }
                 let menuItemImage = document.createElement('img');
+                menuItemImage.setAttribute('style', 'cursor:pointer;');
+                menuItemImage.addEventListener('mousedown', (event) => {
+                    menuItemImage.setAttribute('style', 'cursor:grabbing;')
+                });
+                menuItemImage.addEventListener('mouseup', (event) => {
+                    menuItemImage.setAttribute('style', 'cursor:pointer;')
+                });
                 menuItemImage.alt = documentSnapshot.get('nombre');
 
                 downloadImage(imagePath, menuItemImage);
 
+                // Create the item's elements hierarchy and append it to the carousel container
                 menuItemContainer.appendChild(menuItemTitle);
                 menuItemElement.appendChild(menuItemContainer);
                 menuItemElement.appendChild(menuItemImage);
                 menuContainer.appendChild(menuItemElement);
+
+                // Handle the onclick logic
+                menuItemElement.addEventListener('click', event => {
+
+                    if (!screenFocused) {
+                        screenFocused = true;
+
+                        blanket.classList.add('blanket-focused');
+                        exitBtn.classList.add('exit-focused');
+                        document.body.style.overflow = 'hidden';
+
+                        exitBtn.addEventListener('click', event => {
+                            blanket.classList.remove('blanket-focused');
+                            exitBtn.classList.remove('exit-focused');
+                            document.body.style.overflow = 'auto';
+                            document.body.style.overflowX = 'hidden';
+
+                            screenFocused = false;
+                        });
+                    }
+                });
                 
             });
         });
