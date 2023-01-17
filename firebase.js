@@ -9,6 +9,7 @@
 
 const menuCategoryElements = document.querySelectorAll('.menu-category');
 const menuContainer = document.querySelector('.carousel');
+const vinosCategories = document.querySelectorAll('.vino-category');
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
@@ -35,12 +36,18 @@ const firebaseConfig = {
     renewCarousel('menu/01.platos/platos');
 
     menuCategoryElements.forEach(function(element) {
-        const category = element.innerHTML;
         element.addEventListener('click', function() {
-            if (category == "Vinos") {
+            if (element.innerHTML == "Vinos") {
                 return;
             }
-            let collectionPath = convertCategoryToCollectionPath(category);
+            let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
+            renewCarousel(collectionPath);
+        });
+    });
+
+    vinosCategories.forEach(function(element) {
+        element.addEventListener('click', function() {
+            let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
             renewCarousel(collectionPath);
         });
     });
@@ -64,6 +71,16 @@ const firebaseConfig = {
                 return 'menu/061.postres/postres';
             case 'Ofertas':
                 return 'menu/07.ofertas/ofertas';
+            case 'Tintos':
+                return 'menu/03.vinos/vinos/Vinos tintos/vinos';
+            case 'Blancos':
+                return 'menu/03.vinos/vinos/Vinos blancos/vinos';
+            case 'Rosé':
+                return 'menu/03.vinos/vinos/Vinos rose/vinos';
+            case 'Postre':
+                return 'menu/03.vinos/vinos/Vinos de postre/vinos';
+            case 'Copas':
+                return 'menu/03.vinos/vinos/Vinos por copa/vinos';
             default:
                 return '';
         }
