@@ -149,25 +149,58 @@ let screenFocused = false;
                 menuContainer.appendChild(menuItemElement);
 
                 // Handle the onclick logic
-                menuItemElement.addEventListener('click', event => {
+                let isGrabbing = false;
+                let grabStartX, grabStartY;
 
-                    if (!screenFocused) {
-                        screenFocused = true;
-
-                        blanket.classList.add('blanket-focused');
-                        exitBtn.classList.add('exit-focused');
-                        document.body.style.overflow = 'hidden';
-
-                        exitBtn.addEventListener('click', event => {
-                            blanket.classList.remove('blanket-focused');
-                            exitBtn.classList.remove('exit-focused');
-                            document.body.style.overflow = 'auto';
-                            document.body.style.overflowX = 'hidden';
-
-                            screenFocused = false;
-                        });
-                    }
+                menuItemElement.addEventListener('mousedown', event => {
+                    isGrabbing = true;
+                    grabStartX = event.clientX;
+                    grabStartY = event.clientY;
                 });
+                menuItemElement.addEventListener('mousemove', event => {
+                    if (isGrabbing) {
+                        let xDiff = event.clientX - grabStartX;
+                        let yDiff = event.clientY - grabStartY;
+                        let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                        if (distance > 10) {
+                            menuItemElement.style.cursor = 'grabbing';
+                        }
+                    }
+                })
+                menuItemElement.addEventListener('mouseup', event => {
+                    isGrabbing = false;
+                    menuItemElement.style.cursor = 'pointer';
+                    let xDiff = event.clientX - grabStartX;
+                    let yDiff = event.clientY - grabStartY;
+                    let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                    if (distance < 10) {
+                        if (!screenFocused) {
+                            screenFocused = true;
+    
+                            blanket.classList.add('blanket-focused');
+                            exitBtn.classList.add('exit-focused');
+                            document.body.style.overflow = 'hidden';
+    
+                            exitBtn.addEventListener('click', event => {
+                                blanket.classList.remove('blanket-focused');
+                                exitBtn.classList.remove('exit-focused');
+                                document.body.style.overflow = 'auto';
+                                document.body.style.overflowX = 'hidden';
+    
+                                screenFocused = false;
+                            });
+                        }
+                    }
+
+                });
+                // menuItemElement.addEventListener('click', event => {
+
+                //     if (!isGrabbing) {
+                        
+                //     }
+
+                    
+                // });
                 
             });
         });
