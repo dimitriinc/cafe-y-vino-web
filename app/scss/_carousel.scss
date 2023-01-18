@@ -141,7 +141,7 @@ $carousel-item-width: 300px !default;
   height: 400px;
   right: 0;
   margin: 0 auto;
-  top: 12%;
+  top: 14%;
   transition: all 500ms ease-in-out;
 
   @include breakpoint-down(mobile) {
@@ -164,23 +164,32 @@ $carousel-item-width: 300px !default;
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 4%;
+  bottom: 8%;
   margin: 0 auto;
   border: 1px solid $nav_links;
   border-radius: 5px;
   opacity: 0;
-  padding: 5px;
+  padding: 10px;
   background-color: $overlay;
-  font-size: 14px;
+  font-size: 18px;
   transform: translateY(100%);
   cursor: default;
-  transition: all 500ms ease-in-out 500ms;
+  transition: all 500ms ease-in-out 300ms;
   max-width: 600px;
+
   @include breakpoint-down(tablet) {
     max-width: 400px;
+    font-size: 16px;
   }
   @include breakpoint-down(mobile) {
+    font-size: 14px;
     max-width: 300px;
+  }
+
+  @media (max-height: 790px) {
+    bottom: 4%;
+    font-size: 14px;
+    padding: 5px;
   }
 }
 

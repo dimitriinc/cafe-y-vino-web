@@ -192,8 +192,8 @@ let screenFocused = false;
                                 descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
                             }
                             description.innerHTML = descText;
-                            description.innerHTML += '<br>';
-                            description.innerHTML += 'S/. ' + documentSnapshot.get('precio');
+                            description.innerHTML += '<br><br>';
+                            description.innerHTML += '<em>S/. ' + documentSnapshot.get('precio') + '</em>';
 
                         
                             blanket.appendChild(itemFocus);
