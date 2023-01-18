@@ -205,29 +205,17 @@ let screenFocused = false;
 
     
                             exitBtn.addEventListener('click', event => {
-                                itemFocus.setAttribute('style', 'transform:translatY(-100%)');
-                                setTimeout(() => {
-                                    blanket.classList.remove('blanket-focused');
-                                    exitBtn.classList.remove('exit-focused');
-                                    document.body.style.overflow = 'auto';
-                                    document.body.style.overflowX = 'hidden';
-                                    blanket.removeChild(itemFocus);  
-                                    blanket.removeChild(description);  
-                                    screenFocused = false;
-                                }, 1);
+                                blanket.classList.remove('blanket-focused');
+                                exitBtn.classList.remove('exit-focused');
+                                document.body.style.overflow = 'auto';
+                                document.body.style.overflowX = 'hidden';
+                                blanket.removeChild(itemFocus);  
+                                blanket.removeChild(description);  
+                                screenFocused = false;
                             });
                         }
                     }
                 });
-                // menuItemElement.addEventListener('click', event => {
-
-                //     if (!isGrabbing) {
-                        
-                //     }
-
-                    
-                // });
-                
             });
         });
     }
@@ -242,10 +230,7 @@ let screenFocused = false;
         } catch (error) {
             console.log(`caugth an error: ${error}`)
             renewCarousel(collectionPath);
-        }
-
-        
-             
+        } 
     }
 }
 

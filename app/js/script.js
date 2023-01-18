@@ -8,6 +8,7 @@ const revealables = document.querySelectorAll('.revealable');
 const dimitriinc = document.querySelector('#dimitriinc');
 const dimiEmail = document.querySelector('#dimi_email');
 
+
 window.onload = (event) => {
     revealables.forEach(function(element) {
         element.classList.add('revealed');
