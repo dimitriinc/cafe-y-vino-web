@@ -180,18 +180,44 @@ let screenFocused = false;
                             blanket.classList.add('blanket-focused');
                             exitBtn.classList.add('exit-focused');
                             document.body.style.overflow = 'hidden';
+
+                            let itemFocus = menuItemElement.cloneNode(true);
+                            itemFocus.classList.add('item-focus');
+                            itemFocus.setAttribute('style', 'visibility:visible;')
+
+                            let description = document.createElement('div');
+                            description.classList.add('description-focus');
+                            let descText = documentSnapshot.get('descripcion');
+                            if (descText === '' || descText === undefined || descText === null) {
+                                descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
+                            }
+                            description.innerHTML = descText;
+                            description.innerHTML += '<br>';
+                            description.innerHTML += 'S/. ' + documentSnapshot.get('precio');
+
+                        
+                            blanket.appendChild(itemFocus);
+                            blanket.appendChild(description);
+                            setTimeout(() => {
+                                itemFocus.classList.add('item-in-focus');
+                                description.classList.add('description-in-focus');
+                            }, 0);
+
     
                             exitBtn.addEventListener('click', event => {
-                                blanket.classList.remove('blanket-focused');
-                                exitBtn.classList.remove('exit-focused');
-                                document.body.style.overflow = 'auto';
-                                document.body.style.overflowX = 'hidden';
-    
-                                screenFocused = false;
+                                itemFocus.setAttribute('style', 'transform:translatY(-100%)');
+                                setTimeout(() => {
+                                    blanket.classList.remove('blanket-focused');
+                                    exitBtn.classList.remove('exit-focused');
+                                    document.body.style.overflow = 'auto';
+                                    document.body.style.overflowX = 'hidden';
+                                    blanket.removeChild(itemFocus);  
+                                    blanket.removeChild(description);  
+                                    screenFocused = false;
+                                }, 1);
                             });
                         }
                     }
-
                 });
                 // menuItemElement.addEventListener('click', event => {
 
@@ -208,10 +234,17 @@ let screenFocused = false;
 
     async function renewCarousel(collectionPath) {
 
-        await loadMenuItems(collectionPath);
+        try {
+            await loadMenuItems(collectionPath);
 
         let elems = document.querySelectorAll('.carousel');
         let instances = M.Carousel.init(elems);
+        } catch (error) {
+            console.log(`caugth an error: ${error}`)
+            renewCarousel(collectionPath);
+        }
+
+        
              
     }
 }
