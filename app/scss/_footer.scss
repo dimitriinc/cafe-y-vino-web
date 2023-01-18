@@ -62,6 +62,14 @@ footer {
     
 
     .bottom-navigation {
+
+        p {
+            letter-spacing: 2px;
+            color: $overlay;
+            display: inline-block;
+            text-transform: uppercase;
+            margin: 0 1rem;
+        }
         
 
         a {
