@@ -65,7 +65,7 @@ function renderCalendar(month, year) {
     }
 
     // get the first day of the month
-    let firstDay = new Date(currentYear, currentMonth, 1);
+    let firstDay = new Date(currentYear, currentMonth, 0);
     let startingDay = firstDay.getDay();
     
     let monthLength = daysInMonth[currentMonth];
@@ -85,7 +85,7 @@ function renderCalendar(month, year) {
         for (let j = 0; j < 7; j++) {
             cells[j].innerHTML = '&nbsp;';
             
-            if (day <= monthLength && (i > 0 || j + 1 >= startingDay)) {
+            if (day <= monthLength && (i > 0 || j >= startingDay)) {
 
                 // add day class to add padding
                 cells[j].classList.add('day');
@@ -95,12 +95,8 @@ function renderCalendar(month, year) {
 
                 // block unavailable days
                 let thisDate = new Date(currentYear, currentMonth, day);
-                // if (thisDate.getDay() === 0) {
-                //     cells[j].classList.add('domingo');
-                // }
-
                 // block sundays
-                if (j === 6) {
+                if (thisDate.getDay() === 0) {
                     cells[j].classList.add('day-blocked');
                 }
                 // block past days
@@ -108,6 +104,7 @@ function renderCalendar(month, year) {
                     cells[j].classList.add('day-blocked');
                 }
 
+                // proceed for the days that are not blocked
                 if (!cells[j].classList.contains('day-blocked')) {
                     // check if the cell contains the selected date
                     // if it does, add a border around it
