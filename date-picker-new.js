@@ -26,7 +26,7 @@ btn_next_mth.addEventListener('click', function() {
 });
 btn_prev_mth.addEventListener('click', function() {
     changeMonth(-1);
-});    
+});     
 
 function changeMonth(offset) {
     currentMonth += offset;
@@ -42,6 +42,13 @@ function changeMonth(offset) {
 }
 
 function renderCalendar(month, year) {
+
+    // Don't let them go back in time
+    if (currentMonth === today.getMonth()) {
+        btn_prev_mth.setAttribute('style', 'visibility:hidden;');
+    } else {
+        btn_prev_mth.removeAttribute('style');
+    }
 
     // clear the calendar
     calendarDates.innerHTML = '';
@@ -91,7 +98,13 @@ function renderCalendar(month, year) {
                 // if (thisDate.getDay() === 0) {
                 //     cells[j].classList.add('domingo');
                 // }
+
+                // block sundays
                 if (j === 6) {
+                    cells[j].classList.add('day-blocked');
+                }
+                // block past days
+                if (currentMonth === today.getMonth() && day < today.getDate()) {
                     cells[j].classList.add('day-blocked');
                 }
 
