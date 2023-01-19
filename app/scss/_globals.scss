@@ -120,6 +120,8 @@ button {
 .input-control {
     display: block;
     padding: 1rem;
+    font-size: 14px;
+    letter-spacing: 1px;
     border: 1px solid $nav_links;
     width: 100%;
     margin: 0 auto;
@@ -135,6 +137,7 @@ button {
     margin: 1rem auto;
     background: transparent; 
     border-radius: 40px;
+    font-size: 14px;
 
 }
 

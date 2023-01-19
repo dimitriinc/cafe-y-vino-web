@@ -61,7 +61,7 @@ function renderCalendar(month, year) {
             cell.innerHTML = "&nbsp;";
             row.appendChild(cell);
         }
-        calendarDates.appendChild(row)
+        calendarDates.appendChild(row);
     }
 
     // get the first day of the month
