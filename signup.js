@@ -19,11 +19,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const fStore = firebase.firestore();
 
-submit_anim.addEventListener('click', () => {
-    submit_anim.setAttribute('style', 'display:none;');
-        submit_btn.removeAttribute('style');
-})
-
 form.addEventListener('submit', signupUserForEmailList);
 
 function signupUserForEmailList(event) {
@@ -37,18 +32,18 @@ function signupUserForEmailList(event) {
     console.log(`name: ${userName}`);
     console.log(`email: ${userEmail}`);
 
-    // fStore.collection('mailing-list').add({
-    //     nombre: userName,
-    //     email: userEmail
-    // }).then(event => {
-    //     submit_anim.setAttribute('style', 'display:none;');
-    //     submit_btn.removeAttribute('style');
-    //     alert('La inscripción exitosa!');
-    //     window.location.href = '/index.html';
-    // }).catch(event => {
-    //     submit_anim.setAttribute('style', 'display:none;');
-    //     submit_btn.removeAttribute('style');
-    //     alert('Caramba!')
-    // });
+    fStore.collection('mailing-list').add({
+        nombre: userName,
+        email: userEmail
+    }).then(event => {
+        submit_anim.setAttribute('style', 'display:none;');
+        submit_btn.removeAttribute('style');
+        alert('La inscripción exitosa!');
+        window.location.href = '/index.html';
+    }).catch(event => {
+        submit_anim.setAttribute('style', 'display:none;');
+        submit_btn.removeAttribute('style');
+        alert('Caramba!')
+    });
 
 }
