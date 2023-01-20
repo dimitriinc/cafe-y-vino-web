@@ -55,7 +55,7 @@
         }
 
         input[type=range]::-webkit-range-thumb {
-            -webkit-appearance: none;
+            // -webkit-appearance: none;
             background-color: $nav_links; /* Change the color of the thumb */
             width: 20px; /* Change the size of the thumb */
             height: 20px;
