@@ -7,6 +7,9 @@
     <title>Reservaciones | Café y Vino</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="dist/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.22.0/firebase-app.js" ></script>
+    <script src="https://www.gstatic.com/firebasejs/7.22.0/firebase-firestore.js" ></script>
 </head>
 <body>
 
@@ -77,20 +80,23 @@
 
         </section>
 
-        <form action="/future-reserv-script.php" method="post">
+        <form id="reserv-form">
 
             <section class="reserv-form revealable">
 
-                <input class="input-control" type="text" placeholder="Nombre" name="userName">
+                <input required id="reserv-name" class="input-control" type="text" placeholder="Nombre" name="userName">
 
-                <input class="input-control" type="tel" placeholder="Número de teléfono" name="userPhone">
+                <input required id="reserv-tel" class="input-control" type="tel" placeholder="Número de teléfono" name="userPhone">
 
-                <input type="number" min="1" max="15" class="input-control hide-for-mobile" placeholder="Cantidad de personas" name="pax">
+                <input required id="reserv-email" type="email" class="input-control" placeholder="Email">
+
+                <input id="reserv-pax-desk" type="number" min="1" max="15" class="input-control hide-for-mobile" placeholder="Cantidad de personas" name="pax">
 
                 <p id="pax-display" class="hide-for-desktop">Cantidad de personas: <span class="pax-value"></span></p>
-                <input type="range" class="input-control hide-for-desktop" min="1" max="15" id="pax-input" placeholder="Cantidad de personas" name="pax" step="1">
 
-                <textarea name="comment" rows="5" class="input-control" placeholder="Información adicional"></textarea>
+                <input id="reserv-pax-mobile" type="range" class="input-control hide-for-desktop" min="1" max="15" placeholder="Cantidad de personas" name="pax" step="1">
+
+                <textarea id="reserv-comment" name="comment" rows="5" class="input-control" placeholder="Información adicional"></textarea>
 
             </section>
     
@@ -120,13 +126,13 @@
                     <tbody id="calendar-dates"></tbody>
                 </table>
 
-                <input type="hidden" name="date" id="date-element">
+                <input type="hidden" name="date" id="reserv-date">
     
             </section>
 
             <section class="time revealable">
                 <p>La hora de llegada<br>14:00 &#8212; 21:00</p>
-                <input type="time" name="hour" class="input-control">
+                <input required id="reserv-hour" type="time" name="hour" class="input-control">
             </section>
     
             <section class="reserv-button revealable">
@@ -186,6 +192,7 @@
     <script src="/date-picker-new.js"></script>
     <script src="/time-validator.js"></script>
     <script src="/pax-value-displayer.js"></script>
+    <script src="/reserv-submit.js"></script>
 
 </body>
 </html>

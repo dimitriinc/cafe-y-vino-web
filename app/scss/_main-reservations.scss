@@ -40,12 +40,32 @@
             font-size: 1rem;
         }
 
-        // input[type="range"]::-moz-range-progress {
-        //     background-color: $nav_links; 
-        // }
-        // input[type="range"]::-moz-range-track {  
-        //     // background-color: #9a905d;
-        // }
+        input[type=range]::-moz-range-thumb {
+            background: $nav_links; /* Change the color of the thumb */
+            width: 20px; /* Change the size of the thumb */
+            height: 20px;
+            border: 0px solid;
+            // border-radius: 50%; /* Make the thumb circular */
+          }
+        input[type=range]::-moz-range-progress {
+            background-color: $nav_links; 
+        }
+        input[type=range]::-moz-range-track {  
+            background-color: #9a905d;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background: $nav_links; /* Change the color of the thumb */
+            width: 20px; /* Change the size of the thumb */
+            height: 20px;
+            border: 0px solid;
+            // border-radius: 50%; /* Make the thumb circular */
+          }
+          
+        input[type=range]::-webkit-slider-runnable-track {
+        background: #9a905d; /* Change the color of the track */
+        }
     }
 
     

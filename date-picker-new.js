@@ -14,7 +14,7 @@ const monthYearLabel = document.querySelector('.mth');
 const btn_next_mth = document.querySelector('.next-mth');
 const btn_prev_mth = document.querySelector('.prev-mth');
 const calendarDates = document.getElementById('calendar-dates');
-let date_element = document.getElementById('date-element');
+let date_element = document.getElementById('reserv-date');
 
 let monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Deciembre'];
 let daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -110,6 +110,9 @@ function renderCalendar(month, year) {
                     // if it does, add a border around it
                     if (day == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear) {
                         cells[j].classList.add('day-selected');
+                        let momentDate = moment(new Date(selectedYear, selectedMonth, selectedDay));
+                        date_element.value = momentDate.format('DD-MM-YYYY');
+                        console.log(`selected date: ${date_element.value}`)
                     }
 
                     // set the selected day
@@ -118,7 +121,7 @@ function renderCalendar(month, year) {
                         selectedMonth = currentMonth;
                         selectedYear = currentYear;
                         renderCalendar(currentMonth, currentYear);
-                        date_element.value = new Date(selectedYear, selectedMonth, selectedDay);
+                        
                     });
                 }
 
