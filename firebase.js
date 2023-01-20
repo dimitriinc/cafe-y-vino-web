@@ -102,7 +102,7 @@ let screenFocused = false;
         menuContainer.innerHTML = '';
 
         const collectionReference = db.collection(collectionPath);
-        const query = collectionReference.where('isPresent', '==', true);
+        const query = collectionReference.where('isPresent', '==', true).orderBy('nombre');
         let index = 0;
 
         await query.get().then(querySnapshot => {
