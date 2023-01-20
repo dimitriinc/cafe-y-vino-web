@@ -40,34 +40,48 @@
             font-size: 1rem;
         }
 
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background-color: $nav_links; /* Change the color of the thumb */
+            width: 20px; /* Change the size of the thumb */
+            height: 20px;
+            border: 0.2px solid $overlay;
+            box-shadow: 1px 1px 1px $overlay, 0px 0px 1px $overlay;
+            margin-top: -10px;
+          }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: .3rem;
+            background: $overlay;
+            border: 1px solid $nav_links;
+        }
+        input[type=range]::-webkit-progress-value {
+            -webkit-appearance: none;
+            background-color: $nav_links; 
+        }
+
         input[type=range]::-moz-range-thumb {
             background: $nav_links; /* Change the color of the thumb */
             width: 20px; /* Change the size of the thumb */
             height: 20px;
-            border: 0px solid;
+            border: 1px solid $overlay;
             // border-radius: 50%; /* Make the thumb circular */
           }
         input[type=range]::-moz-range-progress {
             background-color: $nav_links; 
+            border: 1px solid $overlay;
         }
         input[type=range]::-moz-range-track {  
-            background-color: #9a905d;
+            background-color: $overlay;
+            border: 1px solid $nav_links;
         }
 
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            background-color: black; /* Change the color of the thumb */
-            width: 20px; /* Change the size of the thumb */
-            height: 20px;
-            border: 0px solid;
-            // border-radius: 50%; /* Make the thumb circular */
-          }
-        input[type=range]::-webkit-slider-track {
-            background: #9a905d; /* Change the color of the track */
-        }
-        input[type=range]::-webkit-slider-progress {
-            background-color: $nav_links; 
-        }
+        
     }
 
     
