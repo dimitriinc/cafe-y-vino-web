@@ -54,18 +54,18 @@
             background-color: #9a905d;
         }
 
-        input[type=range]::-webkit-range-thumb {
-            // -webkit-appearance: none;
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
             background-color: black; /* Change the color of the thumb */
             width: 20px; /* Change the size of the thumb */
             height: 20px;
             border: 0px solid;
             // border-radius: 50%; /* Make the thumb circular */
           }
-        input[type=range]::-webkit-range-track {
+        input[type=range]::-webkit-slider-track {
             background: #9a905d; /* Change the color of the track */
         }
-        input[type=range]::-webkit-range-progress {
+        input[type=range]::-webkit-slider-progress {
             background-color: $nav_links; 
         }
     }
