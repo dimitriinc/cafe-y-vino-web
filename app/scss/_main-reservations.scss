@@ -62,9 +62,11 @@
             border: 0px solid;
             // border-radius: 50%; /* Make the thumb circular */
           }
-          
         input[type=range]::-webkit-range-track {
-        background: #9a905d; /* Change the color of the track */
+            background: #9a905d; /* Change the color of the track */
+        }
+        input[type=range]::-webkit-range-progress {
+            background-color: $nav_links; 
         }
     }
 
