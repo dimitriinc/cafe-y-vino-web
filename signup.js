@@ -24,13 +24,13 @@ function signupUserForEmailList(event) {
     let userEmail = emailInput.value;
     console.log(`name: ${userName}`);
     console.log(`email: ${userEmail}`);
+    
     fStore.collection('mailing-list').add({
         nombre: userName,
         email: userEmail
     }).then(event => {
-        alert('La inscripción exitosa!')
-        window.location.href = '/index.html'
-        console.log('user added to the mail list');
+        alert('La inscripción exitosa!');
+        window.location.href = '/index.html';
     }).catch(event => {
         alert('Caramba!')
     });

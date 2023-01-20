@@ -60,11 +60,8 @@
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
             height: .3rem;
-            background: $overlay;
+            background-color: $overlay;
             border: 1px solid $nav_links;
-        }
-        input[type=range]::-webkit-progress-value {
-            background-color: $nav_links; 
         }
 
         input[type=range]::-moz-range-thumb {
@@ -196,5 +193,10 @@
         &:active {
             transform: scale(95%);
         }
+    }
+
+    #loader {
+        transform: translateY(-20px);
+        margin-bottom: 2.3rem;
     }
 }
