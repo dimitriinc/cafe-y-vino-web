@@ -29,21 +29,33 @@ function signupUserForEmailList(event) {
 
     let userName = nameInput.value;
     let userEmail = emailInput.value;
-    console.log(`name: ${userName}`);
-    console.log(`email: ${userEmail}`);
-
-    fStore.collection('mailing-list').add({
-        nombre: userName,
-        email: userEmail
-    }).then(event => {
-        submit_anim.setAttribute('style', 'display:none;');
-        submit_btn.removeAttribute('style');
-        alert('La inscripción exitosa!');
-        window.location.href = '/index.html';
-    }).catch(event => {
-        submit_anim.setAttribute('style', 'display:none;');
-        submit_btn.removeAttribute('style');
-        alert('Caramba!')
+    
+    fStore.collection('mailing-list').get().then(querySnapshot => {
+        let emailInList = false;
+        querySnapshot.forEach(documentSnapshot => {
+            if (documentSnapshot.get('email') === userEmail) {
+                emailInList = true;
+            }
+        })
+        if (emailInList) {
+            alert('Este email ya está en la lista');
+            submit_anim.setAttribute('style', 'display:none;');
+            submit_btn.removeAttribute('style');
+        } else {
+            fStore.collection('mailing-list').add({
+                nombre: userName,
+                email: userEmail,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                submit_anim.setAttribute('style', 'display:none;');
+                submit_btn.removeAttribute('style');
+                alert('La inscripción exitosa!');
+                window.location.href = '/index.html';
+            }).catch(() => {
+                submit_anim.setAttribute('style', 'display:none;');
+                submit_btn.removeAttribute('style');
+                alert('Caramba!')
+            });
+        }
     });
-
 }

@@ -3,14 +3,7 @@ const name_element = document.getElementById('reserv-name');
 const tel_element = document.getElementById('reserv-tel');
 const email_element = document.getElementById('reserv-email');
 const comment_element = document.getElementById('reserv-comment');
-let pax_element;
-if (document.documentElement.clientWidth > 769) {
-    pax_element = document.getElementById('reserv-pax-desk');
-    pax_element.setAttribute('required', 'true');
-} else {
-    pax_element = document.getElementById('reserv-pax-mobile');
-}
-
+const pax_element = document.getElementById('reserv-pax');
 const fecha_element = document.getElementById('reserv-date');
 const hour_element = document.getElementById('reserv-hour');
 
@@ -56,7 +49,8 @@ form_element.addEventListener('submit', event => {
         pax: pax,
         fecha: date,
         hora: hour,
-        confirmado: false
+        confirmado: false,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).catch(event => {
         submit_anim.setAttribute('style', 'display:none;');
         submit_btn.removeAttribute('style');

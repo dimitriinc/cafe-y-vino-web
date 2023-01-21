@@ -21,7 +21,11 @@ function scssTask() {
     return src(files.scssPath)
         .pipe(sourcemaps.init())
         .pipe(sass())   // Compiles to .css
-        .pipe(postcss([autoprefixer(), cssnano()])) // Optimize with postprocessor
+        .pipe(postcss([autoprefixer({
+            config: {
+                path: '.browserslistrc'
+            }
+        }), cssnano()])) // Optimize with postprocessor
         .pipe(sourcemaps.write('.'))
         .pipe(dest('dist')); // Put final CSS in dist folder
 }
