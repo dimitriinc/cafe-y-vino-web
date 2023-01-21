@@ -5,27 +5,24 @@ main {
 
     .hero {
         
-        width: 100%;
-        position: relative;
-        height: calc(100vh - 15rem);
+        height: fit-content;
 
-        @include breakpoint-up(tablet) {
-            height: calc(100vh - 10rem);
+        @include breakpoint-down(tablet) {
+            margin-top: 3rem;
+            margin-bottom: 4rem;
         }
 
         @include breakpoint-up(laptop) {
-            height: 100vh;
+            height: calc(100vh - 166px);
         }
 
         &__image {
-            position: absolute;
             background-image: url(/images/throwaway_image.png);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             min-height: 25.3rem;
             width: 100%;
-            top: 50%;
 
             @include breakpoint-up(laptop) {
                 top: auto;
@@ -35,11 +32,7 @@ main {
                 margin: auto;
                 margin-bottom: .6rem;
                 width: 80%;
-                min-height: calc(100vh - 160px);
-            }
-
-            @include breakpoint-down(tablet) {
-                transform: translateY(-40%);
+                min-height: 100%;
             }
         }
     }
