@@ -133,6 +133,11 @@ main {
             text-transform: uppercase;
             transition: all 300ms ease-in-out;
 
+            @media screen and (-webkit-min-device-pixel-ratio:0) {
+                font-weight: normal;
+            }
+            
+
             &:active {
                 background-color: $overlay;
                 color: $nav_links;
