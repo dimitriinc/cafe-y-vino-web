@@ -109,7 +109,7 @@
             
 
             
-            &::before {
+            &:not(.is-active)::before {
                 content: "";
                 position: absolute;
                 left: 0;
@@ -118,13 +118,10 @@
                 margin: 0 auto;
                 display: block;
                 height: 1px;
-                background-color: $nav_links_hover;
+                background-color: $nav_links;
                 width: 0%;
                 transition: width 300ms ease-in-out;
             }
-
-            
-
 
             &:hover {
                 color: $nav_links_hover;
@@ -241,6 +238,7 @@
 
 .is-active {
     border: 1px $nav_links_hover solid;
+    cursor: default;
 }
 
 .header-spacer {

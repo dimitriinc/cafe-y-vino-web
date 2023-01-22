@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: 'FuturaRg';
+    src: url(/fonts/FuturaLT.ttf);
+}
+
+@font-face {
     font-family: 'FuturaIt';
     src: url(/fonts/FuturaLT-LightOblique.ttf);
 }
@@ -81,6 +86,11 @@ button {
 
 em {
     font-family: FuturaIt !important;
+}
+
+strong {
+    font-family: FuturaRg !important;
+    font-weight: noraml;
 }
 
 .flex {
