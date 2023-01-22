@@ -30,6 +30,13 @@ form_element.addEventListener('submit', event => {
     submit_btn.setAttribute('style', 'display:none;');
     submit_anim.removeAttribute('style');
 
+    if (fecha_element.value === '') {
+        alert('Por favor, escoge una fecha.');
+        submit_anim.setAttribute('style', 'display:none;');
+        submit_btn.removeAttribute('style');
+        return;
+    }
+
     let userName = name_element.value;
     let userTel = tel_element.value;
     let userEmail = email_element.value;

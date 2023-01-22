@@ -92,6 +92,22 @@
         text-align: center;
         padding-top: .5rem;
 
+        .is-active {
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -10px;
+                display: block;
+                height: 1px;
+                background-color: $nav_links;
+                width: 100%;
+            }
+            cursor: default;
+            pointer-events: none;
+        }
+
         
 
         a {
@@ -175,13 +191,26 @@
             }
             
             .is-active {
-                border: 1px $nav_links_hover solid;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 20%;
+                    display: block;
+                    height: 1px;
+                    background-color: $nav_links;
+                    width: 100%;
+                }
+                cursor: default;
+                pointer-events: none;
             }
             
             
             a {
                 visibility: hidden ;
                 display: block;
+                position: relative;
                 width: fit-content;
                 margin-left: auto;
                 margin-right: auto;
@@ -234,11 +263,6 @@
             padding: 0;
         }
     }
-}
-
-.is-active {
-    border: 1px $nav_links_hover solid;
-    cursor: default;
 }
 
 .header-spacer {
