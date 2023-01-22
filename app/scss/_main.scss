@@ -5,11 +5,14 @@ main {
 
     .hero {
         
-        height: fit-content;
+        // height: fit-content;
 
         @include breakpoint-down(tablet) {
-            margin-top: 3rem;
-            margin-bottom: 4rem;
+            height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+            // margin-top: 3rem;
+            // margin-bottom: 4rem;
         }
 
         @include breakpoint-up(laptop) {
@@ -21,7 +24,8 @@ main {
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            min-height: 25.3rem;
+            // min-height: 25.3rem;
+            min-height: 75%;
             width: 100%;
 
             @include breakpoint-up(laptop) {
