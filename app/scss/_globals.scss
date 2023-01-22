@@ -170,13 +170,14 @@ strong {
     padding: 1rem;
     color: $nav_links;
     text-transform: uppercase;
-    font-family: 'Saveur Sans';
+    font-family: 'Saveur Sans Regular';
     letter-spacing: 3px;
     background: none;
+    font-size: .8rem;
     border: 1px solid $nav_links;
     margin-left: auto;
     margin-right: auto;
-    font-weight: 900;
+    font-weight: normal;
     border-radius: 40px;
     margin-bottom: 5rem;
     margin-top: 2rem;
