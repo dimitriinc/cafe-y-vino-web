@@ -69,6 +69,7 @@ main {
             margin: 3rem 0;
             font-size: 1rem;
             cursor: pointer;
+            color: $nav_links;
 
             @include breakpoint-down(tablet) {
                 &:active {
@@ -88,15 +89,6 @@ main {
                     transform: scale(80%);
                 }
             }
-
-            // a {
-            //     text-decoration: none;
-            //     color: $nav_links;
-
-            //     &:hover {
-            //         color: $overlay;
-            //     }
-            // }
         }
     }
     
@@ -122,8 +114,9 @@ main {
             left: 0;
             right: 0;
             top: 45%;
+            font-family: inherit;
             margin: auto;
-            font-weight: 1000;
+            font-weight: 700;
             border: 1px solid;
             color: $overlay;
             width: fit-content;
