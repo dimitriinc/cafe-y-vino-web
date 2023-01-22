@@ -41,23 +41,4 @@ categories.forEach(function(element) {
         resetActive();
         element.classList.add('active')
     })
-
-
-
-    // if (element.innerHTML === 'Vinos') {
-    //     element.addEventListener('click', function() {
-    //         resetActive();
-    //         element.classList.add('active')
-    //     })
-    //     vinos_container.classList.remove('hidden');
-    //     vinos_container.classList.add('visible');
-    // } else {
-    //     element.addEventListener('click', function() {
-    //         resetActive();
-    //         element.classList.add('active')
-    //     })
-    //     vinos_container.classList.remove('visible');
-    //     vinos_container.classList.add('hidden');
-    // }
-    
 })
