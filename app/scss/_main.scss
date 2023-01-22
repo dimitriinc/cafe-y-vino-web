@@ -9,6 +9,8 @@ main {
 
         @include breakpoint-down(tablet) {
             height: calc(100vh - 100px);
+            min-height: calc(100vh - 100px);
+            max-height: calc(100vh - 100px);
             display: flex;
             align-items: center;
             // margin-top: 3rem;
