@@ -65,17 +65,12 @@ main {
             font-family: 'Saveur Sans';
         }
 
-        .pretencious-slogan {
-            font-weight: normal;
-            font-family: Futura;
-            // font-style: italic;
-        }
-
         button {
             margin: 3rem 0;
             font-size: 1rem;
             cursor: pointer;
             color: $nav_links;
+            font-family: 'Saveur Sans Regular';
 
             @include breakpoint-down(tablet) {
                 &:active {
@@ -120,21 +115,22 @@ main {
             left: 0;
             right: 0;
             top: 45%;
-            font-family: Futura;
+            font-family: 'Saveur Sans Regular';
             text-decoration: none;
             margin: auto;
-            font-weight: bold;
+            font-weight: normal;
             border: 1px solid;
             color: $overlay;
             width: fit-content;
             letter-spacing: 2px;
             padding: 1rem;
-            font-size: .8rem;
+            font-size: 1rem;
             text-transform: uppercase;
             transition: all 300ms ease-in-out;
 
             @media screen and (-webkit-min-device-pixel-ratio:0) {
-                font-weight: normal;
+                // font-weight: normal;
+                // font-size: .8rem;
             }
             
 

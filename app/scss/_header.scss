@@ -97,7 +97,7 @@
         a {
             
             font-size: $font_medium;
-            font-weight: 600;
+            font-weight: normal;
             margin: 0 1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -115,6 +115,7 @@
                 left: 0;
                 right: 0;
                 bottom: -10px;
+                margin: 0 auto;
                 display: block;
                 height: 1px;
                 background-color: $nav_links_hover;
