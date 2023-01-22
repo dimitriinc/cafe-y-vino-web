@@ -7,7 +7,6 @@ const mobileNav = document.querySelectorAll('.slider-links');
 const revealables = document.querySelectorAll('.revealable');
 const dimitriinc = document.querySelector('#dimitriinc');
 const dimiEmail = document.querySelector('#dimi_email');
-const hero_image = document.querySelector('.hero__image');
 
 window.onload = (event) => {
     revealables.forEach(function(element) {
@@ -25,13 +24,6 @@ window.addEventListener('scroll', function() {
         }
     }
 })
-
-hero_image.addEventListener('click', () => {
-    window.scrollTo({
-        top: window.scrollY + window.innerHeight,
-        behavior: 'smooth'
-    });
-});
 
 dimitriinc.addEventListener('click', function() {
     dimitriinc.classList.add('submerged')
