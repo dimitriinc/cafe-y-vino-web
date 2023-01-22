@@ -115,6 +115,7 @@ main {
             right: 0;
             top: 45%;
             font-family: Futura;
+            text-decoration: none;
             margin: auto;
             font-weight: 700;
             border: 1px solid;
@@ -128,7 +129,7 @@ main {
 
             &:active {
                 background-color: $overlay;
-                color: $hamburger_menu;
+                color: $nav_links;
             }
         }
     }
