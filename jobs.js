@@ -1,8 +1,13 @@
 const input_file = document.getElementById('file_pdf');
 const input_button = document.querySelector('.input-file-receiver-btn');
 const input_display = document.querySelector('.input-file-receiver-selected');
+const select = document.querySelector('select');
 
 let file_extension;
+
+select.addEventListener('change', () => {
+    select.setAttribute('style', 'color:#160b17')
+});
 
 input_button.addEventListener('click', () => {
     input_file.click();

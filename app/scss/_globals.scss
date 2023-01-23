@@ -94,6 +94,10 @@ strong {
     font-weight: lighter;
 }
 
+input::-webkit-progress-value {
+    color: $nav_links;
+}
+
 .flex {
     display: flex;
 
