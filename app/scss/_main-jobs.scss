@@ -83,6 +83,10 @@
             display: none;
         }
 
+        #loader {
+            transform: translateY(-20px);
+            margin-bottom: 1.9rem;
+        }
         
     }
 }

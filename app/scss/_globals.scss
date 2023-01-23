@@ -183,14 +183,19 @@ input::-webkit-progress-value {
     margin-left: auto;
     margin-right: auto;
     font-weight: normal;
+    cursor: pointer;
     border-radius: 40px;
     margin-bottom: 5rem;
     margin-top: 2rem;
     transition: all 300ms ease-in-out;
 
     &:hover {
-        background-color: $nav_links;
-        color: $overlay;
+
+        @include breakpoint-up(laptop) {
+            background-color: $nav_links;
+            color: $overlay;
+        }
+        
     }
 
     &:active {
