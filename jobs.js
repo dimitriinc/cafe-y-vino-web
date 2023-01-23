@@ -7,7 +7,7 @@ let file_extension;
 
 console.log(`select's initial value: ${select.value}`)
 if (select.value == '') {
-    select.setAttribute('style', 'color:gray');
+    select.setAttribute('style', 'color:grey');
 }
 select.addEventListener('change', () => {
     select.setAttribute('style', 'color:#160b17')
