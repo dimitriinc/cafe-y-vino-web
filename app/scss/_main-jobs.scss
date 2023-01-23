@@ -23,25 +23,67 @@
         padding-left: 1rem;
         padding-right: 1rem;
 
+        select option[disabled] {
+            color: grey;
+        }
+
         .input-file {
 
-            font-size: $font_small;
-            display: block;
-            margin-bottom: 3rem;
+            &-text {
+                text-align: start;
+                margin-top: 1rem;
+                margin-bottom: .5rem;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 640px;
+                font-size: $font_small;
+            }
 
-            .label-file {
-                font-style: italic;
+            &-receiver {
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 6rem;
+                max-width: 640px;
+                font-size: $font_small;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+
+                @include breakpoint-up(laptop) {
+                    margin-bottom: 4rem;
+                }
+
+                &-btn {
+                    display: inline-block;
+                    background-color: $overlay;
+                    color: $nav_links;
+                    padding: 1rem;
+                    border: 1px solid;
+                    cursor: pointer;
+                    transition: all 300ms ease-in-out;
+
+                    &:active {
+                        transform: scale(80%);
+                    }
+
+                    &:hover {
+                        color: $overlay;
+                        background-color: $nav_links;
+                    }
+                }
+
+                &-selected {
+                    color: grey;
+                    margin-left: 1rem;
+                    max-lines: 1;
+                }
             }
         }
 
         input[type="file"] {
-            
+            display: none;
         }
 
         
-    }
-
-    .position-default {
-        color: grey;
     }
 }
