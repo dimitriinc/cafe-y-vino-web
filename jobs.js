@@ -24,6 +24,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const fStore = firebase.firestore();
 
+if (input_file.value !== '') {
+    input_display.innerHTML = `<em>${input_file.files[0].name}</em>`;
+}
+
 if (select.value == '') {
     select.setAttribute('style', 'color:grey');
 }
@@ -57,6 +61,9 @@ form_jobs.addEventListener('submit', (event) => {
     event.preventDefault();
 
     if (input_file.value == '') {
+        if (input_display.innerHTML === '') {
+            input_display.innerHTML = 'El archivo no está seleccionado';
+        }
         return;
     }
 
@@ -71,11 +78,14 @@ form_jobs.addEventListener('submit', (event) => {
 
     console.log(`CV file: ${cv_file}`);
 
+    input_file.value = '';
+
     fStore.collection('aplicaciones_de_trabajo').add({
         nombre: userName,
         telefono: userTel,
         posicion: position,
-        carta: carta
+        carta: carta,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
         jobs_loader.setAttribute('style', 'display:none;');
         jobs_submit_btn.removeAttribute('style');
