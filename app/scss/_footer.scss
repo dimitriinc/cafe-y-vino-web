@@ -128,12 +128,15 @@ footer {
             letter-spacing: 2px;
             transition: all 300ms ease-in-out;
     
-            &:hover {
-                background-color: $overlay;
-                color: $nav_links;
+            @include breakpoint-up(laptop) {
+                &:hover {
+                    background-color: $overlay;
+                    color: $nav_links;
+                }
             }
+            
             &:active {
-                scale: 80%;
+                scale: 90%;
             }
         }
     
