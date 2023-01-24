@@ -24,6 +24,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const fStore = firebase.firestore();
 
+async function sleep() {
+    await new Promise(resolve => setTimeout(resolve, 3000));
+}
+
 form_element.addEventListener('submit', event => {
     event.preventDefault();
 
@@ -48,24 +52,49 @@ form_element.addEventListener('submit', event => {
     let date = String(fecha_element.value);
     let hour = hour_element.value;
 
-    fStore.collection(`reservas/${date}/reservas`).add({
-        nombre: userName,
-        telefono: userTel,
+    const msg = {
+        name: userName,
+        tel: userTel,
         email: userEmail,
-        comentario: comment,
+        comment: comment,
         pax: pax,
-        fecha: date,
-        hora: hour,
-        confirmado: false,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).catch(event => {
-        submit_anim.setAttribute('style', 'display:none;');
-        submit_btn.removeAttribute('style');
-        alert('Caramba!');
-    }).then(event => {
-        submit_anim.setAttribute('style', 'display:none;');
-        submit_btn.removeAttribute('style');
-        alert('La solicitud está enviada!');
-        window.location.href = '/index.html';
-    });
+        date: date,
+        hour: hour
+    }
+
+    axios.post('/backend/reservations-request.py', msg)
+        .then(response => {
+            console.log(response);
+            alert('La solicitud está enviada!');
+            window.location.href = '/index.html';
+        })
+        .catch(error => {
+            console.log(error);
+            setTimeout(() => {
+                submit_anim.setAttribute('style', 'display:none;');
+                submit_btn.removeAttribute('style');
+                alert('Caramba!');
+            }, 3000);
+        });
+
+    // fStore.collection(`reservas/${date}/reservas`).add({
+    //     nombre: userName,
+    //     telefono: userTel,
+    //     email: userEmail,
+    //     comentario: comment,
+    //     pax: pax,
+    //     fecha: date,
+    //     hora: hour,
+    //     confirmado: false,
+    //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    // }).catch(event => {
+    //     submit_anim.setAttribute('style', 'display:none;');
+    //     submit_btn.removeAttribute('style');
+    //     alert('Caramba!');
+    // }).then(event => {
+    //     // submit_anim.setAttribute('style', 'display:none;');
+    //     // submit_btn.removeAttribute('style');
+    //     alert('La solicitud está enviada!');
+    //     window.location.href = '/index.html';
+    // });
 });
