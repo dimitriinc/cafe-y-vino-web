@@ -20,6 +20,19 @@
     form {
         padding-left: 1rem;
         padding-right: 1rem;
+
+        .submit {
+            margin-top: 4rem;
+            padding-bottom: 3rem;
+
+            #contact-submit {
+                margin-bottom: 3.1rem;
+            }
+            
+            #loader {
+                transform: translateY(-20px);
+            }
+        }
     }
     
 }
