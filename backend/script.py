@@ -1,8 +1,13 @@
 from flask import Flask, request, jsonify
 import smtplib
 from email.mime.text import MIMEText
+import logging
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/reservations-request', methods=['POST'])
 def reserv_request():
@@ -14,6 +19,8 @@ def reserv_request():
     pax = data['pax']
     comment = data['comment']
     email = data['email']
+
+    logging.info(f"Received a request from {name}. The reservation date is {date}.")
 
     # to = "elliotponsic@hotmail.fr"
     to = "dimitriinc@proton.me"
@@ -41,4 +48,5 @@ def reserv_request():
     return jsonify({"message": "Email sent successfully"})
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, port = 5000, host = '0.0.0.0')
+    
