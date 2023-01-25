@@ -62,7 +62,7 @@ form_element.addEventListener('submit', event => {
         hour: hour
     }
 
-    axios.post('https://a780-190-238-135-197.sa.ngrok.io/reservations-request', msg)
+    axios.post('https://e31f-190-238-135-197.sa.ngrok.io/reservations-request', msg)
         .then(response => {
             console.log(response);
             alert('La solicitud está enviada!');
