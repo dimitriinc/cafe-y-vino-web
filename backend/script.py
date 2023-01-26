@@ -71,8 +71,8 @@ def reserv_request():
     <p>Teléfono:  <em>{tel}</em></p>
     </div>
     <div style='align-text:center'>
-    <a style='text-decoration:none' href="https://61c3-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
-    <a style='text-decoration:none' href="https://61c3-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
+    <a style='text-decoration:none' href="https://15dc-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
+    <a style='text-decoration:none' href="https://15dc-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
     </div>
     </body></html>
     '''
