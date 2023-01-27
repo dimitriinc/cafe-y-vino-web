@@ -4,11 +4,18 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import logging
 from flask_cors import CORS
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 logging.basicConfig(level=logging.DEBUG)
+
+cred = credentials.Certificate('cafe-y-vino-firebase-adminsdk-qdn8s-0f0ac07b32.json')
+firebase_admin.initialize_app(cred)
+fStore = firestore.client()
 
 # server = smtplib.SMTP('smtp.gmail.com', 587)
 # server.starttls()
@@ -20,6 +27,9 @@ def confirm_reservation():
     name = request.args.get('name')
     date = request.args.get('date')
     hour = request.args.get('hour')
+    doc_id = request.args.get('id')
+
+    fStore.document(f"reservas/{date}/reservas/{doc_id}").update({"confirmado": True})
 
     msg = MIMEMultipart()
     to = request.args.get('email')
@@ -41,6 +51,14 @@ def confirm_reservation():
     server.quit()
     return jsonify({"message": "La confirmación está enviada exitosamente"})
 
+@app.route('/reject-reservation')
+def reject_reservation():
+
+    name = request.args.get('name')
+    date = request.args.get('date')
+    hour = request.args.get('hour')
+    doc_id = request.args.get('id')
+
 @app.route('/reservations-request', methods = ['POST'])
 def reserv_request():
 
@@ -55,10 +73,23 @@ def reserv_request():
 
     logging.info(f"Received a request from {name}. The reservation date is {date}.")
 
+    doc_ref = fStore.collection(f"reservas/{date}/reservas").add({
+        "nombre": name,
+        "telefono": tel,
+        "hora": hour,
+        "pax": pax,
+        "comentario": comment,
+        "timestamp": firestore.SERVER_TIMESTAMP,
+        "confirmado": False
+    })
+
+    doc_id = doc_ref[1].id
+    logging.info(f"the reservation's ID: {doc_id}")
+
     msg = MIMEMultipart()
 
-    to = "elliotponsic@hotmail.fr"
-    # to = "dimitriinc@proton.me"
+    # to = "elliotponsic@hotmail.fr"
+    to = "dimitriinc@proton.me"
     subject = "Solicitud de reserva"
     html = f'''
     <html><body>
@@ -71,8 +102,8 @@ def reserv_request():
     <p>Teléfono:  <em>{tel}</em></p>
     </div>
     <div style='align-text:center'>
-    <a style='text-decoration:none' href="https://15dc-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
-    <a style='text-decoration:none' href="https://15dc-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
+    <a style='text-decoration:none' href="https://4c3b-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
+    <a style='text-decoration:none' href="https://4c3b-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
     </div>
     </body></html>
     '''

@@ -14,5 +14,7 @@
 *.o
 *.so
 
+/backend/*.json
+
 /package-lock.json
 
