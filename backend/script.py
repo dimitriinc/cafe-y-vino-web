@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
 import logging
 from flask_cors import CORS
 import firebase_admin
@@ -176,6 +177,65 @@ def receive_msg():
     msg['From'] = "cafeyvinobot@gmail.com"
     msg['To'] = EMAIL_RECIPIENT
     msg['Subject'] = subject
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
+    server.sendmail(msg['From'], msg['To'], msg.as_string())
+    server.quit()
+    return jsonify({"message": "Email sent successfully"})
+
+
+@app.route('/job-application', methods = ['POST'])
+def apply_job():
+
+    logging.info("apply_job() has started")
+
+    cv_file = request.files['cv']
+    name = request.form['name']
+    tel = request.form['tel']
+    position = request.form['position']
+    letter = request.form['letter']
+
+    logging.info(f"cv file's name: {cv_file.filename}")
+
+    cv_file_data = cv_file.read()
+
+    logging.info(f"A job application received from {name} for the position of {position}")
+
+    fStore.collection('aplicaciones_de_trabajo').add({
+        "nombre": name,
+        "telefono": tel,
+        "carta_titular": letter,
+        "posicion": position,
+        "timestamp": firestore.SERVER_TIMESTAMP
+    })
+
+    msg = MIMEMultipart()
+
+    subject = "Solicitud de trabajo"
+    html = f'''
+    <html><body>
+    <p>Enviado por <em>{name}</em></p>
+    <p>Su teléfono: <em>{tel}</em></p>
+    <p>La posición: <em>{position}</em></p>
+    <p style='margin-top:2rem;'>La carta titular:</p>
+    <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;margin-right:auto;text-align:start;width:100%;'>
+    <p>{letter}</p>
+    </div>
+    </body></html>
+    '''
+
+    msg.attach(MIMEText(html, 'html'))
+    msg['From'] = "cafeyvinobot@gmail.com"
+    msg['To'] = EMAIL_RECIPIENT
+    msg['Subject'] = subject
+
+    logging.info("LOG:: we are at the beginnig of the 'part' creation!!!")
+    
+    part = MIMEApplication(cv_file_data, Name=cv_file.filename)
+    part['Content-Disposition'] = f'attachment; filename="{cv_file.filename}"'
+    msg.attach(part)
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
