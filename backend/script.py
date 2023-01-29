@@ -10,6 +10,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 EMAIL_RECIPIENT = "dimitriinc@proton.me"
+# EMAIL_RECIPIENT = "elliotponsic@hotmail.fr"
 
 app = Flask(__name__)
 CORS(app)
@@ -220,7 +221,7 @@ def apply_job():
     <p>Su teléfono: <em>{tel}</em></p>
     <p>La posición: <em>{position}</em></p>
     <p style='margin-top:2rem;'>La carta titular:</p>
-    <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;margin-right:auto;text-align:start;width:100%;'>
+    <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;margin-right:auto;text-align:start;margin-left:auto;'>
     <p>{letter}</p>
     </div>
     </body></html>
@@ -243,6 +244,52 @@ def apply_job():
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
     return jsonify({"message": "Email sent successfully"})
+
+
+@app.route('/signup', methods = ['POST'])
+def signup():
+
+    logging.info("the signup() has started!")
+
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+
+    collection_ref = fStore.collection('mailing-list')
+    documents = [d for d in collection_ref.where("email", "==", email).stream()]
+
+    if len(documents):
+        logging.info("the query is not empty")
+        return jsonify({"message": "Este email ya está en la lista"})
+    else:   
+        logging.info("query is EMPTY")
+        collection_ref.add({
+            "nombre": name,
+            "email": email,
+            "timestamp": firestore.SERVER_TIMESTAMP
+        })
+        return "La inscripción exitosa!"
+
+
+
+    # return str(query_snapshot[0].get('email'))
+
+    # if query_snapshot.size == 0:
+    #     collection_ref.add({
+    #         "nombre": name,
+    #         "email": email,
+    #         "timestamp": firestore.SERVER_TIMESTAMP
+    #     })
+    #     return "La inscripción exitosa!"
+    # else:
+    #     return "Este email ya está en la lista"
+
+    # if not query_snapshot.docs:
+    #     return "The query returned no results"
+    # else:
+        
+
+    
 
 
 
