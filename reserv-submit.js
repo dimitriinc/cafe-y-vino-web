@@ -10,24 +10,6 @@ const hour_element = document.getElementById('reserv-hour');
 const submit_btn = document.getElementById('reserv-btn');
 const submit_anim = document.getElementById('loader');
 
-const firebaseConfig = {
-    apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
-    authDomain: "cafe-y-vino.firebaseapp.com",
-    databaseURL: "https://cafe-y-vino-default-rtdb.firebaseio.com",
-    projectId: "cafe-y-vino",
-    storageBucket: "cafe-y-vino.appspot.com",
-    messagingSenderId: "1096226926741",
-    appId: "1:1096226926741:web:d5c23cb2bbba3fb4796b9c",
-    measurementId: "G-D0VKYKE89E"
-};
-
-firebase.initializeApp(firebaseConfig);
-const fStore = firebase.firestore();
-
-async function sleep() {
-    await new Promise(resolve => setTimeout(resolve, 3000));
-}
-
 form_element.addEventListener('submit', event => {
     event.preventDefault();
 
@@ -62,7 +44,7 @@ form_element.addEventListener('submit', event => {
         hour: hour
     }
 
-    axios.post('https://4c3b-190-238-135-197.sa.ngrok.io/reservations-request', msg)
+    axios.post('https://0562-190-238-135-197.sa.ngrok.io/reservations-request', msg)
         .then(response => {
             console.log(response);
             alert('La solicitud está enviada!');
@@ -76,25 +58,4 @@ form_element.addEventListener('submit', event => {
                 alert('Caramba!');
             }, 3000);
         });
-
-    // fStore.collection(`reservas/${date}/reservas`).add({
-    //     nombre: userName,
-    //     telefono: userTel,
-    //     email: userEmail,
-    //     comentario: comment,
-    //     pax: pax,
-    //     fecha: date,
-    //     hora: hour,
-    //     confirmado: false,
-    //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    // }).catch(event => {
-    //     submit_anim.setAttribute('style', 'display:none;');
-    //     submit_btn.removeAttribute('style');
-    //     alert('Caramba!');
-    // }).then(event => {
-    //     // submit_anim.setAttribute('style', 'display:none;');
-    //     // submit_btn.removeAttribute('style');
-    //     alert('La solicitud está enviada!');
-    //     window.location.href = '/index.html';
-    // });
 });

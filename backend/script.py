@@ -8,6 +8,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
+EMAIL_RECIPIENT = "dimitriinc@proton.me"
+
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -16,10 +18,6 @@ logging.basicConfig(level=logging.DEBUG)
 cred = credentials.Certificate('cafe-y-vino-firebase-adminsdk-qdn8s-0f0ac07b32.json')
 firebase_admin.initialize_app(cred)
 fStore = firestore.client()
-
-# server = smtplib.SMTP('smtp.gmail.com', 587)
-# server.starttls()
-# server.login("cafeyvinoapp@gmail.com", "hhgwneoltsmuyymn")
 
 @app.route('/confirm-reservation')
 def confirm_reservation():
@@ -40,16 +38,16 @@ def confirm_reservation():
     </body></html>
     '''
     msg.attach(MIMEText(html, 'html'))
-    msg['From'] = "cafeyvinoapp@gmail.com"
+    msg['From'] = "cafeyvinobot@gmail.com"
     msg['To'] = to
     msg['Subject'] = subject
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login("cafeyvinoapp@gmail.com", "hhgwneoltsmuyymn")
+    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
-    return jsonify({"message": "La confirmación está enviada exitosamente"})
+    return jsonify({"message": "La confirmacion esta enviada exitosamente"})
 
 @app.route('/reject-reservation')
 def reject_reservation():
@@ -58,6 +56,29 @@ def reject_reservation():
     date = request.args.get('date')
     hour = request.args.get('hour')
     doc_id = request.args.get('id')
+
+    fStore.document(f"reservas/{date}/reservas/{doc_id}").delete()
+
+    msg = MIMEMultipart()
+    to = request.args.get('email')
+    subject = "Rechazo de reserva"
+    html = f'''
+    <html><body>
+    <p>Hola, {name}! Lo sentimos, pero tu reserva para {date} a las {hour} está rechazada.<br>El restaurante estará en su capasitad a la hora indicada.</p>
+    </body></html>
+    '''
+    msg.attach(MIMEText(html, 'html'))
+    msg['From'] = "cafeyvinobot@gmail.com"
+    msg['To'] = to
+    msg['Subject'] = subject
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
+    server.sendmail(msg['From'], msg['To'], msg.as_string())
+    server.quit()
+    return jsonify({"message": "El rechazo esta enviado exitosamente"})
+
 
 @app.route('/reservations-request', methods = ['POST'])
 def reserv_request():
@@ -88,8 +109,6 @@ def reserv_request():
 
     msg = MIMEMultipart()
 
-    # to = "elliotponsic@hotmail.fr"
-    to = "dimitriinc@proton.me"
     subject = "Solicitud de reserva"
     html = f'''
     <html><body>
@@ -102,23 +121,70 @@ def reserv_request():
     <p>Teléfono:  <em>{tel}</em></p>
     </div>
     <div style='align-text:center'>
-    <a style='text-decoration:none' href="https://4c3b-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
-    <a style='text-decoration:none' href="https://4c3b-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
+    <a style='text-decoration:none' href="https://8be9-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
+    <a style='text-decoration:none' href="https://8be9-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
     </div>
     </body></html>
     '''
 
     msg.attach(MIMEText(html, 'html'))
-    msg['From'] = "cafeyvinoapp@gmail.com"
-    msg['To'] = to
+    msg['From'] = "cafeyvinobot@gmail.com"
+    msg['To'] = EMAIL_RECIPIENT
     msg['Subject'] = subject
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login("cafeyvinoapp@gmail.com", "hhgwneoltsmuyymn")
+    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
     return jsonify({"message": "Email sent successfully"})
+
+
+@app.route('/contact-msg', methods = ['POST'])
+def receive_msg():
+
+    logging.info("receive-msg has started")
+
+    data = request.get_json()
+    name = data.get('name')
+    message = data.get('msg')
+    email = data.get('email')
+
+    logging.info(f"A contact message received from {name}")
+
+    fStore.collection('mensajes').add({
+        "nombre": name,
+        "email": email,
+        "mensaje": message,
+        "timestamp": firestore.SERVER_TIMESTAMP
+    })
+
+    msg = MIMEMultipart()
+
+    subject = "Un mensaje de contacto"
+    html = f'''
+    <html><body>
+    <p>Enviado por {name}</p>
+    <p>Su email: {email}</p>
+    <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;border-radius:50px;margin-right:auto;margin-top:2rem;text-align:start;width:fit-content;'>
+    <p>{message}</p>
+    </div>
+    </body></html>
+    '''
+
+    msg.attach(MIMEText(html, 'html'))
+    msg['From'] = "cafeyvinobot@gmail.com"
+    msg['To'] = EMAIL_RECIPIENT
+    msg['Subject'] = subject
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
+    server.sendmail(msg['From'], msg['To'], msg.as_string())
+    server.quit()
+    return jsonify({"message": "Email sent successfully"})
+
+
 
 @app.after_request
 def after_request(response):
