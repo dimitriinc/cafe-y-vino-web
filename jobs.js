@@ -72,7 +72,7 @@ form_jobs.addEventListener('submit', (event) => {
     form_data.append('letter', cover_letter);
     form_data.append('cv', cv_file);
 
-    axios.post('https://d4f3-190-238-135-197.sa.ngrok.io/job-application', form_data, {
+    axios.post('https://832f-190-238-135-197.sa.ngrok.io', form_data, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
