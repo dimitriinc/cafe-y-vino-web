@@ -46,9 +46,14 @@ form_element.addEventListener('submit', event => {
 
     axios.post('https://d4f3-190-238-135-197.sa.ngrok.io/reservations-request', msg)
         .then(response => {
-            console.log(response);
-            alert('La solicitud está enviada!');
-            window.location.href = '/index.html';
+            if (response.status === 201) {
+                alert(response.data);
+                submit_anim.setAttribute('style', 'display:none;');
+                submit_btn.removeAttribute('style');
+            } else {
+                alert(response.data);
+                window.location.href = '/index.html';
+            }            
         })
         .catch(error => {
             console.log(error);

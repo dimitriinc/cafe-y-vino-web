@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -8,6 +8,16 @@ from flask_cors import CORS
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import socket
+
+
+def validate_email_domain(email):
+    domain = email.split('@')[-1]
+    try:
+        socket.gethostbyname(domain)
+        return True
+    except socket.gaierror:
+        return False
 
 # EMAIL_RECIPIENT = "dimitriinc@proton.me"
 EMAIL_RECIPIENT = "elliotponsic@hotmail.fr"
@@ -96,50 +106,56 @@ def reserv_request():
 
     logging.info(f"Received a request from {name}. The reservation date is {date}.")
 
-    doc_ref = fStore.collection(f"reservas/{date}/reservas").add({
-        "nombre": name,
-        "telefono": tel,
-        "hora": hour,
-        "pax": pax,
-        "comentario": comment,
-        "timestamp": firestore.SERVER_TIMESTAMP,
-        "confirmado": False
-    })
+    if not validate_email_domain(email):
+        return make_response("El dominio del email no es válido.", 201)
+    else: 
+        doc_ref = fStore.collection(f"reservas/{date}/reservas").add({
+            "nombre": name,
+            "telefono": tel,
+            "hora": hour,
+            "pax": pax,
+            "comentario": comment,
+            "timestamp": firestore.SERVER_TIMESTAMP,
+            "confirmado": False
+        })
 
-    doc_id = doc_ref[1].id
-    logging.info(f"the reservation's ID: {doc_id}")
+        doc_id = doc_ref[1].id
+        logging.info(f"the reservation's ID: {doc_id}")
 
-    msg = MIMEMultipart()
+        msg = MIMEMultipart()
 
-    subject = "Solicitud de reserva"
-    html = f'''
-    <html><body>
-    <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;border-radius:50px;margin-left:auto;margin-right:auto;margin-bottom:1rem;width:fit-content;'>
-    <p>Nombre:  <em>{name}</em></p>
-    <p>Fecha:  <em>{date}</em></p>
-    <p>Hora:  <em>{hour}</em></p>
-    <p>Pax:  <em>{pax}</em></p>
-    <p>Comentario:  <em>{comment}</em></p>
-    <p>Teléfono:  <em>{tel}</em></p>
-    </div>
-    <div style='align-text:center'>
-    <a style='text-decoration:none' href="https://d4f3-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
-    <a style='text-decoration:none' href="https://d4f3-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
-    </div>
-    </body></html>
-    '''
+        subject = "Solicitud de reserva"
+        html = f'''
+        <html><body>
+        <div style='padding:2rem;background-color:#fcfaeb;color:#160b17;border:1px solid;border-radius:50px;margin-left:auto;margin-right:auto;margin-bottom:1rem;width:fit-content;'>
+        <p>Nombre:  <em>{name}</em></p>
+        <p>Fecha:  <em>{date}</em></p>
+        <p>Hora:  <em>{hour}</em></p>
+        <p>Pax:  <em>{pax}</em></p>
+        <p>Comentario:  <em>{comment}</em></p>
+        <p>Teléfono:  <em>{tel}</em></p>
+        </div>
+        <div style='align-text:center'>
+        <a style='text-decoration:none' href="https://d4f3-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
+        <a style='text-decoration:none' href="https://d4f3-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
+        </div>
+        </body></html>
+        '''
 
-    msg.attach(MIMEText(html, 'html'))
-    msg['From'] = "cafeyvinobot@gmail.com"
-    msg['To'] = EMAIL_RECIPIENT
-    msg['Subject'] = subject
+        msg.attach(MIMEText(html, 'html'))
+        msg['From'] = "cafeyvinobot@gmail.com"
+        msg['To'] = EMAIL_RECIPIENT
+        msg['Subject'] = subject
 
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
-    server.sendmail(msg['From'], msg['To'], msg.as_string())
-    server.quit()
-    return jsonify({"message": "Email sent successfully"})
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
+        server.quit()
+        return make_response("La solicitud está enviada!", 200)
+    
+
+    
 
 
 @app.route('/contact-msg', methods = ['POST'])
@@ -255,41 +271,25 @@ def signup():
     name = data.get('name')
     email = data.get('email')
 
-    collection_ref = fStore.collection('mailing-list')
-    documents = [d for d in collection_ref.where("email", "==", email).stream()]
+    if validate_email_domain(email):
 
-    if len(documents):
-        logging.info("the query is not empty")
-        return jsonify({"message": "Este email ya está en la lista"})
-    else:   
-        logging.info("query is EMPTY")
-        collection_ref.add({
-            "nombre": name,
-            "email": email,
-            "timestamp": firestore.SERVER_TIMESTAMP
-        })
-        return "La inscripción exitosa!"
+        collection_ref = fStore.collection('mailing-list')
+        documents = [d for d in collection_ref.where("email", "==", email).stream()]
 
+        if len(documents):
+            logging.info("the query is not empty")
+            return make_response("Este email ya está en la lista", 201)
+        else:   
+            logging.info("query is EMPTY")
+            collection_ref.add({
+                "nombre": name,
+                "email": email,
+                "timestamp": firestore.SERVER_TIMESTAMP
+            })
+            return make_response("La inscripción exitosa!", 200)
 
-
-    # return str(query_snapshot[0].get('email'))
-
-    # if query_snapshot.size == 0:
-    #     collection_ref.add({
-    #         "nombre": name,
-    #         "email": email,
-    #         "timestamp": firestore.SERVER_TIMESTAMP
-    #     })
-    #     return "La inscripción exitosa!"
-    # else:
-    #     return "Este email ya está en la lista"
-
-    # if not query_snapshot.docs:
-    #     return "The query returned no results"
-    # else:
-        
-
-    
+    else:
+        return make_response("El dominio del email no es válido.", 201)
 
 
 
@@ -302,4 +302,6 @@ def after_request(response):
 
 if __name__ == '__main__':
     app.run(debug = True, port = 8000)
+
+
     
