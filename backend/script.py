@@ -9,8 +9,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-EMAIL_RECIPIENT = "dimitriinc@proton.me"
-# EMAIL_RECIPIENT = "elliotponsic@hotmail.fr"
+# EMAIL_RECIPIENT = "dimitriinc@proton.me"
+EMAIL_RECIPIENT = "elliotponsic@hotmail.fr"
 
 app = Flask(__name__)
 CORS(app)
@@ -123,8 +123,8 @@ def reserv_request():
     <p>Teléfono:  <em>{tel}</em></p>
     </div>
     <div style='align-text:center'>
-    <a style='text-decoration:none' href="https://8be9-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
-    <a style='text-decoration:none' href="https://8be9-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
+    <a style='text-decoration:none' href="https://d4f3-190-238-135-197.sa.ngrok.io/confirm-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-bottom:1rem;margin-left:auto;margin-right:auto;border-radius:50px;'>Confirmar</button></a>
+    <a style='text-decoration:none' href="https://d4f3-190-238-135-197.sa.ngrok.io/reject-reservation?email={email}&name={name}&date={date}&hour={hour}&id={doc_id}"><button style='background-color:#fcfaeb;color:#160b17;padding:1rem;border:1px solid;display:block;margin-left:auto;margin-right:auto;border-radius:50px;'>Rechazar</button></a>
     </div>
     </body></html>
     '''

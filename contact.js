@@ -33,7 +33,7 @@ contact_form.addEventListener('submit', event => {
 
     console.log(`name: ${userName}\nemail: ${userEmail}\nmessage: ${userMsg}`)
 
-    axios.post('https://0562-190-238-135-197.sa.ngrok.io/contact-msg', msg)
+    axios.post('https://d4f3-190-238-135-197.sa.ngrok.io/contact-msg', msg)
         .then(response => {
             console.log(response);
             alert('Gracias por tu mensaje!');
