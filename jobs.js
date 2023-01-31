@@ -72,6 +72,8 @@ form_jobs.addEventListener('submit', (event) => {
     form_data.append('letter', cover_letter);
     form_data.append('cv', cv_file);
 
+    // !focacciaFRAGMENTADA8
+
     axios.post('https://832f-190-238-135-197.sa.ngrok.io', form_data, {
         headers: {
             'Content-Type': 'multipart/form-data'
