@@ -17,4 +17,5 @@
 /backend/*.json
 
 /package-lock.json
+/config.js
 
