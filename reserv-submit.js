@@ -13,6 +13,8 @@ const submit_anim = document.getElementById('loader');
 form_element.addEventListener('submit', event => {
     event.preventDefault();
 
+    sessionStorage.clear();
+
     submit_btn.setAttribute('style', 'display:none;');
     submit_anim.removeAttribute('style');
 

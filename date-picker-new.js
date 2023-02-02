@@ -8,6 +8,16 @@ let selectedDay = currentDay;
 let selectedMonth = currentMonth;
 let selectedYear = currentYear;
 
+if (sessionStorage.getItem('day') !== null) {
+    selectedDay = sessionStorage.getItem('day')
+}
+if (sessionStorage.getItem('month') !== null) {
+    selectedMonth = sessionStorage.getItem('month')
+}
+if (sessionStorage.getItem('year') !== null) {
+    selectedYear = sessionStorage.getItem('year')
+}
+
 const calendar = document.querySelector('.calendar');
 const calendarHeader = document.querySelector('.calendar-header');
 const monthYearLabel = document.querySelector('.mth');
@@ -117,6 +127,9 @@ function renderCalendar(month, year) {
 
                     // set the selected day
                     cells[j].addEventListener('click', function() {
+                        sessionStorage.setItem('day', cells[j].innerHTML);
+                        sessionStorage.setItem('month', currentMonth);
+                        sessionStorage.setItem('year', currentYear);
                         selectedDay = cells[j].innerHTML;
                         selectedMonth = currentMonth;
                         selectedYear = currentYear;

@@ -1,4 +1,3 @@
-import { FB_API_KEY, FB_SENDER_ID, FB_APP_ID } from "./config";
 
 const menuCategoryElements = document.querySelectorAll('.menu-category');
 const menuContainer = document.querySelector('.carousel');
@@ -7,13 +6,13 @@ const blanket = document.querySelector('.blanket');
 const exitBtn = document.querySelector('.exit-btn');
 
 const firebaseConfig = {
-    apiKey: FB_API_KEY,
+    apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
     authDomain: "cafe-y-vino.firebaseapp.com",
     databaseURL: "https://cafe-y-vino-default-rtdb.firebaseio.com",
     projectId: "cafe-y-vino",
     storageBucket: "cafe-y-vino.appspot.com",
-    messagingSenderId: FB_SENDER_ID,
-    appId: FB_APP_ID,
+    messagingSenderId: "1096226926741",
+    appId: "1:1096226926741:web:d5c23cb2bbba3fb4796b9c",
     measurementId: "G-D0VKYKE89E"
 };
 

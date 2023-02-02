@@ -9,7 +9,6 @@ const cssnano = require('cssnano');
 const replace = require('gulp-replace');
 const sourcemaps = require('gulp-sourcemaps');
 const browsersync = require('browser-sync').create();
-const babel = require('gulp-babel')
 
 // File paths
 const files = {
@@ -37,14 +36,6 @@ function jsTask() {
         .pipe(concat('all.js'))
         .pipe(terser())
         .pipe(dest('dist'));
-}
-
-function transpile() {
-    return src('firebase.js')
-        .pipe(babel({
-            presets: ['@babel/env']
-        }))
-        .pipe(dest('firebase-trans.js'));
 }
 
 
@@ -95,13 +86,13 @@ function bsWatchTask() {
 // Runs the scss and js tasks simultaneously
 // Then runs cacheBust, then watch task
 exports.default = series(
-    parallel(scssTask, jsTask, transpile),
+    parallel(scssTask, jsTask),
     browserSyncServe,
     bsWatchTask
 );
 
 exports.build = series(
-    scssTask, jsTask, transpile
+    scssTask, jsTask
 )
 
 
