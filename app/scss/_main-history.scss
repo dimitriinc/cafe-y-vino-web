@@ -73,6 +73,7 @@
                 background-color: rgba(22, 11, 23, .5);
                 color: $overlay;
                 max-width: 60vw;
+                line-height: 1.2;
 
                 @include breakpoint-down(tablet) {
                     max-width: 80vw;
@@ -107,4 +108,30 @@
 
 .history-focused {
     right: 0;
+}
+
+.hist-prev {
+    color: $overlay;
+    margin: 1rem;
+    z-index: 999;
+    position: absolute;
+    left: 0;
+    top: 2rem;
+    padding: 1rem;
+    border: 1px solid $overlay;
+    border-radius: 1rem;
+    background-color: rgba(22, 11, 23, .5);
+}
+
+.hist-next {
+    color: $overlay;
+    z-index: 999;
+    position: absolute;
+    right: 0;
+    top: 2rem;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid $overlay;
+    border-radius: 1rem;
+    background-color: rgba(22, 11, 23, .5);
 }
