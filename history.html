@@ -7,6 +7,11 @@
     <title>Historia | Café y Vino</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="dist/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
 </head>
 <body>
 
@@ -70,6 +75,28 @@
         <button id="history-btn">Comenzar</button>
     </main>
 
+    <div id="history-blanket">
+
+        <div class="slider">
+            <div class="slick-slide" id="slide-1">
+                <div class="slick-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </div>
+            </div>
+            <div class="slick-slide" id="slide-2">
+                <div class="slick-text">
+                    Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum.
+                </div>
+            </div>
+            <div class="slick-slide" id="slide-3">
+                <div class="slick-text">
+                    Faucibus purus in massa tempor. Iaculis nunc sed augue lacus viverra vitae congue.
+                </div>
+            </div>
+        </div>
+    </div>
+    <img class="exit-btn" src="/images/exit-lt.png" alt="exit">
+
     <footer>
         <nav class="footer-navigation">
             <p class="address hide-for-desktop">
@@ -112,6 +139,7 @@
     </footer>
 
     <script src="dist/all.js"></script>
+    <script src="history.js"></script>
     
 </body>
 </html>
