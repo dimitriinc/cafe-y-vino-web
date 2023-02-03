@@ -1,3 +1,36 @@
 .main-history {
     min-height: 100vh;
+    position: relative;
+
+    h2 {
+        margin-top: 5rem;
+        font-size: 32px;
+    }
+
+    #history-btn {
+        padding: 1rem;
+        background-color: $overlay;
+        color: $nav_links;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        top: 55%;
+        font-family: 'Saveur Sans';
+
+        &:active {
+            transform: scale(90%);
+        }
+        @include breakpoint-down(tablet) {
+            top: 60%;
+        }
+
+        @include breakpoint-up(laptop) {
+            &:hover {
+                color: $overlay;
+                background-color: $nav_links;
+            }
+        }
+        
+    }
 }
