@@ -8,6 +8,7 @@
     }
 
     #history-btn {
+        width: fit-content;
         padding: 1rem;
         background-color: $overlay;
         color: $nav_links;
@@ -47,7 +48,7 @@
 
     .slider {
         width: 100%;
-        height: 100%;
+        height: 100vh;
         color: $overlay;
 
         .slick-slide {
