@@ -19,8 +19,11 @@ $('.hist-prev').hide();
 
 $('.slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
     if (nextSlide === 0) {
-        $('#history-btn').html('Comenzar');
+        
         $('.hist-prev').hide();
+        setTimeout(function() {
+            $('#history-btn').html('Comenzar');
+        }, 1000)
     } else {
         $('.hist-prev').show();
         
@@ -41,8 +44,7 @@ $('.slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) 
 
 $('#history-btn').on('click', function () {
     if (isRepeat) {
-        console.log(`repetir activated`)
-        $('.slider').currentSlide = 0;
+        $('.slider').slick('slickGoTo', 0)
         isRepeat = false;
     }
     $('#history-blanket').css('right', '0');
