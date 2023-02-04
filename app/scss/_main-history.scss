@@ -112,6 +112,7 @@
 
 .hist-prev {
     color: $overlay;
+    cursor: pointer;
     margin: 1rem;
     z-index: 999;
     position: absolute;
@@ -126,6 +127,7 @@
 .hist-next {
     color: $overlay;
     z-index: 999;
+    cursor: pointer;
     position: absolute;
     right: 0;
     top: 2rem;

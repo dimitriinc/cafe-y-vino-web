@@ -31,6 +31,7 @@ $('.slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) 
 
     if (nextSlide !== 0 && nextSlide !== slick.slideCount - 1) {
         $('#history-btn').html('Continuar');
+        isRepeat = false;
     }
 
     if (nextSlide === slick.slideCount - 1) {
