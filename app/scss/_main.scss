@@ -96,7 +96,7 @@ main {
     }
     
     .bottom-image {
-        background-image: url(/images/terasse.jpg);
+        background-image: url(/images/terasse0.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
@@ -126,6 +126,7 @@ main {
             color: $overlay;
             width: fit-content;
             letter-spacing: 2px;
+            background-color: rgba(22, 11, 23, .5);
             padding: 1rem;
             font-size: 1rem;
             text-transform: uppercase;
