@@ -35,7 +35,7 @@ $('.slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) 
 
     if (nextSlide === slick.slideCount - 1) {
         $('.hist-next').hide();
-        $('#history-btn').html('Repitir');
+        $('#history-btn').html('Repetir');
         isRepeat = true;
     } else {
         $('.hist-next').show();
