@@ -58,6 +58,9 @@
             object-fit: cover;
             color: $overlay;
             position: relative;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             transition: all 500ms ease-in-out;
 
             .slick-text {
@@ -83,22 +86,25 @@
         }
 
         #slide-1 {
-            background-image: url(/images/pic-ex1.jpeg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+            background-image: url(/images/historia/01.jpg);
         }
         #slide-2 {
-            background-image: url(/images/pic-ex2.jpeg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+            background-image: url(/images/historia/02.jpg);
         }
         #slide-3 {
-            background-image: url(/images/pic-ex3.jpg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+            background-image: url(/images/historia/03.jpg);
+        }
+        #slide-4 {
+            background-image: url(/images/historia/04.jpg);
+        }
+        #slide-5 {
+            background-image: url(/images/historia/05.jpg);
+        }
+        #slide-6 {
+            background-image: url(/images/historia/06.jpg);
+        }
+        #slide-7 {
+            background-image: url(/images/historia/07.jpg);
         }
         
 

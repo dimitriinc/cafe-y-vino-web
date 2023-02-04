@@ -110,6 +110,7 @@ main {
 
         @include breakpoint-up(laptop) {
             min-height: 33rem;
+            background-image: url(/images/index.jpg);
         }
 
         #to-reserva-btn {

@@ -11,7 +11,7 @@ hero_image.addEventListener('click', () => {
             });
         } else {
             window.scrollTo({
-                top: window.scrollY + window.innerHeight - 100,
+                top: window.scrollY + window.innerHeight,
                 behavior: 'smooth'
             });
         }
