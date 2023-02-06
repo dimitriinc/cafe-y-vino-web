@@ -198,4 +198,12 @@
         transform: translateY(-20px);
         margin-bottom: 2.3rem;
     }
+
+    .bottom-image {
+        background-image: url(/images/bottom/reservas.jpg);
+
+        @include breakpoint-up(laptop) {
+            background-image: url(/images/bottom/reservas-wide.jpg);
+        }
+    }
 }
