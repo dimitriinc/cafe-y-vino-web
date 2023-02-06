@@ -1,6 +1,14 @@
 .main-jobs {
     min-height: 100vh;
 
+    .bottom-image {
+        background-image: url(/images/bottom/jobs.jpg);
+
+        @include breakpoint-up(laptop) {
+            background-image: url(/images/bottom/jobs-wide.jpg);
+        }
+    }
+
     h2 {
         margin-top: 5rem;
         @include breakpoint-down(tablet) {

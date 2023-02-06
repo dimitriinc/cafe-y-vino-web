@@ -14,7 +14,20 @@
     p {
         margin-bottom: 3rem;
         padding: 0 1rem;
+
+        @include breakpoint-down(mobile) {
+            font-size: $font_small;
+        }
         
+    }
+
+    .bottom-image {
+        background-image: url(/images/bottom/contact.jpg);
+
+        @include breakpoint-up(laptop) {
+            background-image: url(/images/bottom/contact-wide.jpg);
+            
+        }
     }
 
     form {
