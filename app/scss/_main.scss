@@ -94,6 +94,43 @@ main {
             }
         }
     }
+
+    .points {
+
+        width: 100%;
+        margin: 3rem auto;
+
+        .point {
+
+            @include breakpoint-down(tablet) {
+                line-height: 1.2;
+
+                &:not(:last-child) {
+                    margin-bottom: 3rem;
+                }
+            }
+            
+        }
+
+        .point-one {
+
+            margin: rem auto;
+
+            #img-point-one {
+                display: block;
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                overflow: hidden;
+                outline: 1px solid;
+                outline-offset: 5px;
+            }
+
+            #txt-point-one {
+
+            }
+        }
+    }
     
     .bottom-image {
         background-image: url(/images/terasse0.jpg);

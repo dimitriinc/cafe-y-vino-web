@@ -208,7 +208,6 @@ input::-webkit-progress-value {
     background-size: cover;
     background-position: center center;
     z-index: 0;
-    // min-height: 25rem;
     min-height: 100vw;
     color: $overlay;
     overflow: hidden;
@@ -218,6 +217,22 @@ input::-webkit-progress-value {
     @include breakpoint-up(laptop) {
         min-height: 33rem;
     }
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.round-image {
+    display: block;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    outline: 1px solid;
+    outline-offset: 5px;
+    margin-bottom: 1rem;
 }
 
 
