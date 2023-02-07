@@ -88,7 +88,7 @@ main {
                 }
                 &:active {
                     // background-color: $overlay;
-                    // color: $overlay;
+                    // color: $omaverlay;
                     transform: scale(90%);
                 }
             }
@@ -100,10 +100,32 @@ main {
         width: 100%;
         margin: 3rem auto;
 
+        @include breakpoint-up(laptop) {
+            width: 80%;
+
+            p {
+                width: 50%;
+            }
+        }
+
         .point {
+
+            @include breakpoint-up(laptop) {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                &:not(:last-child) {
+                    margin-bottom: 3rem;
+                }
+            }
 
             @include breakpoint-down(tablet) {
                 line-height: 1.2;
+
+                .point-text {
+                    max-width: 80%;
+                }
 
                 &:not(:last-child) {
                     margin-bottom: 3rem;
@@ -112,24 +134,11 @@ main {
             
         }
 
-        .point-one {
-
-            margin: rem auto;
-
-            #img-point-one {
-                display: block;
-                width: 300px;
-                height: 300px;
-                border-radius: 50%;
-                overflow: hidden;
-                outline: 1px solid;
-                outline-offset: 5px;
-            }
-
-            #txt-point-one {
-
-            }
+        .point-two {
+            flex-direction: row-reverse;
         }
+
+        
     }
     
     .bottom-image {
