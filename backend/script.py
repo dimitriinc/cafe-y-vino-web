@@ -56,7 +56,7 @@ def confirm_reservation():
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login("cafeyvinobot@gmail.com", "uvlykbgynynxyxfl")
+    server.login("cafeyvinobot@gmail.com", "")
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
     return jsonify({"message": "La confirmacion esta enviada exitosamente"})
