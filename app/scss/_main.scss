@@ -142,21 +142,19 @@ main {
     }
     
     .bottom-image {
-        background-image: url(/images/terasse0.jpg);
-        position: relative;
+        background-image: url(/images/bottom/main.jpg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         
         @include breakpoint-up(laptop) {
-            background-image: url(/images/index.jpg);
+            background-image: url(/images/bottom/main-wide.jpg);
         }
 
         #to-reserva-btn {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 45%;
+            
             font-family: 'Saveur Sans Regular';
             text-decoration: none;
-            margin: auto;
             font-weight: normal;
             white-space: nowrap;
             border: 1px solid;
