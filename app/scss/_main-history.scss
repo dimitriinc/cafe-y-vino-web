@@ -3,23 +3,40 @@
     position: relative;
 
     #back-image {
+        // display: none;
         position: absolute;
         left: 0;
-        top: 30%;
-        width: 300px;
-        height: 300px;
+        top: 40%;
+        width: 150px;
+        height: 150px;
         opacity: .5;
         z-index: 0;
+        margin-left: 3rem;
+
+        @include breakpoint-up(laptop) {
+            top: 30%;
+            width: 325px;
+            height: 325px;
+            margin-left: 12rem;
+        }
     }
 
     #back-image-0 {
         position: absolute;
         right: 0;
         bottom: 0;
-        width: 300px;
-        height: 300px;
+        width: 200px;
+        height: 200px;
         opacity: .5;
         z-index: 0;
+        margin: 3rem;
+
+        @include breakpoint-up(laptop) {
+            width: 400px;
+            height: 400px;
+            margin-bottom: 3rem;
+            margin-right: 12rem;
+        }
     }
 
     h2 {
