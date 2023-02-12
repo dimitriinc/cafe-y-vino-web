@@ -6,7 +6,7 @@
         // display: none;
         position: absolute;
         left: 0;
-        top: 40%;
+        top: 250px;
         width: 150px;
         height: 150px;
         opacity: .5;
@@ -14,7 +14,7 @@
         margin-left: 3rem;
 
         @include breakpoint-up(laptop) {
-            top: 30%;
+            top: 200px;
             width: 325px;
             height: 325px;
             margin-left: 12rem;
@@ -40,7 +40,7 @@
     }
 
     h2 {
-        margin-top: 5rem;
+        margin-top: 2rem;
         font-size: 32px;
     }
 
@@ -118,7 +118,7 @@
 
                 @include breakpoint-down(tablet) {
                     max-width: 80vw;
-                    bottom: 100px;
+                    bottom: 15vh;
                 }
             }
         }
