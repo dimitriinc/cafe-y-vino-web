@@ -61,9 +61,10 @@
             height: 450px;
             border: none;
             border: 2rem solid #fff;
-                border-image: url(/images/art_border_slightly_orange.png);
-                border-image-repeat: round;
-                border-image-slice: 88;
+            border-image: url(/images/border-deco-fat.png);
+            border-image-repeat: round;
+            border-image-slice: 88;
+            margin-bottom: 2rem;
 
             @include breakpoint-up(laptop) {
                 width: 640px;
