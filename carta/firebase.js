@@ -37,6 +37,7 @@ let screenFocused = false;
                 return;
             }
             let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
+            let table_name = convertCategoryToTableName(element.innerHTML);
             renewCarousel(collectionPath);
         });
     });
@@ -44,6 +45,7 @@ let screenFocused = false;
     vinosCategories.forEach(function(element) {
         element.addEventListener('click', function() {
             let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
+            let table_name = convertCategoryToTableName(element.innerHTML);
             renewCarousel(collectionPath);
         });
     });
@@ -82,6 +84,37 @@ let screenFocused = false;
         }
     }
 
+    function convertCategoryToTableName(category) {
+        switch(category) {
+            case 'Platos': 
+                return 'platos';
+            case 'Piqueos':
+                return 'piqueos';
+            case 'Cocteles':
+                return 'cocteles';
+            case 'Cervezas':
+                return 'cervezas';
+            case 'Bebidas calientes':
+                return 'bebidas_calientes';
+            case 'Postres':
+                return 'postres';
+            case 'Ofertas':
+                return 'ofertas';
+            case 'Tintos':
+                return 'vinos_tintos';
+            case 'Blancos':
+                return 'vinos_blancos';
+            case 'Rosé':
+                return 'vinos_rose';
+            case 'Postre':
+                return 'vinos_postre';
+            case 'Copas':
+                return 'vinos_copa';
+            default:
+                return '';
+        }
+    }
+
     async function downloadImage(imgPath, menuItemImage) {
         let imageReference = storageRef.child(imgPath);
         await imageReference.getDownloadURL().then(function(url) {
@@ -96,6 +129,27 @@ let screenFocused = false;
         const collectionReference = db.collection(collectionPath);
         const query = collectionReference.where('isPresent', '==', true).orderBy('nombre');
         let index = 0;
+
+        await fetch(`https://c07b-190-238-135-197.sa.ngrok.io/get-collection`, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(product => {
+                    console.log(product.nombre)
+                })
+                console.log(data)
+            })
+            .catch(error => {
+                
+                console.log(`there was an error:: ${error}`)
+            })
 
         await query.get().then(querySnapshot => {
             querySnapshot.forEach(documentSnapshot => {
