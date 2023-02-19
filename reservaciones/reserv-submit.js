@@ -46,7 +46,7 @@ form_element.addEventListener('submit', event => {
         hour: hour
     }
 
-    axios.post('https://d4f3-190-238-135-197.sa.ngrok.io/reservations-request', msg)
+    axios.post('https://8a66-190-238-135-197.sa.ngrok.io/reservations-request', msg)
         .then(response => {
             if (response.status === 201) {
                 alert(response.data);

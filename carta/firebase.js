@@ -1,4 +1,3 @@
-
 const menuCategoryElements = document.querySelectorAll('.menu-category');
 const menuContainer = document.querySelector('.carousel');
 const vinosCategories = document.querySelectorAll('.vino-category');
@@ -130,15 +129,17 @@ let screenFocused = false;
         const query = collectionReference.where('isPresent', '==', true).orderBy('nombre');
         let index = 0;
 
-        await fetch(`https://c07b-190-238-135-197.sa.ngrok.io/get-collection`, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,Authorization',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
-            }
-        })
+        msg = {
+            message: 'helo'
+        }
+
+        // axios.post(`https://8a66-190-238-135-197.sa.ngrok.io/get-collection?table-name=ofertas`, msg)
+        //     .then(response => {
+        //         console.log(response.data)
+        //     })
+        //     .catch(error => console.log(error))
+
+            await fetch(`https://8a66-190-238-135-197.sa.ngrok.io/get-collection?table-name=ofertas`)
             .then(response => response.json())
             .then(data => {
                 data.forEach(product => {
