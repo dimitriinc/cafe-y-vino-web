@@ -28,8 +28,8 @@ let screenFocused = false;
     const storage = firebase.storage();
     const storageRef = storage.ref();
 
-    // renewCarousel('menu/01.platos/platos');
-    renewCarousel('platos');
+    renewCarousel('menu/01.platos/platos');
+    // renewCarousel('platos');
 
     menuCategoryElements.forEach(function(element) {
         element.addEventListener('click', function() {
@@ -38,8 +38,8 @@ let screenFocused = false;
             }
             let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
             let table_name = convertCategoryToTableName(element.innerHTML);
-            renewCarousel(table_name);
-            // renewCarousel(collectionPath);
+            // renewCarousel(table_name);
+            renewCarousel(collectionPath);
         });
     });
 
@@ -47,8 +47,8 @@ let screenFocused = false;
         element.addEventListener('click', function() {
             let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
             let table_name = convertCategoryToTableName(element.innerHTML);
-            renewCarousel(table_name);
-            // renewCarousel(collectionPath);
+            // renewCarousel(table_name);
+            renewCarousel(collectionPath);
         });
     });
 
@@ -117,141 +117,31 @@ let screenFocused = false;
         }
     }
 
-    // async function downloadImage(imgPath, menuItemImage) {
-    //     let imageReference = storageRef.child(imgPath);
-    //     await imageReference.getDownloadURL().then(function(url) {
-    //         menuItemImage.src = url;
-    //     });
-    // }
+    async function downloadImage(imgPath, menuItemImage) {
+        let imageReference = storageRef.child(imgPath);
+        await imageReference.getDownloadURL().then(function(url) {
+            menuItemImage.src = url;
+        });
+    }
 
-    // async function loadMenuItems(collectionPath) {
-    async function loadMenuItems(table_name) {
+    async function loadMenuItems(collectionPath) {
+    // async function loadMenuItems(table_name) {
         
         menuContainer.innerHTML = '';
 
-        // const collectionReference = db.collection(collectionPath);
-        // const query = collectionReference.where('isPresent', '==', true).orderBy('nombre');
+        const collectionReference = db.collection(collectionPath);
+        const query = collectionReference.where('isPresent', '==', true).orderBy('nombre');
         let index = 0;
 
 
-        fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
-            method: 'POST',
-            mode: 'cors'
-        })
-        .then(response => response.json())
-        .then(data => {
+        // fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
+        //     method: 'POST',
+        //     mode: 'cors'
+        // })
+        // .then(response => response.json())
+        // .then(data => {
 
-            data.forEach(product => {
-
-                // Create the parent item element
-                let menuItemElement = document.createElement('div');
-                menuItemElement.classList.add('carousel-item');
-                if (index === 0) {
-                    menuItemElement.classList.add('active');
-                }
-                index++;
-
-                // Create a container div for the title
-                let menuItemContainer = document.createElement('div');
-                menuItemContainer.classList.add('carousel-item-container');
-
-                // Create the title div to put it inside the container
-                let menuItemTitle = document.createElement('div');
-                menuItemTitle.classList.add('item-title');
-                menuItemTitle.innerHTML = product.nombre;
-
-                // Create the image element and load the image there
-                
-                let menuItemImage = document.createElement('img');
-                menuItemImage.setAttribute('style', 'cursor:pointer;');
-                menuItemImage.addEventListener('mousedown', (event) => {
-                    menuItemImage.setAttribute('style', 'cursor:grabbing;')
-                });
-                menuItemImage.addEventListener('mouseup', (event) => {
-                    menuItemImage.setAttribute('style', 'cursor:pointer;')
-                });
-                menuItemImage.alt = product.nombre;
-                menuItemImage.src = product.imagen;
-
-                // Create the item's elements hierarchy and append it to the carousel container
-                menuItemContainer.appendChild(menuItemTitle);
-                menuItemElement.appendChild(menuItemContainer);
-                menuItemElement.appendChild(menuItemImage);
-                menuContainer.appendChild(menuItemElement);
-
-                // Handle the onclick logic
-                let isGrabbing = false;
-                let grabStartX, grabStartY;
-
-                menuItemElement.addEventListener('mousedown', event => {
-                    isGrabbing = true;
-                    grabStartX = event.clientX;
-                    grabStartY = event.clientY;
-                });
-                menuItemElement.addEventListener('mousemove', event => {
-                    if (isGrabbing) {
-                        let xDiff = event.clientX - grabStartX;
-                        let yDiff = event.clientY - grabStartY;
-                        let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                        if (distance > 10) {
-                            menuItemElement.style.cursor = 'grabbing';
-                        }
-                    }
-                })
-                menuItemElement.addEventListener('mouseup', event => {
-                    isGrabbing = false;
-                    menuItemElement.style.cursor = 'pointer';
-                    let xDiff = event.clientX - grabStartX;
-                    let yDiff = event.clientY - grabStartY;
-                    let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                    if (distance < 10) {
-                        if (!screenFocused) {
-                            screenFocused = true;
-    
-                            blanket.classList.add('blanket-focused');
-                            exitBtn.classList.add('exit-focused');
-                            document.body.style.overflow = 'hidden';
-
-                            let itemFocus = menuItemElement.cloneNode(true);
-                            itemFocus.classList.add('item-focus');
-                            itemFocus.setAttribute('style', 'visibility:visible;')
-
-                            let description = document.createElement('div');
-                            description.classList.add('description-focus');                        
-                            description.innerHTML = product.descripcion;
-                            description.innerHTML += '<br><br>';
-                            description.innerHTML += '<em>S/. ' + product.precio + '</em>';
-
-                        
-                            blanket.appendChild(itemFocus);
-                            blanket.appendChild(description);
-                            setTimeout(() => {
-                                itemFocus.classList.add('item-in-focus');
-                                description.classList.add('description-in-focus');
-                            }, 1);
-
-    
-                            exitBtn.addEventListener('click', () => {
-                                blanket.classList.remove('blanket-focused');
-                                exitBtn.classList.remove('exit-focused');
-                                document.body.style.overflow = 'auto';
-                                document.body.style.overflowX = 'hidden';
-                                blanket.removeChild(itemFocus);  
-                                blanket.removeChild(description);  
-                                screenFocused = false;
-                            });
-                        }
-                    }
-                });
-            })
-        })
-        .catch(error => {
-            
-            console.log(`there was an error:: ${error}`)
-        })
-
-        // await query.get().then(querySnapshot => {
-        //     querySnapshot.forEach(documentSnapshot => {
+        //     data.forEach(product => {
 
         //         // Create the parent item element
         //         let menuItemElement = document.createElement('div');
@@ -268,13 +158,10 @@ let screenFocused = false;
         //         // Create the title div to put it inside the container
         //         let menuItemTitle = document.createElement('div');
         //         menuItemTitle.classList.add('item-title');
-        //         menuItemTitle.innerHTML = documentSnapshot.get('nombre');
+        //         menuItemTitle.innerHTML = product.nombre;
 
         //         // Create the image element and load the image there
-        //         let imagePath = documentSnapshot.get('image');
-        //         if (imagePath === '' || imagePath == null) {
-        //             imagePath = 'lg.png'
-        //         }
+                
         //         let menuItemImage = document.createElement('img');
         //         menuItemImage.setAttribute('style', 'cursor:pointer;');
         //         menuItemImage.addEventListener('mousedown', (event) => {
@@ -283,9 +170,8 @@ let screenFocused = false;
         //         menuItemImage.addEventListener('mouseup', (event) => {
         //             menuItemImage.setAttribute('style', 'cursor:pointer;')
         //         });
-        //         menuItemImage.alt = documentSnapshot.get('nombre');
-
-        //         downloadImage(imagePath, menuItemImage);
+        //         menuItemImage.alt = product.nombre;
+        //         menuItemImage.src = product.imagen;
 
         //         // Create the item's elements hierarchy and append it to the carousel container
         //         menuItemContainer.appendChild(menuItemTitle);
@@ -331,14 +217,10 @@ let screenFocused = false;
         //                     itemFocus.setAttribute('style', 'visibility:visible;')
 
         //                     let description = document.createElement('div');
-        //                     description.classList.add('description-focus');
-        //                     let descText = documentSnapshot.get('descripcion');
-        //                     if (descText === '' || descText === undefined || descText === null) {
-        //                         descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
-        //                     }
-        //                     description.innerHTML = descText;
+        //                     description.classList.add('description-focus');                        
+        //                     description.innerHTML = product.descripcion;
         //                     description.innerHTML += '<br><br>';
-        //                     description.innerHTML += '<em>S/. ' + documentSnapshot.get('precio') + '</em>';
+        //                     description.innerHTML += '<em>S/. ' + product.precio + '</em>';
 
                         
         //                     blanket.appendChild(itemFocus);
@@ -346,10 +228,10 @@ let screenFocused = false;
         //                     setTimeout(() => {
         //                         itemFocus.classList.add('item-in-focus');
         //                         description.classList.add('description-in-focus');
-        //                     }, 0);
+        //                     }, 1);
 
     
-        //                     exitBtn.addEventListener('click', event => {
+        //                     exitBtn.addEventListener('click', () => {
         //                         blanket.classList.remove('blanket-focused');
         //                         exitBtn.classList.remove('exit-focused');
         //                         document.body.style.overflow = 'auto';
@@ -361,8 +243,126 @@ let screenFocused = false;
         //                 }
         //             }
         //         });
-        //     });
-        // });
+        //     })
+        // })
+        // .catch(error => {
+            
+        //     console.log(`there was an error:: ${error}`)
+        // })
+
+        await query.get().then(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+
+                // Create the parent item element
+                let menuItemElement = document.createElement('div');
+                menuItemElement.classList.add('carousel-item');
+                if (index === 0) {
+                    menuItemElement.classList.add('active');
+                }
+                index++;
+
+                // Create a container div for the title
+                let menuItemContainer = document.createElement('div');
+                menuItemContainer.classList.add('carousel-item-container');
+
+                // Create the title div to put it inside the container
+                let menuItemTitle = document.createElement('div');
+                menuItemTitle.classList.add('item-title');
+                menuItemTitle.innerHTML = documentSnapshot.get('nombre');
+
+                // Create the image element and load the image there
+                let imagePath = documentSnapshot.get('image');
+                if (imagePath === '' || imagePath == null) {
+                    imagePath = 'lg.png'
+                }
+                let menuItemImage = document.createElement('img');
+                menuItemImage.setAttribute('style', 'cursor:pointer;');
+                menuItemImage.addEventListener('mousedown', (event) => {
+                    menuItemImage.setAttribute('style', 'cursor:grabbing;')
+                });
+                menuItemImage.addEventListener('mouseup', (event) => {
+                    menuItemImage.setAttribute('style', 'cursor:pointer;')
+                });
+                menuItemImage.alt = documentSnapshot.get('nombre');
+
+                downloadImage(imagePath, menuItemImage);
+
+                // Create the item's elements hierarchy and append it to the carousel container
+                menuItemContainer.appendChild(menuItemTitle);
+                menuItemElement.appendChild(menuItemContainer);
+                menuItemElement.appendChild(menuItemImage);
+                menuContainer.appendChild(menuItemElement);
+
+                // Handle the onclick logic
+                let isGrabbing = false;
+                let grabStartX, grabStartY;
+
+                menuItemElement.addEventListener('mousedown', event => {
+                    isGrabbing = true;
+                    grabStartX = event.clientX;
+                    grabStartY = event.clientY;
+                });
+                menuItemElement.addEventListener('mousemove', event => {
+                    if (isGrabbing) {
+                        let xDiff = event.clientX - grabStartX;
+                        let yDiff = event.clientY - grabStartY;
+                        let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                        if (distance > 10) {
+                            menuItemElement.style.cursor = 'grabbing';
+                        }
+                    }
+                })
+                menuItemElement.addEventListener('mouseup', event => {
+                    isGrabbing = false;
+                    menuItemElement.style.cursor = 'pointer';
+                    let xDiff = event.clientX - grabStartX;
+                    let yDiff = event.clientY - grabStartY;
+                    let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                    if (distance < 10) {
+                        if (!screenFocused) {
+                            screenFocused = true;
+    
+                            blanket.classList.add('blanket-focused');
+                            exitBtn.classList.add('exit-focused');
+                            document.body.style.overflow = 'hidden';
+
+                            let itemFocus = menuItemElement.cloneNode(true);
+                            itemFocus.classList.add('item-focus');
+                            itemFocus.setAttribute('style', 'visibility:visible;')
+
+                            let description = document.createElement('div');
+                            description.classList.add('description-focus');
+                            let descText = documentSnapshot.get('descripcion');
+                            if (descText === '' || descText === undefined || descText === null) {
+                                descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
+                            }
+                            description.innerHTML = descText;
+                            description.innerHTML += '<br><br>';
+                            description.innerHTML += '<em>S/. ' + documentSnapshot.get('precio') + '</em>';
+
+                        
+                            blanket.appendChild(itemFocus);
+                            blanket.appendChild(description);
+                            setTimeout(() => {
+                                itemFocus.classList.add('item-in-focus');
+                                description.classList.add('description-in-focus');
+                            }, 0);
+
+    
+                            exitBtn.addEventListener('click', event => {
+                                blanket.classList.remove('blanket-focused');
+                                exitBtn.classList.remove('exit-focused');
+                                document.body.style.overflow = 'auto';
+                                document.body.style.overflowX = 'hidden';
+                                blanket.removeChild(itemFocus);  
+                                blanket.removeChild(description);  
+                                screenFocused = false;
+                            });
+                        }
+                    }
+                });
+            });
+        });
     }
 
     async function renewCarousel(collectionPath) {
