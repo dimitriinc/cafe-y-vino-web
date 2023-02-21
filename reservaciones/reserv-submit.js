@@ -46,23 +46,33 @@ form_element.addEventListener('submit', event => {
         hour: hour
     }
 
-    axios.post('https://8a66-190-238-135-197.sa.ngrok.io/reservations-request', msg)
-        .then(response => {
+    
+        fetch('https://45d3-190-238-135-197.sa.ngrok.io/reservations-request', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(msg)
+        })
+        .then(async response => {
+            const data = await response.text();
             if (response.status === 201) {
-                alert(response.data);
+                alert(data);
                 submit_anim.setAttribute('style', 'display:none;');
                 submit_btn.removeAttribute('style');
             } else {
-                alert(response.data);
+                alert(data);
                 window.location.href = '/index.html';
-            }            
+            }
         })
+        
         .catch(error => {
             console.log(error);
             setTimeout(() => {
                 submit_anim.setAttribute('style', 'display:none;');
                 submit_btn.removeAttribute('style');
-                alert('Caramba!');
-            }, 3000);
+                alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.');
+            }, 3000 );
         });
 });
