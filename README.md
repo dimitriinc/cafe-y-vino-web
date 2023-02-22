@@ -34,7 +34,7 @@ Apart from providing a general informatin  about the restaurant, a visitor can d
 
 ## Deployment
 
-Currently at staging on Cloudflare pages - [link](https://cafeyvinowinebar.pages.dev/).
+Currently at staging on Cloudflare [pages](https://cafeyvinowinebar.pages.dev/).
 
 ## License
 
