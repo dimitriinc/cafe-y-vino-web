@@ -236,5 +236,14 @@ input::-webkit-progress-value {
     position: relative;
 }
 
+.load-anim {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transition: all 300ms ease-in-out;
+}
+
 
 

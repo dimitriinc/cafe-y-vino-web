@@ -7,12 +7,17 @@ const mobileNav = document.querySelectorAll('.slider-links');
 const revealables = document.querySelectorAll('.revealable');
 const dimitriinc = document.querySelector('#dimitriinc');
 const dimiEmail = document.querySelector('#dimi_email');
+const load_anim = document.querySelector('.load-anim');
 
-window.onload = (event) => {
+window.onload = () => {
+
+    load_anim.setAttribute('style', 'opacity: 0;')
+
     revealables.forEach(function(element) {
         element.classList.add('revealed');
     })
     dimitriinc.classList.add('emerged')
+    
 };
 
 window.addEventListener('scroll', function() {

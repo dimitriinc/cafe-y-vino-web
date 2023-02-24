@@ -56,6 +56,11 @@
     // }
     .mapa {
 
+        @include breakpoint-down(tablet) {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+        
         .gmap {
             width: 100%;
             height: 450px;
@@ -65,11 +70,14 @@
             border-image-repeat: round;
             border-image-slice: 88;
             margin-bottom: 2rem;
+            
 
             @include breakpoint-up(laptop) {
                 width: 640px;
                 
             }
+
+            
         }
     }
 }
