@@ -25,6 +25,7 @@ Apart from providing a general informatin  about the restaurant, a visitor can d
 ## Technologies
 
 - Gulp 4.0.2
+- jQuery 3.6.0
 - Moment 2.29.1
 - Axios 1.2.4
 - Sass 1.56.1
