@@ -243,6 +243,9 @@ input::-webkit-progress-value {
     right: 0;
     top: 50%;
     transition: all 300ms ease-in-out;
+    width: 100px;
+    height: 100px;
+    opacity: .6;
 }
 
 
