@@ -291,7 +291,7 @@ async function loadMenuItems(collectionPath) {
                             setTimeout(() => {
                                 itemFocus.classList.add('item-in-focus');
                                 description.classList.add('description-in-focus');
-                            }, 0);
+                            }, 1);
 
     
                             exitBtn.addEventListener('click', event => {
