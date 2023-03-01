@@ -52,6 +52,9 @@ let screenFocused = false;
 
 async function renewCarousel(collectionPath) {
 
+    menuContainer.setAttribute('style', 'opacity:0;')
+    loader_anim.setAttribute('style', 'opacity: 1;')
+
     try {
         await loadMenuItems(collectionPath);
 
@@ -190,6 +193,9 @@ async function loadMenuItems(collectionPath) {
         // })
 
         await query.get().then(querySnapshot => {
+
+            const promises = [];
+
             querySnapshot.forEach(documentSnapshot => {
 
                 // Create the parent item element
@@ -224,7 +230,7 @@ async function loadMenuItems(collectionPath) {
                 });
                 menuItemImage.alt = documentSnapshot.get('nombre');
 
-                downloadImage(imagePath, menuItemImage);
+                promises.push(downloadImage(imagePath, menuItemImage));
 
                 // Create the item's elements hierarchy and append it to the carousel container
                 menuItemContainer.appendChild(menuItemTitle);
@@ -301,6 +307,12 @@ async function loadMenuItems(collectionPath) {
                     }
                 });
             });
+
+            Promise.all(promises).then(() => {
+                menuContainer.setAttribute('style', 'opacity:1;')
+                loader_anim.setAttribute('style', 'opacity: 0;')
+            })
+            
         });
     }
 
