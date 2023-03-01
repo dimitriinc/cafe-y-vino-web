@@ -38,7 +38,7 @@ categories.forEach(function(element) {
             vinos_container.classList.remove('visible');
             vinos_container.classList.add('hidden');
             // items_container.classList.remove('translated');
-            carousel_container.classList.add('translated');
+            carousel_container.classList.remove('translated');
             resetVinosActive();
         }
         resetActive();
