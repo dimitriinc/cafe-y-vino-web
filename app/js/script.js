@@ -10,16 +10,16 @@ const dimiEmail = document.querySelector('#dimi_email');
 const load_anim = document.querySelector('.load-anim');
 
 
-// window.onload = () => {
+window.onload = () => {
 
-//     load_anim.setAttribute('style', 'opacity: 0;')
+    load_anim.setAttribute('style', 'opacity: 0;')
 
-//         revealables.forEach(function(element) {
-//             element.classList.add('revealed');
-//         })
-//         dimitriinc.classList.add('emerged')
+        revealables.forEach(function(element) {
+            element.classList.add('revealed');
+        })
+        dimitriinc.classList.add('emerged')
 
-// };
+};
 
 window.addEventListener('scroll', function() {
     if (this.document.documentElement.clientWidth < 769) {

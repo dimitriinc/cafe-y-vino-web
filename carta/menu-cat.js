@@ -3,6 +3,7 @@ const container = document.querySelector('.menu-categories-container');
 const vinos_container = document.querySelector('.vinos-container');
 const vino_categories = document.querySelectorAll('.vino-category');
 const items_container = document.querySelector('.carousel');
+const carousel_container = document.querySelector('.carousel-container')
 
 
 function resetActive() {
@@ -31,11 +32,13 @@ categories.forEach(function(element) {
         if (element.innerHTML === 'Vinos') {
             vinos_container.classList.remove('hidden');
             vinos_container.classList.add('visible');
-            items_container.classList.add('translated');
+            // items_container.classList.add('translated');
+            carousel_container.classList.add('translated');
         } else {
             vinos_container.classList.remove('visible');
             vinos_container.classList.add('hidden');
-            items_container.classList.remove('translated');
+            // items_container.classList.remove('translated');
+            carousel_container.classList.add('translated');
             resetVinosActive();
         }
         resetActive();

@@ -3,6 +3,7 @@ const menuContainer = document.querySelector('.carousel');
 const vinosCategories = document.querySelectorAll('.vino-category');
 const blanket = document.querySelector('.blanket');
 const exitBtn = document.querySelector('.exit-btn');
+const loader_anim = document.querySelector('.carta-load-anim')
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
@@ -15,18 +16,14 @@ const firebaseConfig = {
     measurementId: "G-D0VKYKE89E"
 };
 
+firebase.initializeApp(firebaseConfig); 
+const db = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = storage.ref();
+
 let screenFocused = false;
 
-
-
  function main() {
-
-    // await firebaseLoaded;
-
-    firebase.initializeApp(firebaseConfig); 
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-    const storageRef = storage.ref();
 
     renewCarousel('menu/01.platos/platos');
     // renewCarousel('platos');
@@ -51,80 +48,22 @@ let screenFocused = false;
             renewCarousel(collectionPath);
         });
     });
+}
 
-    // Takes the inner HTML of the clicked category and returns a path to the appropriate collection
-    function convertCategoryToCollectionPath(category) {
-        switch(category) {
-            case 'Platos': 
-                return 'menu/01.platos/platos';
-            case 'Piqueos':
-                return 'menu/02.piqueos/piqueos';
-            case 'Vinos':
-                return 'menu/03.vinos/vinos';
-            case 'Cocteles':
-                return 'menu/04.cocteles/cocteles';
-            case 'Cervezas':
-                return 'menu/05.cervezas/cervezas';
-            case 'Bebidas calientes':
-                return 'menu/06.bebidas calientes/bebidas calientes';
-            case 'Postres':
-                return 'menu/061.postres/postres';
-            case 'Ofertas':
-                return 'menu/07.ofertas/ofertas';
-            case 'Tintos':
-                return 'menu/03.vinos/vinos/Vinos tintos/vinos';
-            case 'Blancos':
-                return 'menu/03.vinos/vinos/Vinos blancos/vinos';
-            case 'Rosé':
-                return 'menu/03.vinos/vinos/Vinos rose/vinos';
-            case 'Postre':
-                return 'menu/03.vinos/vinos/Vinos de postre/vinos';
-            case 'Copas':
-                return 'menu/03.vinos/vinos/Vinos por copa/vinos';
-            default:
-                return '';
-        }
-    }
+async function renewCarousel(collectionPath) {
 
-    function convertCategoryToTableName(category) {
-        switch(category) {
-            case 'Platos': 
-                return 'platos';
-            case 'Piqueos':
-                return 'piqueos';
-            case 'Cocteles':
-                return 'cocteles';
-            case 'Cervezas':
-                return 'cervezas';
-            case 'Bebidas calientes':
-                return 'bebidas_calientes';
-            case 'Postres':
-                return 'postres';
-            case 'Ofertas':
-                return 'ofertas';
-            case 'Tintos':
-                return 'vinos_tintos';
-            case 'Blancos':
-                return 'vinos_blancos';
-            case 'Rosé':
-                return 'vinos_rose';
-            case 'Postre':
-                return 'vinos_postre';
-            case 'Copas':
-                return 'vinos_copa';
-            default:
-                return '';
-        }
-    }
+    try {
+        await loadMenuItems(collectionPath);
 
-    async function downloadImage(imgPath, menuItemImage) {
-        let imageReference = storageRef.child(imgPath);
-        await imageReference.getDownloadURL().then(function(url) {
-            menuItemImage.src = url;
-        });
-    }
+    let elems = document.querySelectorAll('.carousel');
+    let instances = M.Carousel.init(elems);
+    } catch (error) {
+        console.log(`caugth an error: ${error}`)
+        renewCarousel(collectionPath);
+    } 
+}
 
-    async function loadMenuItems(collectionPath) {
+async function loadMenuItems(collectionPath) {
     // async function loadMenuItems(table_name) {
         
         menuContainer.innerHTML = '';
@@ -365,18 +304,76 @@ let screenFocused = false;
         });
     }
 
-    async function renewCarousel(collectionPath) {
-
-        try {
-            await loadMenuItems(collectionPath);
-
-        let elems = document.querySelectorAll('.carousel');
-        let instances = M.Carousel.init(elems);
-        } catch (error) {
-            console.log(`caugth an error: ${error}`)
-            renewCarousel(collectionPath);
-        } 
+// Takes the inner HTML of the clicked category and returns a path to the appropriate collection
+function convertCategoryToCollectionPath(category) {
+    switch(category) {
+        case 'Platos': 
+            return 'menu/01.platos/platos';
+        case 'Piqueos':
+            return 'menu/02.piqueos/piqueos';
+        case 'Vinos':
+            return 'menu/03.vinos/vinos';
+        case 'Cocteles':
+            return 'menu/04.cocteles/cocteles';
+        case 'Cervezas':
+            return 'menu/05.cervezas/cervezas';
+        case 'Bebidas calientes':
+            return 'menu/06.bebidas calientes/bebidas calientes';
+        case 'Postres':
+            return 'menu/061.postres/postres';
+        case 'Ofertas':
+            return 'menu/07.ofertas/ofertas';
+        case 'Tintos':
+            return 'menu/03.vinos/vinos/Vinos tintos/vinos';
+        case 'Blancos':
+            return 'menu/03.vinos/vinos/Vinos blancos/vinos';
+        case 'Rosé':
+            return 'menu/03.vinos/vinos/Vinos rose/vinos';
+        case 'Postre':
+            return 'menu/03.vinos/vinos/Vinos de postre/vinos';
+        case 'Copas':
+            return 'menu/03.vinos/vinos/Vinos por copa/vinos';
+        default:
+            return '';
     }
 }
 
-main();
+function convertCategoryToTableName(category) {
+    switch(category) {
+        case 'Platos': 
+            return 'platos';
+        case 'Piqueos':
+            return 'piqueos';
+        case 'Cocteles':
+            return 'cocteles';
+        case 'Cervezas':
+            return 'cervezas';
+        case 'Bebidas calientes':
+            return 'bebidas_calientes';
+        case 'Postres':
+            return 'postres';
+        case 'Ofertas':
+            return 'ofertas';
+        case 'Tintos':
+            return 'vinos_tintos';
+        case 'Blancos':
+            return 'vinos_blancos';
+        case 'Rosé':
+            return 'vinos_rose';
+        case 'Postre':
+            return 'vinos_postre';
+        case 'Copas':
+            return 'vinos_copa';
+        default:
+            return '';
+    }
+}
+
+async function downloadImage(imgPath, menuItemImage) {
+    let imageReference = storageRef.child(imgPath);
+    await imageReference.getDownloadURL().then(function(url) {
+        menuItemImage.src = url;
+    });
+}
+
+main()
