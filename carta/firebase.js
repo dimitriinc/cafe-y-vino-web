@@ -83,6 +83,8 @@ async function loadMenuItems(collectionPath) {
         // .then(response => response.json())
         // .then(data => {
 
+        //     let loadedImages = 0
+
         //     data.forEach(product => {
 
         //         // Create the parent item element
@@ -114,6 +116,15 @@ async function loadMenuItems(collectionPath) {
         //         });
         //         menuItemImage.alt = product.nombre;
         //         menuItemImage.src = product.imagen;
+
+        //         // Check if on load image we are ready to display the whole category
+        //         menuItemImage.addEventListener('load', () => {
+        //             loadedImages++
+        //             if (loadedImages === data.length) {
+        //                 menuContainer.setAttribute('style', 'opacity:1;')
+        //                 loader_anim.setAttribute('style', 'opacity: 0;')
+        //             }
+        //         })
 
         //         // Create the item's elements hierarchy and append it to the carousel container
         //         menuItemContainer.appendChild(menuItemTitle);
@@ -195,6 +206,7 @@ async function loadMenuItems(collectionPath) {
         await query.get().then(querySnapshot => {
 
             const promises = [];
+            let imagesLoaded = 0;
 
             querySnapshot.forEach(documentSnapshot => {
 
@@ -231,6 +243,14 @@ async function loadMenuItems(collectionPath) {
                 menuItemImage.alt = documentSnapshot.get('nombre');
 
                 promises.push(downloadImage(imagePath, menuItemImage));
+
+                menuItemImage.addEventListener('load', () => {
+                    imagesLoaded++
+                    if (imagesLoaded === querySnapshot.size) {
+                        menuContainer.setAttribute('style', 'opacity:1;')
+                        loader_anim.setAttribute('style', 'opacity: 0;')
+                    }
+                })
 
                 // Create the item's elements hierarchy and append it to the carousel container
                 menuItemContainer.appendChild(menuItemTitle);
@@ -309,8 +329,8 @@ async function loadMenuItems(collectionPath) {
             });
 
             Promise.all(promises).then(() => {
-                menuContainer.setAttribute('style', 'opacity:1;')
-                loader_anim.setAttribute('style', 'opacity: 0;')
+                // menuContainer.setAttribute('style', 'opacity:1;')
+                // loader_anim.setAttribute('style', 'opacity: 0;')
             })
             
         });
