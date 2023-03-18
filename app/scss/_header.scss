@@ -265,10 +265,20 @@
 }
 
 .header-spacer {
+    // position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 166px;
 
     @include breakpoint-down(tablet) {
         height: 100px;
     }
+}
+
+.header-slicer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 1px;
 }

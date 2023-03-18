@@ -1,6 +1,7 @@
 
 const btnHamburger = document.querySelector('#btnHamburger');
 const header = document.querySelector('.header');
+const headerSlicer = document.querySelector('.header-slicer');
 const overlay = document.querySelector('.mobile-nav-menu');
 const body = document.querySelector('body');
 const mobileNav = document.querySelectorAll('.slider-links');
@@ -17,15 +18,24 @@ window.onload = () => {
 
 };
 
-window.addEventListener('scroll', function() {
-    if (this.document.documentElement.clientWidth < 769) {
-        if (window.scrollY != 0) {
-            header.classList.add('scroll');
+const obsCallback = function(entries) {
+    if (document.documentElement.clientWidth < 769) {
+        const [entry] = entries
+        if (!entry.isIntersecting) {
+            header.classList.add('scroll')
         } else {
-            header.classList.remove('scroll');
+            header.classList.remove('scroll')
         }
     }
-})
+}
+
+const obsOptions = {
+    root: null,
+    threshold: 0,
+}
+
+const observer = new IntersectionObserver(obsCallback, obsOptions)
+observer.observe(headerSlicer)
 
 dimitriinc.addEventListener('click', function() {
     dimitriinc.classList.add('submerged')
