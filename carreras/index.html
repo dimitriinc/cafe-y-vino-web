@@ -65,75 +65,81 @@
 
     </header>
 
-    <main class="main-jobs revealable">
+    <main class="main-jobs">
 
-        <h2 class="aux_title">
-            Trabaja con nosotros
-        </h2>
+        <section>
 
-        <p>
-            Si está interesado en formar parte de nuestro equipo dinámico y apasionado, simplemente complete el formulario a continuación con su información y envíelo. ¡Nos encantará conocerlo!
-        </p>
-
-        <form id="form-jobs" method="post">
-
-            <input id="jobs-name" type="text" name="userName" placeholder="Nombre" class="input-control" required>
-
-            <input id="jobs-tel" type="tel" name="userPhone" placeholder="Número de teléfono" class="input-control" required>
-
-            <select name="position" class="input-control" required>
-                <option value="" selected disabled hidden>Posición deseada</option>
-                <option value="mesero">Mesero</option>
-                <option value="bartender">Bartender</option>
-                <option value="cocinero">Cocinero</option>
-            </select>
-
-            <textarea id="jobs-carta" name="cover-letter" placeholder="Carta titular" rows="10" class="input-control" required></textarea>
-
-            <section class="input-file">
-                
-                <div class="input-file-text">
-                    Curriculum Vitae - <em>en el formato PDF</em>
-                </div>
-                
-                <input id="file-pdf" type="file" accept="application/pdf" name="cv">
+            <h2 class="aux_title">
+                Trabaja con nosotros
+            </h2>
     
-                <div class="input-file-receiver">
-                    <div class="input-file-receiver-btn">
-                        Seleccionar archivo
+            <p>
+                Si está interesado en formar parte de nuestro equipo dinámico y apasionado, simplemente complete el formulario a continuación con su información y envíelo. ¡Nos encantará conocerlo!
+            </p>
+    
+            <form id="form-jobs" method="post">
+    
+                <input id="jobs-name" type="text" name="userName" placeholder="Nombre" class="input-control" required>
+    
+                <input id="jobs-tel" type="tel" name="userPhone" placeholder="Número de teléfono" class="input-control" required>
+    
+                <select name="position" class="input-control" required>
+                    <option value="" selected disabled hidden>Posición deseada</option>
+                    <option value="mesero">Mesero</option>
+                    <option value="bartender">Bartender</option>
+                    <option value="cocinero">Cocinero</option>
+                </select>
+    
+                <textarea id="jobs-carta" name="cover-letter" placeholder="Carta titular" rows="10" class="input-control" required></textarea>
+    
+                <div class="input-file">
+                    
+                    <div class="input-file-text">
+                        Curriculum Vitae - <em>en el formato PDF</em>
                     </div>
-                    <div class="input-file-receiver-selected"></div>
-                </div>
-
-            </section>
-            
-            <div class="submit">
-                <input id="jobs-submit" type="submit" class="button-control-round" value="aplicar">
-                <div id="loader" style="display: none;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 45 45" stroke="#160b17" capture-installed="true">
-                        <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
-                          <circle cx="22" cy="22" r="14.6676" stroke-opacity="0">
-                            <animate attributeName="r" begin="1s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-opacity" begin="1s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-width" begin="1s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
-                          </circle>
-                          <circle cx="22" cy="22" r="6.66755" stroke-opacity="0">
-                            <animate attributeName="r" begin="2s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-opacity" begin="2s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-width" begin="2s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
-                          </circle>
-                          <circle cx="22" cy="22" r="3.49668">
-                            <animate attributeName="r" begin="0s" dur="1s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite"/>
-                          </circle>
-                        </g>
-                    </svg>  
+                    
+                    <input id="file-pdf" type="file" accept="application/pdf" name="cv">
+        
+                    <div class="input-file-receiver">
+                        <div class="input-file-receiver-btn">
+                            Seleccionar archivo
+                        </div>
+                        <div class="input-file-receiver-selected"></div>
+                    </div>
+    
                 </div>
                 
-            </div>
-            
-        </form>
+                <div class="submit">
+                    <input id="jobs-submit" type="submit" class="button-control-round" value="aplicar">
+                    <div id="loader" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 45 45" stroke="#160b17" capture-installed="true">
+                            <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
+                              <circle cx="22" cy="22" r="14.6676" stroke-opacity="0">
+                                <animate attributeName="r" begin="1s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-opacity" begin="1s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-width" begin="1s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
+                              </circle>
+                              <circle cx="22" cy="22" r="6.66755" stroke-opacity="0">
+                                <animate attributeName="r" begin="2s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-opacity" begin="2s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-width" begin="2s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
+                              </circle>
+                              <circle cx="22" cy="22" r="3.49668">
+                                <animate attributeName="r" begin="0s" dur="1s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite"/>
+                              </circle>
+                            </g>
+                        </svg>  
+                    </div>
+                    
+                </div>
+                
+            </form>
 
-        <section class="bottom-image revealable"></section>
+        </section>
+
+        
+
+        <section class="bottom-image"></section>
 
     </main>
 

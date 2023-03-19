@@ -56,20 +56,26 @@
     // }
     .mapa {
 
+        position: relative;
+        border: 2rem solid #fff;
+        border-image: url(/images/border-deco-fat.png);
+        border-image-repeat: round;
+        border-image-slice: 88;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2rem;
+
         @include breakpoint-down(tablet) {
             margin-left: 1rem;
             margin-right: 1rem;
         }
         
         .gmap {
-            width: 100%;
-            height: 450px;
             border: none;
-            border: 2rem solid #fff;
-            border-image: url(/images/border-deco-fat.png);
-            border-image-repeat: round;
-            border-image-slice: 88;
-            margin-bottom: 2rem;
+            width: 100%;
+            height: 450px;            
+            transition: all 1000ms ease-in-out;
             
 
             @include breakpoint-up(laptop) {
@@ -78,6 +84,19 @@
             }
 
             
+        }
+
+        .gmap-animation {
+            width: 100px;
+            height: 200px;
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 20%;
+            transition: all 300ms ease-in-out;
+            z-index: 999;
         }
     }
 }

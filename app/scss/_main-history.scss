@@ -1,12 +1,17 @@
 .main-history {
-    min-height: 100vh;
     position: relative;
 
+    @include breakpoint-down(tablet) {
+        height: calc(100vh - 100px);
+    }
+    @include breakpoint-up(laptop) {
+        height: calc(100vh - 166px);
+    }
+
     #back-image {
-        // display: none;
         position: absolute;
         left: 0;
-        top: 250px;
+        top: 20%;
         width: 150px;
         height: 150px;
         opacity: .5;
@@ -14,7 +19,7 @@
         margin-left: 3rem;
 
         @include breakpoint-up(laptop) {
-            top: 200px;
+            top: 10%;
             width: 325px;
             height: 325px;
             margin-left: 12rem;
@@ -39,39 +44,43 @@
         }
     }
 
-    h2 {
-        margin-top: 2rem;
-        font-size: 32px;
-    }
+    section {
+        height: 100%;
+        position: relative;
 
-    #history-btn {
-        width: fit-content;
-        padding: 1rem;
-        background-color: $overlay;
-        color: $nav_links;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        top: 55%;
-        font-family: 'Saveur Sans Regular';
-        z-index: 1;
-
-        &:active {
-            transform: scale(90%);
+        h2 {
+            margin-top: 2rem;
+            font-size: 32px;
         }
-        @include breakpoint-down(tablet) {
-            top: 60%;
-        }
-
-        @include breakpoint-up(laptop) {
-            &:hover {
-                color: $overlay;
-                background-color: $nav_links;
+    
+        #history-btn {
+            width: fit-content;
+            padding: 1rem;
+            background-color: $overlay;
+            color: $nav_links;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            top: 50%;
+            font-family: 'Saveur Sans Regular';
+            z-index: 1;
+    
+            &:active {
+                transform: scale(90%);
             }
+    
+            @include breakpoint-up(laptop) {
+                &:hover {
+                    color: $overlay;
+                    background-color: $nav_links;
+                }
+            }
+            
         }
-        
     }
+
+    
 }
 
 #history-blanket {
