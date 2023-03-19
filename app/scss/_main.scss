@@ -22,7 +22,6 @@ main {
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            // min-height: 25.3rem;
             min-height: 75%;
             width: 100%;
 
@@ -40,14 +39,12 @@ main {
     }
 
     .main-text {
-
         text-align: center;
         border: 2rem solid #fff;
         border-image: url(/images/border-deco.png);
         border-image-repeat: round;
         border-image-slice: 88;
-        margin: 1rem;
-        
+        margin: 1rem;        
 
         @include breakpoint-up(laptop) {
             width: 80%;
@@ -88,8 +85,6 @@ main {
                     color: $overlay;
                 }
                 &:active {
-                    // background-color: $overlay;
-                    // color: $omaverlay;
                     transform: scale(90%);
                 }
             }

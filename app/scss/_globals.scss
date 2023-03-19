@@ -136,7 +136,7 @@ input::-webkit-progress-value {
 
 .revealable {
     opacity: 0;
-    transform: translateY(-50px);
+    transform: translateY(50px);
     transition: 1.5s ease all;
 }
 

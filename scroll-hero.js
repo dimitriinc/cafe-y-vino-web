@@ -15,7 +15,7 @@ hero_image.addEventListener('click', () => {
         } else {
             window.scrollTo({
                 left: coords.left + window.pageXOffset,
-                top: coords.top + window.pageYOffset - 80,
+                top: coords.top + window.pageYOffset - 160,
                 behavior: 'smooth'
             });
         }

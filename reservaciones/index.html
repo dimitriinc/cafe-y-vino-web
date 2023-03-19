@@ -68,102 +68,104 @@
 
     <main class="main-reservations">
 
-        <section class="reserv-text revealable">
+        <section>
+            
+            <div class="reserv-text">
 
-            <h2 class="aux_title">
-                Reservaciones  
-            </h2>
-
-            <p>
-                Llene el formulario y reciba una confirmación en el correo electrónico que proporciona.<br>¡Rápido y fácil!
-            </p>
+                <h2 class="aux_title">
+                    Reservaciones  
+                </h2>
+    
+                <p>
+                    Llene el formulario y reciba una confirmación en el correo electrónico que proporciona.<br>¡Rápido y fácil!
+                </p>
+    
+            </div>
+    
+            <form id="reserv-form">
+    
+                <div class="reserv-form">
+    
+                    <input required id="reserv-name" class="input-control" type="text" placeholder="Nombre" name="userName">
+    
+                    <input required id="reserv-tel" class="input-control" type="tel" placeholder="Número de teléfono" name="userPhone">
+    
+                    <input required id="reserv-email" type="email" class="input-control" placeholder="Email">
+    
+                    <p id="pax-display">Cantidad de personas: <span class="pax-value"></span></p>
+    
+                    <input id="reserv-pax" type="range" class="input-control " min="1" max="15" placeholder="Cantidad de personas" name="pax" step="1">
+    
+                    <textarea id="reserv-comment" name="comment" rows="5" class="input-control" placeholder="Información adicional"></textarea>
+    
+                </div>
+        
+                <div class="calendar">
+    
+                    <div class="calendar-header">
+    
+                        <div class="arrows prev-mth" style="font-family: Futura;">&lt;</div>
+                        <div class="mth"></div>
+                        <div class="arrows next-mth" style="font-family: Futura;">&gt;</div>
+    
+                    </div>
+    
+                    <table id="calendar-body">
+                        <thead>
+                            <tr>
+                                <th class="week-day">Lun</th>
+                                <th class="week-day">Mar</th>
+                                <th class="week-day">Mie</th>
+                                <th class="week-day">Jue</th>
+                                <th class="week-day">Vie</th>
+                                <th class="week-day">Sab</th>
+                                <th class="week-day">Dom</th>
+                            </tr>
+                        </thead>
+    
+                        <tbody id="calendar-dates"></tbody>
+                    </table>
+    
+                    <input type="hidden" name="date" id="reserv-date">
+        
+                </div>
+    
+                <div class="time">
+                    <p>La hora de llegada<br>14:00 &#8212; 21:00</p>
+                    <input required id="reserv-hour" type="time" name="hour" class="input-control">
+                </div>
+        
+                <div class="reserv-button">
+    
+                    <input id="reserv-btn" type="submit" class="button-control-round" value="ENVIAR">
+    
+                    <div id="loader" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 45 45" stroke="#160b17" capture-installed="true">
+                            <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
+                              <circle cx="22" cy="22" r="14.6676" stroke-opacity="0">
+                                <animate attributeName="r" begin="1s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-opacity" begin="1s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-width" begin="1s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
+                              </circle>
+                              <circle cx="22" cy="22" r="6.66755" stroke-opacity="0">
+                                <animate attributeName="r" begin="2s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-opacity" begin="2s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-width" begin="2s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
+                              </circle>
+                              <circle cx="22" cy="22" r="3.49668">
+                                <animate attributeName="r" begin="0s" dur="1s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite"/>
+                              </circle>
+                            </g>
+                          </svg>  
+                    </div>
+        
+                </div>
+    
+            </form>
 
         </section>
 
-        <form id="reserv-form">
-
-            <section class="reserv-form revealable">
-
-                <input required id="reserv-name" class="input-control" type="text" placeholder="Nombre" name="userName">
-
-                <input required id="reserv-tel" class="input-control" type="tel" placeholder="Número de teléfono" name="userPhone">
-
-                <input required id="reserv-email" type="email" class="input-control" placeholder="Email">
-
-                <p id="pax-display">Cantidad de personas: <span class="pax-value"></span></p>
-
-                <input id="reserv-pax" type="range" class="input-control " min="1" max="15" placeholder="Cantidad de personas" name="pax" step="1">
-
-                <textarea id="reserv-comment" name="comment" rows="5" class="input-control" placeholder="Información adicional"></textarea>
-
-            </section>
-    
-            <section class="calendar revealable">
-
-                <div class="calendar-header">
-
-                    <div class="arrows prev-mth" style="font-family: Futura;">&lt;</div>
-                    <div class="mth"></div>
-                    <div class="arrows next-mth" style="font-family: Futura;">&gt;</div>
-
-                </div>
-
-                <table id="calendar-body">
-                    <thead>
-                        <tr>
-                            <th class="week-day">Lun</th>
-                            <th class="week-day">Mar</th>
-                            <th class="week-day">Mie</th>
-                            <th class="week-day">Jue</th>
-                            <th class="week-day">Vie</th>
-                            <th class="week-day">Sab</th>
-                            <th class="week-day">Dom</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="calendar-dates"></tbody>
-                </table>
-
-                <input type="hidden" name="date" id="reserv-date">
-    
-            </section>
-
-            <section class="time revealable">
-                <p>La hora de llegada<br>14:00 &#8212; 21:00</p>
-                <input required id="reserv-hour" type="time" name="hour" class="input-control">
-            </section>
-    
-            <section class="reserv-button revealable">
-
-                <input id="reserv-btn" type="submit" class="button-control-round" value="ENVIAR">
-
-                <div id="loader" style="display: none;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 45 45" stroke="#160b17" capture-installed="true">
-                        <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
-                          <circle cx="22" cy="22" r="14.6676" stroke-opacity="0">
-                            <animate attributeName="r" begin="1s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-opacity" begin="1s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-width" begin="1s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
-                          </circle>
-                          <circle cx="22" cy="22" r="6.66755" stroke-opacity="0">
-                            <animate attributeName="r" begin="2s" dur="2s" values="6;22" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-opacity" begin="2s" dur="2s" values="1;0" calcMode="linear" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-width" begin="2s" dur="2s" values="2;0" calcMode="linear" repeatCount="indefinite"/>
-                          </circle>
-                          <circle cx="22" cy="22" r="3.49668">
-                            <animate attributeName="r" begin="0s" dur="1s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite"/>
-                          </circle>
-                        </g>
-                      </svg>  
-                </div>
-    
-            </section>
-
-        </form>
-
-        
-
-        <section class="bottom-image revealable">
+        <section class="bottom-image">
         </section>
 
     </main>
