@@ -30,7 +30,7 @@ const reveal = function(entries, observer) {
 }
 const revealOptions = {
     root: null,
-    threshold: 0.2
+    threshold: 0
 }
 const revealObserver = new IntersectionObserver(reveal, revealOptions)
 
