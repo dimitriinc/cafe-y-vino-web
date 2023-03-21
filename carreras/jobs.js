@@ -48,11 +48,9 @@ form_jobs.addEventListener('submit', (event) => {
 
     if (input_file.value == '') {
 
-        console.log('input value is empty')
         if (input_display.innerHTML === '') {
             input_display.innerHTML = '<em>El archivo no está seleccionado</em>';
         }
-        // input_display.innerHTML = 'El archivo no está seleccionado';
         return;
     }
 
@@ -80,19 +78,14 @@ form_jobs.addEventListener('submit', (event) => {
         }
     })
         .then(response => {
-            console.log(response);
             alert('Gracias por tu solicitud! Nos contactaremos pronto.');
             window.location.href = '/index.html';
         })
         .catch(error => {
-            console.log(error);
             setTimeout(() => {
                 jobs_loader.setAttribute('style', 'display:none;');
                 jobs_submit_btn.removeAttribute('style');
-                alert('Caramba!');
-                input_display.innerHTML = '';
+                alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.');
             }, 3000);
         });
-    
-    input_file.value = '';
 });

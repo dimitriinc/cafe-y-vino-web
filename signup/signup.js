@@ -10,8 +10,6 @@ form.addEventListener('submit', signupUserForEmailList);
 function signupUserForEmailList(event) {
     event.preventDefault();
 
-    console.log(`email: ${emailInput.value}`)
-
     submit_btn.setAttribute('style', 'display:none;');
     submit_anim.removeAttribute('style');
 
@@ -36,11 +34,10 @@ function signupUserForEmailList(event) {
             }
         })
         .catch(error => {
-            console.log(error);
             setTimeout(() => {
                 submit_anim.setAttribute('style', 'display:none;');
                 submit_btn.removeAttribute('style');
-                alert('Caramba!');
+                alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.');
             }, 3000);
         });
 }

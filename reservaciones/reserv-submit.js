@@ -6,7 +6,6 @@ const comment_element = document.getElementById('reserv-comment');
 const pax_element = document.getElementById('reserv-pax');
 const fecha_element = document.getElementById('reserv-date');
 const hour_element = document.getElementById('reserv-hour');
-
 const submit_btn = document.getElementById('reserv-btn');
 const submit_anim = document.getElementById('loader');
 
@@ -68,7 +67,6 @@ form_element.addEventListener('submit', event => {
         })
         
         .catch(error => {
-            console.log(error);
             setTimeout(() => {
                 submit_anim.setAttribute('style', 'display:none;');
                 submit_btn.removeAttribute('style');
