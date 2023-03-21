@@ -1,8 +1,9 @@
 const hero_image = document.querySelector('.hero__image');
 const main_text = document.querySelector('.main-text')
+const navigation = document.querySelector('nav')
+const header_spacer = document.querySelector('.header-spacer')
 
 const coords = main_text.getBoundingClientRect()
-
 
 hero_image.addEventListener('click', () => {
 
@@ -21,3 +22,16 @@ hero_image.addEventListener('click', () => {
         }
     }
 });
+
+if (document.documentElement.clientWidth > 769) {
+    const navObserver = new IntersectionObserver(entries => {
+        const [entry] = entries
+        if (!entry.isIntersecting) {
+            navigation.classList.add('sticky')
+        } else {
+            navigation.classList.remove('sticky')
+        }
+    })
+    navObserver.observe(header_spacer)
+}
+

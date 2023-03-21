@@ -20,6 +20,7 @@
 
     nav {
         padding: 1rem 1.5rem;
+        transition: all 500ms ease-in-out;
         
         @include breakpoint-down(tablet) {
             background-image: none;
@@ -38,7 +39,40 @@
         }
     }
 
+    .sticky {
+
+        @include breakpoint-up(laptop) {
+
+            width: 100%;
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
     
+            .header__logo {
+                margin-left: 2rem;
+                margin-right: auto;
+    
+                img {
+                    width: 6rem;
+                }
+            }
+
+            .header__links {
+
+                a {
+
+                    font-size: 1rem;
+
+                    @include breakpoint-down(laptop) {
+
+                        font-size: $font_small;
+                        margin: 0.5rem;
+                    }
+                }
+            }
+        }
+    }
 
     &__logo {
 
@@ -56,6 +90,7 @@
             width: 8rem;
             height: auto;
             padding-top: .4rem;
+            transition: all 500ms ease-in-out;
 
             @include breakpoint-down(tablet) {
                 transition: width 300ms ease-in;
@@ -91,6 +126,7 @@
         display: block;
         text-align: center;
         padding-top: .5rem;
+        transition: all 500ms ease-in-out;
 
         .is-active {
             &::before {
