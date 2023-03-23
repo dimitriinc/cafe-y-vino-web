@@ -18,13 +18,11 @@
 // const animation = document.querySelector('.gmap-animation')
 const map_container = document.getElementById('map')
 
-const coords = [-16.39871198765061, -71.53587167377633]
+const coords = [-16.39885635543751, -71.53528710495644]
 
 map = L.map('map').setView(coords, 20)
 
-L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map)
+L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png').addTo(map)
 
 L.marker(coords).addTo(map)
 
