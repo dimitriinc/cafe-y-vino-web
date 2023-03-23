@@ -14,12 +14,23 @@
 //     });
 // }
 
-const map = document.querySelector('.gmap')
-const animation = document.querySelector('.gmap-animation')
+// const map = document.querySelector('.gmap')
+// const animation = document.querySelector('.gmap-animation')
+const map_container = document.getElementById('map')
 
-map.style.opacity = 0
+const coords = [-16.39871198765061, -71.53587167377633]
 
-map.addEventListener('load', () => {
-    animation.style.opacity = 0
-    map.style.opacity = 1
-})
+map = L.map('map').setView(coords, 20)
+
+L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map)
+
+L.marker(coords).addTo(map)
+
+// map.style.opacity = 0
+
+// map.addEventListener('load', () => {
+//     animation.style.opacity = 0
+//     map.style.opacity = 1
+// })

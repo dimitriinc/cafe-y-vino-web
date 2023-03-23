@@ -8,6 +8,22 @@
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/dist/style.css">
     <title>Document</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""
+    />
+    <script
+        defer
+        src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""
+    ></script>
+
+    <script defer src="google-maps.js"></script>
+
 </head>
 <body>
 
@@ -97,9 +113,9 @@
     
             <div id="map" class="mapa">
                 
-                <img src="/images/loader.svg" class="gmap-animation">
+                <!-- <img src="/images/loader.svg" class="gmap-animation"> -->
 
-                <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1969.8344199612693!2d-71.5364683132083!3d-16.39871033734343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91424a575b88124d%3A0x864fa38bc4ba965e!2sCafe%20%26%20Vino%20Winebar!5e0!3m2!1sen!2spe!4v1672071790316!5m2!1sen!2spe" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1969.8344199612693!2d-71.5364683132083!3d-16.39871033734343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91424a575b88124d%3A0x864fa38bc4ba965e!2sCafe%20%26%20Vino%20Winebar!5e0!3m2!1sen!2spe!4v1672071790316!5m2!1sen!2spe" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
 
             </div>
 
@@ -152,7 +168,6 @@
     </footer>
 
     <script src="/dist/all.js"></script>
-    <script src="google-maps.js"></script>
     <!-- <script src="/google-maps.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key={api_key}&callback=initMap">
