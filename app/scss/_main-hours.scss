@@ -57,13 +57,14 @@
     .mapa {
 
         position: relative;
-        border: 2rem solid #fff;
+        border: 1rem solid #fff;
         border-image: url(/images/border-deco-fat.png);
         border-image-repeat: round;
         border-image-slice: 88;
         width: fit-content;
         margin-left: auto;
         margin-right: auto;
+        background: transparent;
         margin-bottom: 2rem;
         max-width: 640px;
         width: 100%;

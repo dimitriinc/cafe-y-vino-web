@@ -20,9 +20,9 @@ const map_container = document.getElementById('map')
 
 const coords = [-16.39885635543751, -71.53528710495644]
 
-map = L.map('map').setView(coords, 20)
+map = L.map('map').setView(coords, 17)
 
-L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: ''
 }).addTo(map)
 
@@ -34,3 +34,5 @@ L.marker(coords).addTo(map)
 //     animation.style.opacity = 0
 //     map.style.opacity = 1
 // })
+
+// 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
