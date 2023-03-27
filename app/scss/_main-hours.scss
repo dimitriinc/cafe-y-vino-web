@@ -67,25 +67,26 @@
         margin-bottom: 2rem;
         max-width: 640px;
         width: 100%;
-        height: 450px;
+        height: 500px;
         padding: 1rem;
 
         @include breakpoint-down(tablet) {
-            margin-left: 1rem;
-            margin-right: 1rem;
-        }
+            width: 90%;
         
-        .gmap {
-            border: none;
-            width: 100%;
-            height: 450px;            
-            transition: all 1000ms ease-in-out;
+        // #map {
+        //     border: none;
+        //     width: 100%;
+        //     height: 450px;            
+        //     transition: all 1000ms ease-in-out;
+        //     margin: auto;
+        //     transform: translate(-25px, -25px);
+            
             
 
-            @include breakpoint-up(laptop) {
-                width: 640px;
+        //     @include breakpoint-up(laptop) {
+        //         width: 590px;
                 
-            }
+        //     }
 
             
         }
