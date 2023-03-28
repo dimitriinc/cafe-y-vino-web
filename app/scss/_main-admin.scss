@@ -1,9 +1,145 @@
+.reserves-header {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: $overlay;
+
+    @include breakpoint-up(laptop) {
+        background-color: transparent;
+        position: absolute;
+    }
+
+    #logo-res-head {
+        margin-left: 1rem;
+        margin-right: auto;
+        width: 70px;
+        height: 70px;
+
+        @include breakpoint-up(laptop) {
+            width: 90px;
+            height: 90px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+    }
+
+    #tomorrow-btn {
+        margin: 0 1rem;
+        padding: .5rem;
+        font-size: 16px;
+        font-family: 'Futura';
+        transform: translateY(4px);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+    }
+
+    #cal-res-head {
+        width: 50px;
+        height: 50px;
+        margin-right: 1.4rem;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+#head-spacers-res {
+    height: 100px;
+}
+
+#reserves-title {
+    font-family: 'Saveur Sans';
+    margin-top: 3rem;
+    letter-spacing: 5px;
+    font-size: 30px;
+}
+
+#reserves-date {
+    font-family: 'Saveur Sans';
+    letter-spacing: 2px;
+}
+
 .main-admin {
 
     .reserves-container {
         
         .reserves-item {
-            
+            width: 640px;
+            height: fit-content;
+            padding: 1rem;
+            border: 3px solid $nav_links;
+            margin-bottom: 2rem;
+
+            @include breakpoint-down(tablet) {
+                width: 300px;
+            }
+
+            h3 {
+                font-family: 'Saveur Sans';
+                letter-spacing: 2px;
+            }
+
+            .reserve-data {
+                text-align: start;
+
+                .reserve-label {
+                    font-weight: bold;
+                }
+            }
+
+            .reserve-actions {
+
+                margin-top: 2rem;
+
+                .res-action {
+                    display: inline-block;
+                    margin: 1rem;
+                    padding: 1rem;
+                    font-family: 'Saveur Sans';
+                    border: 1px solid $nav_links;
+                    color: $nav_links;
+                    background-color: $overlay;
+                    transition: all .2s ease-in;
+
+                    @include breakpoint-down(tablet) {
+                        display: block;
+                        &:active {
+                            transform: scale(95%);
+                        }
+                    }    
+
+                    @include breakpoint-up(laptop) {
+                        &:hover {
+                            transform: scale(105%);
+                        }
+                        &:active {
+                            transform: scale(100%)
+                        }
+                    }
+                
+                }
+            }
+
+            .reserve-confirmed {
+                margin-top: 2rem;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
         }
         
     }
