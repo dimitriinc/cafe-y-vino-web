@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -5,156 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Café y Vino | Admin</title>
     <link rel="stylesheet" href="/dist/style.css">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <script defer src="admin.js"></script>
 </head>
 <body style="margin-top: 3rem">
 
     <header class="reserves-header">
-        <img id="logo-res-head" src="/images/logo_inline_black.svg" alt="logo">
-        <button id="tomorrow-btn">Mañana</button>
-        <img id="cal-res-head" src="/images/calendar.png" alt="calendario">
+        <div class="flex-header-container">
+            <img id="logo-res-head" src="/images/logo_inline_black.svg" alt="logo">
+            <button id="tomorrow-btn">mañana</button>
+            <img id="cal-res-head" src="/images/calendar.png" alt="calendario">
+        </div>
+        <div id="res-date-picker--container">
+            <input type="date" name="date" id="res-date-picker">
+        </div>
     </header>
 
     <div id="head-spacers-res"></div>
-    <h2 class="aux-title centered" id="reserves-title" style="display: inline">Reservaciones</h2>
-    <h3 id="reserves-date">20 / 07 / 2023</h3>
+    <h2 class="aux-title" id="reserves-title">Reservaciones</h2>
+    <h3 id="reserves-date"></h3>
 
     <main class="main-admin">
 
-        <div class="reserves-container">
+        <img id="reserves-loader" class="invisible centered" src="/images/reservesLoader.svg" alt="loader">
 
-            <div class="reserves-item centered">
+        <div id="res-err-msg" class="invisible centered"></div>
 
-                <h3>Jose Jimenez - 18:00</h3>
-
-                <div class="reserve-data">
-                    <div class="res-pax">
-                        <span class="reserve-label">Pax: </span>
-                        <span class="reserve-value">04</span>
-                    </div>
-                    <div class="res-telephone">
-                        <span class="reserve-label">Teléfono: </span>
-                        <span class="reserve-value">985 355 893</span>
-                    </div>
-                    <div class="res-comment">
-                        <span class="reserve-label">Comentario: </span>
-                        <span class="reserve-value">Lorem ipsum dolor sit amet</span>
-                    </div>
-                </div>
-
-                <div class="reserve-confirmed">
-                    <img src="/images/confirm-tick.png" alt="confirmado">
-                </div>
-
-            </div>
-
-            <div class="reserves-item centered">
-
-                <h3>Joel Miller - 16:30</h3>
-
-                <div class="reserve-data">
-                    <div class="res-pax">
-                        <span class="reserve-label">Pax: </span>
-                        <span class="reserve-value">02</span>
-                    </div>
-                    <div class="res-telephone">
-                        <span class="reserve-label">Teléfono: </span>
-                        <span class="reserve-value">984 298 234</span>
-                    </div>
-                    <div class="res-comment">
-                        <span class="reserve-label">Comentario: </span>
-                        <span class="reserve-value">Sin comentario</span>
-                    </div>
-                    
-                </div>
-
-                <div class="reserve-actions">
-                    <a href="#" class="res-action">Confirmar</a>
-                    <a href="#" class="res-action">Rechazar</a>
-                </div>
-
-            </div>
-
-            <div class="reserves-item centered">
-
-                <h3>Ellie Anderson - 20:30</h3>
-
-                <div class="reserve-data">
-                    <div class="res-pax">
-                        <span class="reserve-label">Pax: </span>
-                        <span class="reserve-value">03</span>
-                    </div>
-                    <div class="res-telephone">
-                        <span class="reserve-label">Teléfono: </span>
-                        <span class="reserve-value">432 954 908</span>
-                    </div>
-                    <div class="res-comment">
-                        <span class="reserve-label">Comentario: </span>
-                        <span class="reserve-value">Sin comentario</span>
-                    </div>
-                </div>
-
-                <div class="reserve-actions">
-                    <a href="#" class="res-action">Confirmar</a>
-                    <a href="#" class="res-action">Rechazar</a>
-                </div>
-
-            </div>
-
-            <div class="reserves-item centered">
-
-                <h3>Marlene Firefly - 19:00</h3>
-
-                <div class="reserve-data">
-                    <div class="res-pax">
-                        <span class="reserve-label">Pax: </span>
-                        <span class="reserve-value">08</span>
-                    </div>
-                    <div class="res-telephone">
-                        <span class="reserve-label">Teléfono: </span>
-                        <span class="reserve-value">456 345 098</span>
-                    </div>
-                    <div class="res-comment">
-                        <span class="reserve-label">Comentario: </span>
-                        <span class="reserve-value">Nulla malesuada pellentesque elit eget gravida cum sociis</span>
-                    </div>
-                </div>
-
-                <div class="reserve-confirmed">
-                    <img src="/images/confirm-tick.png" alt="confirmado">
-                </div>
-
-            </div>
-
-            <div class="reserves-item centered">
-
-                <h3>Tommy Miller - 18:00</h3>
-
-                <div class="reserve-data">
-                    <div class="res-pax">
-                        <span class="reserve-label">Pax: </span>
-                        <span class="reserve-value">02</span>
-                    </div>
-                    <div class="res-telephone">
-                        <span class="reserve-label">Teléfono: </span>
-                        <span class="reserve-value">566 099 467</span>
-                    </div>
-                    <div class="res-comment">
-                        <span class="reserve-label">Comentario: </span>
-                        <span class="reserve-value">Sin comentario</span>
-                    </div>
-                </div>
-
-                <div class="reserve-confirmed">
-                    <img src="/images/confirm-tick.png" alt="confirmado">
-                </div>
-
-            </div>                
-
-        </div>
+        <div class="reserves-container invisible"></div>
 
     </main>
-
-    <script src="admin.js"></script>
     
 </body>
 </html>

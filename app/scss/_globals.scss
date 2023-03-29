@@ -242,3 +242,13 @@ input::-webkit-progress-value {
     margin-bottom: 2rem;
     position: relative;
 }
+
+.invisible {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+}
