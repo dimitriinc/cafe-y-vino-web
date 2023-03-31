@@ -121,7 +121,7 @@ function renderCalendar(month, year) {
                     if (day == selectedDay && currentMonth == selectedMonth && currentYear == selectedYear) {
                         cells[j].classList.add('day-selected');
                         let momentDate = moment(new Date(selectedYear, selectedMonth, selectedDay));
-                        date_element.value = momentDate.format('DD-MM-YYYY');
+                        date_element.value = momentDate.format('DD/MM/YYYY');
                         console.log(`selected date: ${date_element.value}`);
                     }
 

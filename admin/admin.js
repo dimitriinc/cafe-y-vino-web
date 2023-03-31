@@ -12,51 +12,59 @@ const reservesDatePicker = document.getElementById('res-date-picker')
 const today = new Date()
 
 const loadReserves = function(date) {
+
+    const dateFormatted = `${String(date.getDate()).padStart(2,0)}/${String(date.getMonth() + 1).padStart(2,0)}/${date.getFullYear()}`
+    console.log(dateFormatted);
+
     reservesContainer.classList.remove('visible')
     errorMessage.classList.remove('visible')
     reservesContainer.innerHTML = ''
-    dateLabel.textContent = date.toLocaleDateString()
+    dateLabel.textContent = dateFormatted
     reservesLoader.classList.add('visible')
 
-    fetch('protocol://domain/resource')
+    fetch(`https://85eb-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
+        method: 'POST',
+        mode: 'cors'
+    })
         .then(response => {
             if (response.status === 404) throw new Error('404')
             return response.json()
         })
         .then(data => {
+            console.log(data);
             if (data.length === 0) throw new Error('No hay reservas')
-            data.forEach(reserve => {
+            data.forEach(reservation => {
                 const item = document.createElement('div')
                 item.classList.add('reserves-item')
                 const mainHtml = `
-                    <h3>${reserve.name} - ${reserve.hour}</h3>
+                    <h3>${reservation.name} - ${reservation.hour}</h3>
 
-                    <div class="reserve-data">
+                    <div class="reservation-data">
                         <div class="res-pax">
-                            <span class="reserve-label">Pax: </span>
-                            <span class="reserve-value">${reserve.pax}</span>
+                            <span class="reservation-label">Pax: </span>
+                            <span class="reservation-value">${reservation.pax}</span>
                         </div>
                         <div class="res-telephone">
-                            <span class="reserve-label">Teléfono: </span>
-                            <span class="reserve-value">${reserve.phone}</span>
+                            <span class="reservation-label">Teléfono: </span>
+                            <span class="reservation-value">${reservation.phone}</span>
                         </div>
                         <div class="res-comment">
-                            <span class="reserve-label">Comentario: </span>
-                            <span class="reserve-value">${reserve.comment}</span>
+                            <span class="reservation-label">Comentario: </span>
+                            <span class="reservation-value">${reservation.comment}</span>
                         </div>
                     </div>
                 `
                 item.insertAdjacentHTML('afterbegin', mainHtml)
                 let endHtml
-                if (reserve.confirmed) {
+                if (reservation.confirmed) {
                     endHtml = `
-                        <div class="reserve-confirmed">
+                        <div class="reservation-confirmed">
                             <img src="/images/confirm-tick.png" alt="confirmado">
                         </div>
                     `
                 } else {
                     endHtml = `
-                        <div class="reserve-actions">
+                        <div class="reservation-actions">
                             <a href="#" class="res-action">Confirmar</a>
                             <a href="#" class="res-action">Rechazar</a>
                         </div>

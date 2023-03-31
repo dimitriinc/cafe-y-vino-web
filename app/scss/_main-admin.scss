@@ -71,14 +71,19 @@
 
 #reserves-title {
     font-family: 'Saveur Sans';
-    margin-top: 4rem;
+    margin-top: 3rem;
     letter-spacing: 5px;
     font-size: 30px;
+
+    @include breakpoint-down(tablet) {
+        margin-top: 2rem;
+    }
 }
 
 #reserves-date {
     font-family: 'Saveur Sans';
     letter-spacing: 2px;
+    margin-bottom: 3rem;
 }
 
 .main-admin {
@@ -109,6 +114,8 @@
             padding: 1rem;
             border: 3px solid $nav_links;
             margin-bottom: 2rem;
+            margin-left: auto;
+            margin-right: auto;
 
             @include breakpoint-down(tablet) {
                 width: 300px;
@@ -119,15 +126,15 @@
                 letter-spacing: 2px;
             }
 
-            .reserve-data {
+            .reservation-data {
                 text-align: start;
 
-                .reserve-label {
+                .reservation-label {
                     font-weight: bold;
                 }
             }
 
-            .reserve-actions {
+            .reservation-actions {
 
                 margin-top: 2rem;
 
@@ -160,7 +167,7 @@
                 }
             }
 
-            .reserve-confirmed {
+            .reservation-confirmed {
                 margin-top: 2rem;
 
                 img {
