@@ -107,6 +107,8 @@
     }
 
     .reserves-container {
+
+        transition: all .5s ease-in-out;
         
         .reserves-item {
             width: 640px;
