@@ -22,7 +22,7 @@ const loadReserves = function(date) {
     dateLabel.textContent = dateFormatted
     reservesLoader.classList.add('visible')
 
-    fetch(`https://85eb-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
+    fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
         method: 'POST',
         mode: 'cors'
     })
@@ -65,8 +65,8 @@ const loadReserves = function(date) {
                 } else {
                     endHtml = `
                         <div class="reservation-actions">
-                            <a href="#" class="res-action">Confirmar</a>
-                            <a href="#" class="res-action">Rechazar</a>
+                            <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action">Confirmar</button>
+                            <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action">Rechazar</button>
                         </div>
                     `
                 }
@@ -88,6 +88,38 @@ const loadReserves = function(date) {
             }, 3000)
         })
 }
+
+reservesContainer.addEventListener('click', event => {
+
+    if (event.target.innerHTML === 'Confirmar') {
+        console.log('CONFIRMAR pressed');
+        const data = event.target.dataset
+        fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+            method: 'POST',
+            mode: 'cors'
+        })
+            .then(response => response.text())
+            .then(msg => {
+                console.log(msg)
+                location.reload()
+            })
+            .catch(error => console.log(error.message))
+
+    } else if (event.target.innerHTML === 'Rechazar') {
+        console.log('RECHAZAR pressed');
+        const data = event.target.dataset
+        fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+            method: 'POST',
+            mode: 'cors'
+        })
+            .then(response => response.text())
+            .then(msg => {
+                console.log(msg)
+                location.reload()
+            })
+            .catch(error => console.log(error.message))
+    }
+})
 
 loadReserves(today)
 

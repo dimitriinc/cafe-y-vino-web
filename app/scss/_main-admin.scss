@@ -152,12 +152,15 @@
 
                     @include breakpoint-down(tablet) {
                         display: block;
+                        margin-left: auto;
+                        margin-right: auto;
                         &:active {
                             transform: scale(95%);
                         }
                     }    
 
                     @include breakpoint-up(laptop) {
+                        cursor: pointer;
                         &:hover {
                             transform: scale(105%);
                         }

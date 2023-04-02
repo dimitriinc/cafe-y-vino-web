@@ -55,7 +55,7 @@ form_element.addEventListener('submit', event => {
 
 
 
-    fetch(`https://85eb-190-238-135-197.sa.ngrok.io/make-reservation`, {
+    fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/make-reservation`, {
         method: 'POST',
         mode: 'cors',
         headers: {
