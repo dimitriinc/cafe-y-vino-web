@@ -4,6 +4,7 @@
     top: 0;
     width: 100%;
     background-color: $overlay;
+    z-index: 999;
 
     @include breakpoint-up(laptop) {
         background-color: transparent;
@@ -140,35 +141,64 @@
 
                 margin-top: 2rem;
 
-                .res-action {
-                    display: inline-block;
-                    margin: 1rem;
-                    padding: 1rem;
-                    font-family: 'Saveur Sans';
-                    border: 1px solid $nav_links;
-                    color: $nav_links;
-                    background-color: $overlay;
-                    transition: all .2s ease-in;
-
-                    @include breakpoint-down(tablet) {
-                        display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        &:active {
-                            transform: scale(95%);
-                        }
-                    }    
-
+                .reservation-action-container {
+                    position: relative;
+                    z-index: 2;
+                    
                     @include breakpoint-up(laptop) {
-                        cursor: pointer;
-                        &:hover {
-                            transform: scale(105%);
-                        }
-                        &:active {
-                            transform: scale(100%)
+                        display: inline-block;
+                    }
+                    
+
+                    .reservation-loader {
+                        opacity: 0;
+                        visibility: hidden;
+                        height: 32px;
+                        width: 30px;
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        top: 30%;
+                        margin: auto;
+                        z-index: 3;
+                        transition: all .3s ease-in;
+
+                        @include breakpoint-down(tablet) {
+                            top: 20%;
                         }
                     }
-                
+
+                    .res-action {
+                        display: inline-block;
+                        margin: 1rem;
+                        padding: 1rem;
+                        font-family: 'Saveur Sans';
+                        border: 1px solid $nav_links;
+                        color: $nav_links;
+                        background-color: $overlay;
+                        transition: all .1s ease-in;
+                        z-index: 4;
+    
+                        @include breakpoint-down(tablet) {
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
+                            &:active {
+                                transform: scale(95%);
+                            }
+                        }    
+    
+                        @include breakpoint-up(laptop) {
+                            cursor: pointer;
+                            &:hover {
+                                transform: scale(105%);
+                            }
+                            &:active {
+                                transform: scale(100%)
+                            }
+                        }
+                    
+                    }
                 }
             }
 

@@ -10,11 +10,16 @@ const reservesHeader = document.querySelector('.reserves-header')
 const reservesDatePicker = document.getElementById('res-date-picker')
 
 const today = new Date()
+let currentDate = today
+
+if (sessionStorage.getItem('date')) {
+    currentDate = new Date(sessionStorage.getItem('date'))
+    if (currentDate.toLocaleDateString() !== today.toLocaleDateString()) tomorrowBtn.textContent = 'hoy'
+}
 
 const loadReserves = function(date) {
 
     const dateFormatted = `${String(date.getDate()).padStart(2,0)}/${String(date.getMonth() + 1).padStart(2,0)}/${date.getFullYear()}`
-    console.log(dateFormatted);
 
     reservesContainer.classList.remove('visible')
     errorMessage.classList.remove('visible')
@@ -22,7 +27,7 @@ const loadReserves = function(date) {
     dateLabel.textContent = dateFormatted
     reservesLoader.classList.add('visible')
 
-    fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
+    fetch(`https://bace-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
         method: 'POST',
         mode: 'cors'
     })
@@ -65,8 +70,14 @@ const loadReserves = function(date) {
                 } else {
                     endHtml = `
                         <div class="reservation-actions">
-                            <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action">Confirmar</button>
-                            <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action">Rechazar</button>
+                            <div class="reservation-action-container">
+                                <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action btn-confirm-res">Confirmar</button>
+                                <img id="reservation-confirmation-loader" class="reservation-loader" src="/images/loaders/res-actions.svg" alt="loader">
+                            </div>
+                            <div class="reservation-action-container">
+                                <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action btn-reject-res">Rechazar</button>
+                                <img id="reservation-rejection-loader" class="reservation-loader" src="/images/loaders/res-actions.svg" alt="loader">
+                            </div>
                         </div>
                     `
                 }
@@ -77,51 +88,69 @@ const loadReserves = function(date) {
         })
         .catch(error => {
             setTimeout(() => {
-                errorMessage.textContent = 'No hay reservas'
+                errorMessage.textContent = error.message
                 errorMessage.classList.add('visible')
-            }, 3500)
+            }, 0)
         })
         .finally(() => {
             setTimeout(() => {
                 reservesLoader.classList.remove('visible')
                 reservesContainer.classList.add('visible')
-            }, 3000)
+            }, 0)
         })
 }
 
 reservesContainer.addEventListener('click', event => {
 
     if (event.target.innerHTML === 'Confirmar') {
+
         console.log('CONFIRMAR pressed');
         const data = event.target.dataset
-        fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+        const loader = event.target.nextElementSibling
+        const btnReject = event.target.closest('.reservation-actions').querySelector('.btn-reject-res')
+        console.log(btnReject);
+        event.target.setAttribute('style', 'opacity: 0; z-index: 1; pointer-events: none;')
+        loader.setAttribute('style', 'opacity: 1; visibility: visible;')
+        btnReject.setAttribute('style', 'pointer-events: none;')
+
+        fetch(`https://bace-190-238-135-197.sa.ngrok.io/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
             method: 'POST',
             mode: 'cors'
         })
-            .then(response => response.text())
-            .then(msg => {
-                console.log(msg)
-                location.reload()
+            .then(() => location.reload())
+            .catch(() => {
+                loader.removeAttribute('style')
+                event.target.removeAttribute('style')
+                btnReject.removeAttribute('style')
+                alert('Ha ocurrido un error.\nInténtalo de nuevo más tarde.')
             })
-            .catch(error => console.log(error.message))
 
     } else if (event.target.innerHTML === 'Rechazar') {
+
         console.log('RECHAZAR pressed');
         const data = event.target.dataset
-        fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+        const loader = event.target.nextElementSibling
+        const btnConfirm = event.target.closest('.reservation-actions').querySelector('.btn-confirm-res')
+        console.log(btnConfirm);
+        event.target.setAttribute('style', 'opacity: 0; z-index: 1; pointer-events: none;')
+        loader.setAttribute('style', 'opacity: 1; visibility: visible;')
+        btnConfirm.setAttribute('style', 'pointer-events: none;')
+
+        fetch(`https://bace-190-238-135-197.sa.ngrok.io/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
             method: 'POST',
             mode: 'cors'
         })
-            .then(response => response.text())
-            .then(msg => {
-                console.log(msg)
-                location.reload()
+            .then(() => location.reload())
+            .catch(() => {
+                loader.removeAttribute('style')
+                event.target.removeAttribute('style')
+                btnConfirm.removeAttribute('style')
+                alert('Ha ocurrido un error.\nInténtalo de nuevo más tarde.')
             })
-            .catch(error => console.log(error.message))
     }
 })
 
-loadReserves(today)
+loadReserves(currentDate)
 
 tomorrowBtn.addEventListener('click', () => {
     if (tomorrowBtn.textContent !== 'hoy') {
@@ -129,9 +158,11 @@ tomorrowBtn.addEventListener('click', () => {
         let tomorrow = new Date()
         tomorrow.setDate(today.getDate() + 1)
         loadReserves(tomorrow)
+        sessionStorage.setItem('date', tomorrow)
     } else {
         tomorrowBtn.textContent = 'mañana'
         loadReserves(today)
+        sessionStorage.setItem('date', today)
     }
 })
 
@@ -143,6 +174,7 @@ reservesDatePicker.addEventListener('change', () => {
     const date = new Date(reservesDatePicker.value)
     date.setHours(date.getHours()+5)
     loadReserves(date)
+    sessionStorage.setItem('date', date)
     if (today.toLocaleDateString() === date.toLocaleDateString()) {
         tomorrowBtn.textContent = 'mañana'
     } else {

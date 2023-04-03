@@ -50,12 +50,7 @@ form_element.addEventListener('submit', event => {
         arrivalTimestamp: arrivalTimestamp
     }
 
-    console.dir(dateObj);
-    console.log(arrivalTimestamp);
-
-
-
-    fetch(`https://6ca6-190-238-135-197.sa.ngrok.io/make-reservation`, {
+    fetch(`https://bace-190-238-135-197.sa.ngrok.io/make-reservation`, {
         method: 'POST',
         mode: 'cors',
         headers: {
