@@ -65,9 +65,7 @@
                 font-size: 18px;
                 margin: 10px;
                 min-width: fit-content;
-                // color: $nav_links;
                 border-radius: 5px;
-                // overflow: hidden;
                 cursor: pointer;
                 transition: all 200ms ease-in-out;
 
@@ -78,7 +76,7 @@
             }
 
             .active {
-                scale: 120%;
+                scale: 110%;
                 box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
             }
         }
@@ -133,14 +131,14 @@
     }
 
     .carta-load-anim {
-        width: 100px;
-        height: 200px;
+        width: 70px;
+        height: 70px;
         display: inline-block;
         position: absolute;
         left: 0;
         right: 0;
         margin: auto;
-        top: 20%;
+        top: 35%;
         transition: all 300ms ease-in-out;
     }
     

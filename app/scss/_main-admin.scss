@@ -1,4 +1,4 @@
-.reserves-header {
+.reservations-header {
     position: fixed;
     right: 0;
     top: 0;
@@ -70,7 +70,7 @@
     height: 100px;
 }
 
-#reserves-title {
+#reservations-title {
     font-family: 'Saveur Sans';
     margin-top: 3rem;
     letter-spacing: 5px;
@@ -81,7 +81,7 @@
     }
 }
 
-#reserves-date {
+#reservations-date {
     font-family: 'Saveur Sans';
     letter-spacing: 2px;
     margin-bottom: 3rem;
@@ -89,7 +89,7 @@
 
 .main-admin {
 
-    #reserves-loader {
+    #reservations-loader {
         position: fixed;
         left: 0;
         right: 0;
@@ -107,11 +107,11 @@
         width: 70%;
     }
 
-    .reserves-container {
+    .reservations-container {
 
         transition: all .5s ease-in-out;
         
-        .reserves-item {
+        .reservation-item {
             width: 640px;
             height: fit-content;
             padding: 1rem;
@@ -168,7 +168,7 @@
                         }
                     }
 
-                    .res-action {
+                    .reservation-action {
                         display: inline-block;
                         margin: 1rem;
                         padding: 1rem;

@@ -1,12 +1,12 @@
 const logoHead = document.getElementById('logo-res-head')
-const reservesContainer = document.querySelector('.reserves-container')
-const reservesLoader = document.getElementById('reserves-loader')
-const dateLabel = document.getElementById('reserves-date')
+const reservesContainer = document.querySelector('.reservations-container')
+const reservesLoader = document.getElementById('reservations-loader')
+const dateLabel = document.getElementById('reservations-date')
 const tomorrowBtn = document.getElementById('tomorrow-btn')
 const errorMessage = document.getElementById('res-err-msg')
 const reservesCalendar = document.getElementById('cal-res-head')
 const datePickerContainer = document.getElementById('res-date-picker--container')
-const reservesHeader = document.querySelector('.reserves-header')
+const reservesHeader = document.querySelector('.reservations-header')
 const reservesDatePicker = document.getElementById('res-date-picker')
 
 const today = new Date()
@@ -27,7 +27,7 @@ const loadReserves = function(date) {
     dateLabel.textContent = dateFormatted
     reservesLoader.classList.add('visible')
 
-    fetch(`https://bace-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
+    fetch(`https://e58c-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
         method: 'POST',
         mode: 'cors'
     })
@@ -40,7 +40,7 @@ const loadReserves = function(date) {
             if (data.length === 0) throw new Error('No hay reservas')
             data.forEach(reservation => {
                 const item = document.createElement('div')
-                item.classList.add('reserves-item')
+                item.classList.add('reservation-item')
                 const mainHtml = `
                     <h3>${reservation.name} - ${reservation.hour}</h3>
 
@@ -71,11 +71,11 @@ const loadReserves = function(date) {
                     endHtml = `
                         <div class="reservation-actions">
                             <div class="reservation-action-container">
-                                <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action btn-confirm-res">Confirmar</button>
+                                <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="reservation-action btn-confirm-res">Confirmar</button>
                                 <img id="reservation-confirmation-loader" class="reservation-loader" src="/images/loaders/res-actions.svg" alt="loader">
                             </div>
                             <div class="reservation-action-container">
-                                <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="res-action btn-reject-res">Rechazar</button>
+                                <button data-id="${reservation.id}" data-email="${reservation.email}" data-name="${reservation.name}" data-date="${reservation.date}" data-hour="${reservation.hour}" class="reservation-action btn-reject-res">Rechazar</button>
                                 <img id="reservation-rejection-loader" class="reservation-loader" src="/images/loaders/res-actions.svg" alt="loader">
                             </div>
                         </div>
@@ -107,17 +107,26 @@ reservesContainer.addEventListener('click', event => {
         console.log('CONFIRMAR pressed');
         const data = event.target.dataset
         const loader = event.target.nextElementSibling
-        const btnReject = event.target.closest('.reservation-actions').querySelector('.btn-reject-res')
+        const actionsContainer = event.target.closest('.reservation-actions')
+        const btnReject = actionsContainer.querySelector('.btn-reject-res')
         console.log(btnReject);
         event.target.setAttribute('style', 'opacity: 0; z-index: 1; pointer-events: none;')
         loader.setAttribute('style', 'opacity: 1; visibility: visible;')
         btnReject.setAttribute('style', 'pointer-events: none;')
 
-        fetch(`https://bace-190-238-135-197.sa.ngrok.io/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+        fetch(`https://e58c-190-238-135-197.sa.ngrok.io/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
             method: 'POST',
             mode: 'cors'
         })
-            .then(() => location.reload())
+            .then(() => {
+                const itemWrapper = actionsContainer.closest('.reservation-item')
+                actionsContainer.remove()
+                itemWrapper.insertAdjacentHTML('beforeend', `
+                    <div class="reservation-confirmed">
+                        <img src="/images/confirm-tick.png" alt="confirmado">
+                    </div>
+                `)
+            })
             .catch(() => {
                 loader.removeAttribute('style')
                 event.target.removeAttribute('style')
@@ -130,17 +139,26 @@ reservesContainer.addEventListener('click', event => {
         console.log('RECHAZAR pressed');
         const data = event.target.dataset
         const loader = event.target.nextElementSibling
-        const btnConfirm = event.target.closest('.reservation-actions').querySelector('.btn-confirm-res')
+        const actionsContainer = event.target.closest('.reservation-actions')
+        const btnConfirm = actionsContainer.querySelector('.btn-confirm-res')
         console.log(btnConfirm);
         event.target.setAttribute('style', 'opacity: 0; z-index: 1; pointer-events: none;')
         loader.setAttribute('style', 'opacity: 1; visibility: visible;')
         btnConfirm.setAttribute('style', 'pointer-events: none;')
 
-        fetch(`https://bace-190-238-135-197.sa.ngrok.io/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+        fetch(`https://e58c-190-238-135-197.sa.ngrok.io/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
             method: 'POST',
             mode: 'cors'
         })
-            .then(() => location.reload())
+            .then(() => {
+                const itemWrapper = actionsContainer.closest('.reservation-item')
+                actionsContainer.remove()
+                itemWrapper.insertAdjacentHTML('beforeend', `
+                    <div class="reservation-confirmed">
+                        <img src="/images/cancelled.png" alt="confirmado">
+                    </div>
+                `)
+            })
             .catch(() => {
                 loader.removeAttribute('style')
                 event.target.removeAttribute('style')
