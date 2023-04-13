@@ -23,7 +23,7 @@ const storageRef = storage.ref();
 
 let screenFocused = false;
 
- function main() {
+function main() {
 
     renewCarousel('menu/01.platos/platos');
     // renewCarousel('platos');
@@ -58,8 +58,8 @@ async function renewCarousel(collectionPath) {
     try {
         await loadMenuItems(collectionPath);
 
-    let elems = document.querySelectorAll('.carousel');
-    let instances = M.Carousel.init(elems);
+        let elems = document.querySelectorAll('.carousel');
+        let instances = M.Carousel.init(elems);
     } catch (error) {
         console.log(`caugth an error: ${error}`)
         renewCarousel(collectionPath);
@@ -71,9 +71,10 @@ async function loadMenuItems(collectionPath) {
         
         menuContainer.innerHTML = '';
 
-        const collectionReference = db.collection(collectionPath);
-        const query = collectionReference.where('isPresent', '==', true).orderBy('nombre');
-        let index = 0;
+        const collectionReference = db.collection(collectionPath)
+        const query = collectionReference.where('isPresent', '==', true).orderBy('nombre')
+        let index = 0
+        let imagesLoaded = 0
 
 
         // fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
@@ -96,7 +97,7 @@ async function loadMenuItems(collectionPath) {
         //         index++;
 
         //         // Create a container div for the title
-        //         let menuItemContainer = document.createElement('div');
+        //         let itemTitleContainer = document.createElement('div');
         //         menuItemContainer.classList.add('carousel-item-container');
 
         //         // Create the title div to put it inside the container
@@ -203,137 +204,122 @@ async function loadMenuItems(collectionPath) {
         //     console.log(`there was an error:: ${error}`)
         // })
 
-        await query.get().then(querySnapshot => {
+        const querySnapshot = await query.get()
 
-            const promises = [];
-            let imagesLoaded = 0;
+        querySnapshot.forEach(documentSnapshot => {
 
-            querySnapshot.forEach(documentSnapshot => {
+            // Parent element for a carousel item
+            const menuItemElement = document.createElement('div');
+            menuItemElement.classList.add('carousel-item');
+            if (index === 0) {
+                // The first product (alphabetically) starts at the center of the carousel
+                menuItemElement.classList.add('active');
+            }
+            index++;
 
-                // Create the parent item element
-                let menuItemElement = document.createElement('div');
-                menuItemElement.classList.add('carousel-item');
-                if (index === 0) {
-                    menuItemElement.classList.add('active');
+            // Relation element for the title, 0 hight, allows the Y translation of the title
+            const itemTitleContainer = document.createElement('div');
+            itemTitleContainer.classList.add('item-title-container');
+
+            // The title of the product
+            const menuItemTitle = document.createElement('div');
+            menuItemTitle.classList.add('item-title');
+            menuItemTitle.innerHTML = documentSnapshot.get('nombre');
+
+            // Image element, get the img path and load it to the img
+            let menuItemImage = document.createElement('img');
+            menuItemImage.alt = documentSnapshot.get('nombre');
+
+            let imagePath = documentSnapshot.get('image');
+            if (!imagePath) imagePath = 'lg.png'
+
+            downloadImage(imagePath, menuItemImage)
+
+            menuItemImage.addEventListener('load', () => {
+                imagesLoaded++
+                
+                // When the last img is loaded, display the whole carousel
+                if (imagesLoaded === querySnapshot.size) {
+                    menuContainer.setAttribute('style', 'opacity:1;')
+                    loader_anim.setAttribute('style', 'opacity: 0;')
                 }
-                index++;
-
-                // Create a container div for the title
-                let menuItemContainer = document.createElement('div');
-                menuItemContainer.classList.add('carousel-item-container');
-
-                // Create the title div to put it inside the container
-                let menuItemTitle = document.createElement('div');
-                menuItemTitle.classList.add('item-title');
-                menuItemTitle.innerHTML = documentSnapshot.get('nombre');
-
-                // Create the image element and load the image there
-                let imagePath = documentSnapshot.get('image');
-                if (imagePath === '' || imagePath == null) {
-                    imagePath = 'lg.png'
-                }
-                let menuItemImage = document.createElement('img');
-                menuItemImage.setAttribute('style', 'cursor:pointer;');
-                menuItemImage.addEventListener('mousedown', (event) => {
-                    menuItemImage.setAttribute('style', 'cursor:grabbing;')
-                });
-                menuItemImage.addEventListener('mouseup', (event) => {
-                    menuItemImage.setAttribute('style', 'cursor:pointer;')
-                });
-                menuItemImage.alt = documentSnapshot.get('nombre');
-
-                promises.push(downloadImage(imagePath, menuItemImage));
-
-                menuItemImage.addEventListener('load', () => {
-                    imagesLoaded++
-                    if (imagesLoaded === querySnapshot.size) {
-                        menuContainer.setAttribute('style', 'opacity:1;')
-                        loader_anim.setAttribute('style', 'opacity: 0;')
-                    }
-                })
-
-                // Create the item's elements hierarchy and append it to the carousel container
-                menuItemContainer.appendChild(menuItemTitle);
-                menuItemElement.appendChild(menuItemContainer);
-                menuItemElement.appendChild(menuItemImage);
-                menuContainer.appendChild(menuItemElement);
-
-                // Handle the onclick logic
-                let isGrabbing = false;
-                let grabStartX, grabStartY;
-
-                menuItemElement.addEventListener('mousedown', event => {
-                    isGrabbing = true;
-                    grabStartX = event.clientX;
-                    grabStartY = event.clientY;
-                });
-                menuItemElement.addEventListener('mousemove', event => {
-                    if (isGrabbing) {
-                        let xDiff = event.clientX - grabStartX;
-                        let yDiff = event.clientY - grabStartY;
-                        let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                        if (distance > 10) {
-                            menuItemElement.style.cursor = 'grabbing';
-                        }
-                    }
-                })
-                menuItemElement.addEventListener('mouseup', event => {
-                    isGrabbing = false;
-                    menuItemElement.style.cursor = 'pointer';
-                    let xDiff = event.clientX - grabStartX;
-                    let yDiff = event.clientY - grabStartY;
-                    let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                    if (distance < 10) {
-                        if (!screenFocused) {
-                            screenFocused = true;
-    
-                            blanket.classList.add('blanket-focused');
-                            exitBtn.classList.add('exit-focused');
-                            document.body.style.overflow = 'hidden';
-
-                            let itemFocus = menuItemElement.cloneNode(true);
-                            itemFocus.classList.add('item-focus');
-                            itemFocus.setAttribute('style', 'visibility:visible;')
-
-                            let description = document.createElement('div');
-                            description.classList.add('description-focus');
-                            let descText = documentSnapshot.get('descripcion');
-                            if (descText === '' || descText === undefined || descText === null) {
-                                descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
-                            }
-                            description.innerHTML = descText;
-                            description.innerHTML += '<br><br>';
-                            description.innerHTML += '<em>S/. ' + documentSnapshot.get('precio') + '</em>';
-
-                        
-                            blanket.appendChild(itemFocus);
-                            blanket.appendChild(description);
-                            setTimeout(() => {
-                                itemFocus.classList.add('item-in-focus');
-                                description.classList.add('description-in-focus');
-                            }, 1);
-
-    
-                            exitBtn.addEventListener('click', event => {
-                                blanket.classList.remove('blanket-focused');
-                                exitBtn.classList.remove('exit-focused');
-                                document.body.style.overflow = 'auto';
-                                document.body.style.overflowX = 'hidden';
-                                blanket.removeChild(itemFocus);  
-                                blanket.removeChild(description);  
-                                screenFocused = false;
-                            });
-                        }
-                    }
-                });
-            });
-
-            Promise.all(promises).then(() => {
-                // menuContainer.setAttribute('style', 'opacity:1;')
-                // loader_anim.setAttribute('style', 'opacity: 0;')
             })
-            
-        });
+
+            // Create the item's elements hierarchy and append it to the carousel container
+            itemTitleContainer.appendChild(menuItemTitle);
+            menuItemElement.appendChild(itemTitleContainer);
+            menuItemElement.appendChild(menuItemImage);
+            menuContainer.appendChild(menuItemElement);
+
+            // Handle the onclick logic
+            let isGrabbing = false;
+            let grabStartX, grabStartY;
+
+            menuItemElement.addEventListener('mousedown', event => {
+                isGrabbing = true;
+                grabStartX = event.clientX;
+                grabStartY = event.clientY;
+            });
+            menuItemElement.addEventListener('mousemove', event => {
+                if (isGrabbing) {
+                    const xDiff = event.clientX - grabStartX;
+                    const yDiff = event.clientY - grabStartY;
+                    const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                    if (distance > 10) {
+                        menuItemImage.setAttribute('style', 'cursor:grabbing;')
+                    }
+                }
+            })
+            menuItemElement.addEventListener('mouseup', event => {
+                isGrabbing = false;
+                menuItemImage.setAttribute('style', 'cursor:pointer;')
+                let xDiff = event.clientX - grabStartX;
+                let yDiff = event.clientY - grabStartY;
+                let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                if (distance < 10) {
+                    if (!screenFocused) {
+                        screenFocused = true;
+
+                        blanket.classList.add('blanket-focused');
+                        exitBtn.classList.add('exit-focused');
+                        document.body.style.overflow = 'hidden';
+
+                        let itemFocus = menuItemElement.cloneNode(true);
+                        itemFocus.classList.add('item-focus');
+                        itemFocus.setAttribute('style', 'visibility:visible;')
+
+                        let description = document.createElement('div');
+                        description.classList.add('description-focus');
+                        let descText = documentSnapshot.get('descripcion');
+                        if (descText === '' || descText === undefined || descText === null) {
+                            descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
+                        }
+                        description.innerHTML = descText;
+                        description.innerHTML += '<br><br>';
+                        description.innerHTML += '<em>S/. ' + documentSnapshot.get('precio') + '</em>';
+
+                    
+                        blanket.appendChild(itemFocus);
+                        blanket.appendChild(description);
+                        setTimeout(() => {
+                            itemFocus.classList.add('item-in-focus');
+                            description.classList.add('description-in-focus');
+                        }, 1);
+
+
+                        exitBtn.addEventListener('click', event => {
+                            blanket.classList.remove('blanket-focused');
+                            exitBtn.classList.remove('exit-focused');
+                            document.body.style.overflow = 'auto';
+                            document.body.style.overflowX = 'hidden';
+                            blanket.removeChild(itemFocus);  
+                            blanket.removeChild(description);  
+                            screenFocused = false;
+                        });
+                    }
+                }
+            });
+        }); 
     }
 
 // Takes the inner HTML of the clicked category and returns a path to the appropriate collection
@@ -402,10 +388,9 @@ function convertCategoryToTableName(category) {
 }
 
 async function downloadImage(imgPath, menuItemImage) {
-    let imageReference = storageRef.child(imgPath);
-    await imageReference.getDownloadURL().then(function(url) {
-        menuItemImage.src = url;
-    });
+    const imageReference = storageRef.child(imgPath);
+    const url = await imageReference.getDownloadURL()
+    menuItemImage.src = url;
 }
 
 main()
