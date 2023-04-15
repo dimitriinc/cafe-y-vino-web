@@ -1,10 +1,12 @@
-const menuCategoryElements = document.querySelectorAll('.menu-category');
-const menuContainer = document.querySelector('.carousel');
-const vinosCategories = document.querySelectorAll('.vino-category');
-const blanket = document.querySelector('.blanket');
-const exitBtn = document.querySelector('.exit-btn');
+// DOM elements
+const menuCategoryElements = document.querySelectorAll('.menu-category')
+const menuContainer = document.querySelector('.carousel')
+const vinosCategories = document.querySelectorAll('.vino-category')
+const blanket = document.querySelector('.blanket')
+const exitBtn = document.querySelector('.exit-btn')
 const loader_anim = document.querySelector('.carta-load-anim')
 
+// Firebase stuff
 const firebaseConfig = {
     apiKey: "AIzaSyC8URyjiTFzhzOwuJYtftqN0sFaDGzj9rc",
     authDomain: "cafe-y-vino.firebaseapp.com",
@@ -14,43 +16,50 @@ const firebaseConfig = {
     messagingSenderId: "1096226926741",
     appId: "1:1096226926741:web:d5c23cb2bbba3fb4796b9c",
     measurementId: "G-D0VKYKE89E"
-};
-
-firebase.initializeApp(firebaseConfig); 
-const db = firebase.firestore();
-const storage = firebase.storage();
-const storageRef = storage.ref();
-
-let screenFocused = false;
-
-function main() {
-
-    renewCarousel('menu/01.platos/platos');
-    // renewCarousel('platos');
-
-    menuCategoryElements.forEach(function(element) {
-        element.addEventListener('click', function() {
-            if (element.innerHTML == "Vinos") {
-                return;
-            }
-            let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
-            let table_name = convertCategoryToTableName(element.innerHTML);
-            // renewCarousel(table_name);
-            renewCarousel(collectionPath);
-        });
-    });
-
-    vinosCategories.forEach(function(element) {
-        element.addEventListener('click', function() {
-            let collectionPath = convertCategoryToCollectionPath(element.innerHTML);
-            let table_name = convertCategoryToTableName(element.innerHTML);
-            // renewCarousel(table_name);
-            renewCarousel(collectionPath);
-        });
-    });
 }
+firebase.initializeApp(firebaseConfig)
+const db = firebase.firestore()
+const storage = firebase.storage()
+const storageRef = storage.ref()
 
-async function renewCarousel(collectionPath) {
+// Global variables
+let screenFocused = false
+let loadedImages = 0
+
+// Event Listeners
+menuCategoryElements.forEach(element => 
+    element.addEventListener('click', () => {
+        if (element.innerHTML == "Vinos") return
+        const collectionPath = convertCategoryToCollectionPath(element.innerHTML);
+        const table_name = convertCategoryToTableName(element.innerHTML);
+        // updateCarousel(table_name);
+        updateCarousel(collectionPath);
+    })
+);
+
+vinosCategories.forEach(element =>
+    element.addEventListener('click', function() {
+        const collectionPath = convertCategoryToCollectionPath(element.innerHTML);
+        const table_name = convertCategoryToTableName(element.innerHTML);
+        // updateCarousel(table_name);
+        updateCarousel(collectionPath);
+    })
+);
+
+exitBtn.addEventListener('click', () => {
+    if (!screenFocused) return
+    focusExit()
+});
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+        if (!screenFocused) return
+        focusExit()
+    }
+})
+
+// Functions
+async function updateCarousel(collectionPath) {
 
     menuContainer.setAttribute('style', 'opacity:0;')
     loader_anim.setAttribute('style', 'opacity: 1;')
@@ -61,22 +70,22 @@ async function renewCarousel(collectionPath) {
         let elems = document.querySelectorAll('.carousel');
         let instances = M.Carousel.init(elems);
     } catch (error) {
-        console.log(`caugth an error: ${error}`)
-        renewCarousel(collectionPath);
+        updateCarousel(collectionPath);
     } 
 }
 
 async function loadMenuItems(collectionPath) {
     // async function loadMenuItems(table_name) {
         
-        menuContainer.innerHTML = '';
+        menuContainer.innerHTML = ''
+        imagesLoaded = 0
 
         const collectionReference = db.collection(collectionPath)
         const query = collectionReference.where('isPresent', '==', true).orderBy('nombre')
         let index = 0
-        let imagesLoaded = 0
-
-
+        let isGrabbing = false
+        let grabStartX, grabStartY
+        
         // fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
         //     method: 'POST',
         //     mode: 'cors'
@@ -206,55 +215,60 @@ async function loadMenuItems(collectionPath) {
 
         const querySnapshot = await query.get()
 
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot.forEach(async documentSnapshot => {
+
+            const carouselItem = await createItemElement(documentSnapshot, index)
+            index++
 
             // Parent element for a carousel item
-            const menuItemElement = document.createElement('div');
-            menuItemElement.classList.add('carousel-item');
-            if (index === 0) {
-                // The first product (alphabetically) starts at the center of the carousel
-                menuItemElement.classList.add('active');
-            }
-            index++;
+            // const menuItemElement = document.createElement('div');
+            // menuItemElement.classList.add('carousel-item');
+            // if (index === 0) {
+            //     // The first product (alphabetically) starts at the center of the carousel
+            //     menuItemElement.classList.add('active');
+            // }
+            // index++;
 
-            // Relation element for the title, 0 hight, allows the Y translation of the title
-            const itemTitleContainer = document.createElement('div');
-            itemTitleContainer.classList.add('item-title-container');
+            // // Relation element for the title, 0 hight, allows the Y translation of the title
+            // const itemTitleContainer = document.createElement('div');
+            // itemTitleContainer.classList.add('item-title-container');
 
-            // The title of the product
-            const menuItemTitle = document.createElement('div');
-            menuItemTitle.classList.add('item-title');
-            menuItemTitle.innerHTML = documentSnapshot.get('nombre');
+            // // The title of the product
+            // const menuItemTitle = document.createElement('div');
+            // menuItemTitle.classList.add('item-title');
+            // menuItemTitle.innerHTML = documentSnapshot.get('nombre');
 
-            // Image element, get the img path and load it to the img
-            let menuItemImage = document.createElement('img');
-            menuItemImage.alt = documentSnapshot.get('nombre');
+            // // Image element, get the img path and load it to the img
+            // const menuItemImage = document.createElement('img');
+            // menuItemImage.alt = documentSnapshot.get('nombre');
 
-            let imagePath = documentSnapshot.get('image');
-            if (!imagePath) imagePath = 'lg.png'
+            // const imagePath = documentSnapshot.get('image') ? documentSnapshot.get('image') : 'lg.png'
 
-            downloadImage(imagePath, menuItemImage)
+            // downloadImage(imagePath, menuItemImage)
 
-            menuItemImage.addEventListener('load', () => {
-                imagesLoaded++
+            // menuItemImage.addEventListener('load', () => {
+            //     imagesLoaded++
                 
-                // When the last img is loaded, display the whole carousel
-                if (imagesLoaded === querySnapshot.size) {
-                    menuContainer.setAttribute('style', 'opacity:1;')
-                    loader_anim.setAttribute('style', 'opacity: 0;')
-                }
-            })
+            //     // When the last img is loaded, display the whole carousel
+            //     if (imagesLoaded === querySnapshot.size) {
+            //         menuContainer.setAttribute('style', 'opacity:1;')
+            //         loader_anim.setAttribute('style', 'opacity: 0;')
+            //     }
+            // })
 
-            // Create the item's elements hierarchy and append it to the carousel container
-            itemTitleContainer.appendChild(menuItemTitle);
-            menuItemElement.appendChild(itemTitleContainer);
-            menuItemElement.appendChild(menuItemImage);
-            menuContainer.appendChild(menuItemElement);
+            // // Create the item's elements hierarchy and append it to the carousel container
+            // itemTitleContainer.appendChild(menuItemTitle);
+            // menuItemElement.appendChild(itemTitleContainer);
+            // menuItemElement.appendChild(menuItemImage);
+            menuContainer.appendChild(carouselItem);
+
+            // When the last img is loaded, display the whole carousel
+            if (imagesLoaded === querySnapshot.size) {
+                menuContainer.setAttribute('style', 'opacity:1;')
+                loader_anim.setAttribute('style', 'opacity: 0;')
+            }
 
             // Handle the onclick logic
-            let isGrabbing = false;
-            let grabStartX, grabStartY;
-
             menuItemElement.addEventListener('mousedown', event => {
                 isGrabbing = true;
                 grabStartX = event.clientX;
@@ -277,50 +291,43 @@ async function loadMenuItems(collectionPath) {
                 let yDiff = event.clientY - grabStartY;
                 let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
                 if (distance < 10) {
-                    if (!screenFocused) {
-                        screenFocused = true;
+                    if (screenFocused) return
 
-                        blanket.classList.add('blanket-focused');
-                        exitBtn.classList.add('exit-focused');
-                        document.body.style.overflow = 'hidden';
+                    screenFocused = true;
 
-                        let itemFocus = menuItemElement.cloneNode(true);
-                        itemFocus.classList.add('item-focus');
-                        itemFocus.setAttribute('style', 'visibility:visible;')
+                    blanket.classList.add('blanket-focused');
+                    exitBtn.classList.add('exit-focused');
+                    document.body.style.overflow = 'hidden';
 
-                        let description = document.createElement('div');
-                        description.classList.add('description-focus');
-                        let descText = documentSnapshot.get('descripcion');
-                        if (descText === '' || descText === undefined || descText === null) {
-                            descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
-                        }
-                        description.innerHTML = descText;
-                        description.innerHTML += '<br><br>';
-                        description.innerHTML += '<em>S/. ' + documentSnapshot.get('precio') + '</em>';
+                    let itemFocus = menuItemElement.cloneNode(true);    
+                    itemFocus.classList.add('item-focus');
+                    itemFocus.setAttribute('style', 'visibility:visible;')
 
-                    
-                        blanket.appendChild(itemFocus);
-                        blanket.appendChild(description);
-                        setTimeout(() => {
-                            itemFocus.classList.add('item-in-focus');
-                            description.classList.add('description-in-focus');
-                        }, 1);
-
-
-                        exitBtn.addEventListener('click', event => {
-                            blanket.classList.remove('blanket-focused');
-                            exitBtn.classList.remove('exit-focused');
-                            document.body.style.overflow = 'auto';
-                            document.body.style.overflowX = 'hidden';
-                            blanket.removeChild(itemFocus);  
-                            blanket.removeChild(description);  
-                            screenFocused = false;
-                        });
-                    }
+                    let description = document.createElement('div');
+                    description.classList.add('description-focus');
+                    let descText = documentSnapshot.get('descripcion');
+                    if (!descText) descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
+                    description.innerHTML = `${descText}<br><br><em>S/. ${documentSnapshot.get('precio')}</em>`
+                
+                    blanket.appendChild(itemFocus);
+                    blanket.appendChild(description);
+                    setTimeout(() => {
+                        itemFocus.classList.add('item-in-focus');
+                        description.classList.add('description-in-focus');
+                    }, 100);
                 }
             });
         }); 
     }
+
+const focusExit = function() {
+    blanket.classList.remove('blanket-focused');
+    exitBtn.classList.remove('exit-focused');
+    document.body.style.overflow = 'auto';
+    document.body.style.overflowX = 'hidden';
+    blanket.innerHTML = ''
+    screenFocused = false;
+}
 
 // Takes the inner HTML of the clicked category and returns a path to the appropriate collection
 function convertCategoryToCollectionPath(category) {
@@ -393,4 +400,40 @@ async function downloadImage(imgPath, menuItemImage) {
     menuItemImage.src = url;
 }
 
-main()
+async function createItemElement(documentSnapshot, index) {
+    return new Promise(resolve => {
+
+        const menuItemElement = document.createElement('div')
+        menuItemElement.classList.add('carousel-item')
+        // The first product (alphabetically) starts at the center of the carousel
+        if (index === 0) menuItemElement.classList.add('active')
+
+        // Relation element for the title, 0 hight, allows the Y translation of the title
+        const itemTitleContainer = document.createElement('div')
+        itemTitleContainer.classList.add('item-title-container')
+        // The title of the product
+        const menuItemTitle = document.createElement('div')
+        menuItemTitle.classList.add('item-title')
+        menuItemTitle.innerHTML = documentSnapshot.get('nombre')
+
+        // Image element, get the img path and load it to the img
+        const menuItemImage = document.createElement('img')
+        menuItemImage.alt = documentSnapshot.get('nombre')
+        const imagePath = documentSnapshot.get('image') ? documentSnapshot.get('image') : 'lg.png'
+
+        downloadImage(imagePath, menuItemImage)
+
+        itemTitleContainer.appendChild(menuItemTitle)
+        menuItemElement.appendChild(itemTitleContainer)
+        menuItemElement.appendChild(menuItemImage)
+
+        menuItemImage.addEventListener('load', () => {
+            imagesLoaded++
+            resolve(menuItemElement)
+        })
+    })
+}
+
+// Function calls
+updateCarousel('menu/01.platos/platos');
+// updateCarousel('platos');

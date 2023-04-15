@@ -7,41 +7,32 @@ const carousel_container = document.querySelector('.carousel-container')
 
 
 function resetActive() {
-    categories.forEach(function(element) {
-        element.classList.remove('active');
-    })
+    categories.forEach(element => element.classList.remove('active'))
 }
 
 function resetVinosActive() {
-    vino_categories.forEach(function(element) {
-        element.classList.remove('active');
-    })
+    vino_categories.forEach(element => element.classList.remove('active'))
 }
 
-vino_categories.forEach(function(element) {
-    element.addEventListener('click', function() {
-        resetVinosActive();
-        element.classList.add('active');
+vino_categories.forEach(element => element.addEventListener('click', () => {
+        resetVinosActive()
+        element.classList.add('active')
     })
-})
+)
 
-categories.forEach(function(element) {
-
-    element.addEventListener('click', function() {
+categories.forEach(element => element.addEventListener('click', () => {
 
         if (element.innerHTML === 'Vinos') {
             vinos_container.classList.remove('hidden');
             vinos_container.classList.add('visible');
-            // items_container.classList.add('translated');
             carousel_container.classList.add('translated');
         } else {
             vinos_container.classList.remove('visible');
             vinos_container.classList.add('hidden');
-            // items_container.classList.remove('translated');
             carousel_container.classList.remove('translated');
             resetVinosActive();
         }
         resetActive();
         element.classList.add('active')
     })
-})
+)
