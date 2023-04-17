@@ -70,7 +70,7 @@ async function updateCarousel(collectionPath) {
         let elems = document.querySelectorAll('.carousel');
         let instances = M.Carousel.init(elems);
     } catch (error) {
-        updateCarousel(collectionPath);
+        console.log(`The Error!!! :: ${error.message}`)
     } 
 }
 
@@ -82,8 +82,6 @@ async function loadMenuItems(collectionPath) {
 
         const collectionReference = db.collection(collectionPath)
         const query = collectionReference.where('isPresent', '==', true).orderBy('nombre')
-        let index = 0
-        let isGrabbing = false
         let grabStartX, grabStartY
         
         // fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
@@ -215,10 +213,16 @@ async function loadMenuItems(collectionPath) {
 
         const querySnapshot = await query.get()
 
-        querySnapshot.forEach(async documentSnapshot => {
+        console.log(`the size of response:: ${querySnapshot.size}`)
 
+        // querySnapshot.forEach(async function(documentSnapshot, index) {
+        for (let index = 0; index < querySnapshot.size; index++) {
+
+            const documentSnapshot = querySnapshot.docs[index]
             const carouselItem = await createItemElement(documentSnapshot, index)
-            index++
+
+            console.dir(`the Index is:: ${index}`)
+            console.dir(`Name:: ${documentSnapshot.get('nombre')}\nPrice:: ${documentSnapshot.get('precio')}`)
 
             // Parent element for a carousel item
             // const menuItemElement = document.createElement('div');
@@ -269,24 +273,25 @@ async function loadMenuItems(collectionPath) {
             }
 
             // Handle the onclick logic
-            menuItemElement.addEventListener('mousedown', event => {
+            let isGrabbing = false
+            carouselItem.addEventListener('mousedown', event => {
                 isGrabbing = true;
                 grabStartX = event.clientX;
                 grabStartY = event.clientY;
             });
-            menuItemElement.addEventListener('mousemove', event => {
+            carouselItem.addEventListener('mousemove', event => {
                 if (isGrabbing) {
                     const xDiff = event.clientX - grabStartX;
                     const yDiff = event.clientY - grabStartY;
                     const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
                     if (distance > 10) {
-                        menuItemImage.setAttribute('style', 'cursor:grabbing;')
+                        carouselItem.setAttribute('style', 'cursor:grabbing;')
                     }
                 }
             })
-            menuItemElement.addEventListener('mouseup', event => {
+            carouselItem.addEventListener('mouseup', event => {
                 isGrabbing = false;
-                menuItemImage.setAttribute('style', 'cursor:pointer;')
+                carouselItem.setAttribute('style', 'cursor:pointer;')
                 let xDiff = event.clientX - grabStartX;
                 let yDiff = event.clientY - grabStartY;
                 let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
@@ -299,7 +304,7 @@ async function loadMenuItems(collectionPath) {
                     exitBtn.classList.add('exit-focused');
                     document.body.style.overflow = 'hidden';
 
-                    let itemFocus = menuItemElement.cloneNode(true);    
+                    let itemFocus = carouselItem.cloneNode(true);    
                     itemFocus.classList.add('item-focus');
                     itemFocus.setAttribute('style', 'visibility:visible;')
 
@@ -317,7 +322,7 @@ async function loadMenuItems(collectionPath) {
                     }, 100);
                 }
             });
-        }); 
+        }; 
     }
 
 const focusExit = function() {
