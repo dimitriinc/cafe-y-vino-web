@@ -24,7 +24,6 @@ const storageRef = storage.ref()
 
 // Global variables
 let screenFocused = false
-let loadedImages = 0
 
 // Event Listeners
 menuCategoryElements.forEach(element => 
@@ -77,11 +76,12 @@ async function loadMenuItems(collectionPath) {
 // async function loadMenuItems(table_name) {
     
     menuContainer.innerHTML = ''
-    imagesLoaded = 0
 
     const collectionReference = db.collection(collectionPath)
     const query = collectionReference.where('isPresent', '==', true).orderBy('nombre')
     let grabStartX, grabStartY
+    let loadPromises = []
+
     
     // fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
     //     method: 'POST',
@@ -209,19 +209,22 @@ async function loadMenuItems(collectionPath) {
         
     //     console.log(`there was an error:: ${error}`)
     // })
-
     const querySnapshot = await query.get()
 
-    if (querySnapshot.size === 0) throw new Error('The request came back empty')
+    const downloadUrlPromises = querySnapshot.docs.map(async doc => {
+        const imgPath = doc.data().image || 'lg.png'
+        const imageReference = storageRef.child(imgPath);
+        return await imageReference.getDownloadURL()
+    })
+    const downloadUrls =  await Promise.all(downloadUrlPromises)
 
-    // querySnapshot.forEach(async function(documentSnapshot, index) {
-    for (let index = 0; index < querySnapshot.size; index++) {
+    querySnapshot.docs.forEach(async (doc, index) => {
 
-        const documentSnapshot = querySnapshot.docs[index]
-        const carouselItem = await createItemElement(documentSnapshot, index)
+        const carouselItem = createItemElement(doc, index)
 
-        console.dir(`the Index is:: ${index}`)
-        console.dir(`Name:: ${documentSnapshot.get('nombre')}\nPrice:: ${documentSnapshot.get('precio')}`)
+        const itemImg = carouselItem.querySelector('img')
+        const loadPromise = getLoadPromise(itemImg, downloadUrls[index])
+        loadPromises.push(loadPromise)
 
         // Parent element for a carousel item
         // const menuItemElement = document.createElement('div');
@@ -265,12 +268,6 @@ async function loadMenuItems(collectionPath) {
         // menuItemElement.appendChild(menuItemImage);
         menuContainer.appendChild(carouselItem);
 
-        // When the last img is loaded, display the whole carousel
-        if (imagesLoaded === querySnapshot.size) {
-            menuContainer.setAttribute('style', 'opacity:1;')
-            loader_anim.setAttribute('style', 'opacity: 0;')
-        }
-
         // Handle the onclick logic
         let isGrabbing = false
         carouselItem.addEventListener('mousedown', event => {
@@ -309,9 +306,9 @@ async function loadMenuItems(collectionPath) {
 
                 let description = document.createElement('div');
                 description.classList.add('description-focus');
-                let descText = documentSnapshot.get('descripcion');
+                let descText = doc.data().descripcion
                 if (!descText) descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
-                description.innerHTML = `${descText}<br><br><em>S/. ${documentSnapshot.get('precio')}</em>`
+                description.innerHTML = `${descText}<br><br><em>S/. ${doc.data().precio}</em>`
             
                 blanket.appendChild(itemFocus);
                 blanket.appendChild(description);
@@ -321,47 +318,38 @@ async function loadMenuItems(collectionPath) {
                 }, 100);
             }
         });
-    }; 
-}
-
-async function createItemElement(documentSnapshot, index) {
-    return new Promise(resolve => {
-
-        const menuItemElement = document.createElement('div')
-        menuItemElement.classList.add('carousel-item')
-        // The first product (alphabetically) starts at the center of the carousel
-        if (index === 0) menuItemElement.classList.add('active')
-
-        // Relation element for the title, 0 hight, allows the Y translation of the title
-        const itemTitleContainer = document.createElement('div')
-        itemTitleContainer.classList.add('item-title-container')
-        // The title of the product
-        const menuItemTitle = document.createElement('div')
-        menuItemTitle.classList.add('item-title')
-        menuItemTitle.innerHTML = documentSnapshot.get('nombre')
-
-        // Image element, get the img path and load it to the img
-        const menuItemImage = document.createElement('img')
-        menuItemImage.alt = documentSnapshot.get('nombre')
-        const imagePath = documentSnapshot.get('image') ? documentSnapshot.get('image') : 'lg.png'
-
-        downloadImage(imagePath, menuItemImage)
-
-        itemTitleContainer.appendChild(menuItemTitle)
-        menuItemElement.appendChild(itemTitleContainer)
-        menuItemElement.appendChild(menuItemImage)
-
-        menuItemImage.addEventListener('load', () => {
-            imagesLoaded++
-            resolve(menuItemElement)
-        })
     })
+
+    try {
+        await Promise.all(loadPromises)
+        menuContainer.setAttribute('style', 'opacity:1;')
+        loader_anim.setAttribute('style', 'opacity: 0;')
+    } catch(err) {
+        throw new Error("Failed to load all the images")
+    }
 }
 
-async function downloadImage(imgPath, menuItemImage) {
-    const imageReference = storageRef.child(imgPath);
-    const url = await imageReference.getDownloadURL()
-    menuItemImage.src = url;
+function createItemElement(documentSnapshot, index) {
+
+    const html = `
+        <div class="item-title-container">
+            <div class="item-title">${documentSnapshot.data().nombre}</div>
+        </div>
+        <img alt="${documentSnapshot.data().nombre}">
+    `
+    const menuItemElement = document.createElement('div')
+    menuItemElement.classList.add('carousel-item')
+    if (index === 0) menuItemElement.classList.add('active')
+    menuItemElement.insertAdjacentHTML('afterbegin', html)
+
+    return menuItemElement
+}
+
+function getLoadPromise(imgElement, downloadUrl) {
+    return new Promise(resolve => {
+        imgElement.src = downloadUrl
+        imgElement.addEventListener('load', resolve)
+    })
 }
 
 const focusExit = function() {
