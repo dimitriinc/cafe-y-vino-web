@@ -269,28 +269,28 @@ async function loadMenuItems(collectionPath) {
         menuContainer.appendChild(carouselItem);
 
         // Handle the onclick logic
-        let isGrabbing = false
+        // let isGrabbing = false
         carouselItem.addEventListener('mousedown', event => {
-            isGrabbing = true;
+            // isGrabbing = true;
             grabStartX = event.clientX;
             grabStartY = event.clientY;
         });
-        carouselItem.addEventListener('mousemove', event => {
-            if (isGrabbing) {
-                const xDiff = event.clientX - grabStartX;
-                const yDiff = event.clientY - grabStartY;
-                const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                if (distance > 10) {
-                    carouselItem.setAttribute('style', 'cursor:grabbing;')
-                }
-            }
-        })
+        // carouselItem.addEventListener('mousemove', event => {
+        //     if (isGrabbing) {
+        //         const xDiff = event.clientX - grabStartX;
+        //         const yDiff = event.clientY - grabStartY;
+        //         const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+        //         if (distance > 10) {
+        //             carouselItem.setAttribute('style', 'cursor:grabbing;')
+        //         }
+        //     }
+        // })
         carouselItem.addEventListener('mouseup', event => {
-            isGrabbing = false;
-            carouselItem.setAttribute('style', 'cursor:pointer;')
-            let xDiff = event.clientX - grabStartX;
-            let yDiff = event.clientY - grabStartY;
-            let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+            // isGrabbing = false;
+            // carouselItem.setAttribute('style', 'cursor:pointer;')
+            const xDiff = event.clientX - grabStartX;
+            const yDiff = event.clientY - grabStartY;
+            const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
             if (distance < 10) {
                 if (screenFocused) return
 
@@ -306,8 +306,7 @@ async function loadMenuItems(collectionPath) {
 
                 let description = document.createElement('div');
                 description.classList.add('description-focus');
-                let descText = doc.data().descripcion
-                if (!descText) descText = 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
+                let descText = doc.data().descripcion ? doc.data().descripcion : 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
                 description.innerHTML = `${descText}<br><br><em>S/. ${doc.data().precio}</em>`
             
                 blanket.appendChild(itemFocus);
@@ -318,6 +317,8 @@ async function loadMenuItems(collectionPath) {
                 }, 100);
             }
         });
+
+    
     })
 
     try {
