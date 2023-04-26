@@ -79,136 +79,90 @@ async function loadMenuItems(collectionPath) {
 
     const collectionReference = db.collection(collectionPath)
     const query = collectionReference.where('isPresent', '==', true).orderBy('nombre')
+
+
     let grabStartX, grabStartY
     let loadPromises = []
 
+
+
+
+
+
     
-    // fetch(`https://21df-190-238-135-197.sa.ngrok.io/get-collection?table-name=${table_name}`, {
+    // const response = await fetch(`https://3067-190-238-135-197.ngrok-free.app/get-collection?table-name=${table_name}`, {
     //     method: 'POST',
     //     mode: 'cors'
     // })
-    // .then(response => response.json())
-    // .then(data => {
+    // const responseData = await response.json()
 
-    //     let loadedImages = 0
+    // console.log('data received from the server');
+    // menuContainer.innerHTML = ''
 
-    //     data.forEach(product => {
+    // responseData.forEach((product, index) => {
 
-    //         // Create the parent item element
-    //         let menuItemElement = document.createElement('div');
-    //         menuItemElement.classList.add('carousel-item');
-    //         if (index === 0) {
-    //             menuItemElement.classList.add('active');
-    //         }
-    //         index++;
+    //     // Create the parent item element
+    //     const carouselItem = createItemElementSql(product, index)
 
-    //         // Create a container div for the title
-    //         let itemTitleContainer = document.createElement('div');
-    //         menuItemContainer.classList.add('carousel-item-container');
+    //     const itemImg = carouselItem.querySelector('img')
+    //     const loadPromise = getLoadPromise(itemImg, product.imagen)
+    //     loadPromises.push(loadPromise)
 
-    //         // Create the title div to put it inside the container
-    //         let menuItemTitle = document.createElement('div');
-    //         menuItemTitle.classList.add('item-title');
-    //         menuItemTitle.innerHTML = product.nombre;
-
-    //         // Create the image element and load the image there
-            
-    //         let menuItemImage = document.createElement('img');
-    //         menuItemImage.setAttribute('style', 'cursor:pointer;');
-    //         menuItemImage.addEventListener('mousedown', (event) => {
-    //             menuItemImage.setAttribute('style', 'cursor:grabbing;')
-    //         });
-    //         menuItemImage.addEventListener('mouseup', (event) => {
-    //             menuItemImage.setAttribute('style', 'cursor:pointer;')
-    //         });
-    //         menuItemImage.alt = product.nombre;
-    //         menuItemImage.src = product.imagen;
-
-    //         // Check if on load image we are ready to display the whole category
-    //         menuItemImage.addEventListener('load', () => {
-    //             loadedImages++
-    //             if (loadedImages === data.length) {
-    //                 menuContainer.setAttribute('style', 'opacity:1;')
-    //                 loader_anim.setAttribute('style', 'opacity: 0;')
-    //             }
-    //         })
-
-    //         // Create the item's elements hierarchy and append it to the carousel container
-    //         menuItemContainer.appendChild(menuItemTitle);
-    //         menuItemElement.appendChild(menuItemContainer);
-    //         menuItemElement.appendChild(menuItemImage);
-    //         menuContainer.appendChild(menuItemElement);
-
-    //         // Handle the onclick logic
-    //         let isGrabbing = false;
-    //         let grabStartX, grabStartY;
-
-    //         menuItemElement.addEventListener('mousedown', event => {
-    //             isGrabbing = true;
-    //             grabStartX = event.clientX;
-    //             grabStartY = event.clientY;
-    //         });
-    //         menuItemElement.addEventListener('mousemove', event => {
-    //             if (isGrabbing) {
-    //                 let xDiff = event.clientX - grabStartX;
-    //                 let yDiff = event.clientY - grabStartY;
-    //                 let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-    //                 if (distance > 10) {
-    //                     menuItemElement.style.cursor = 'grabbing';
-    //                 }
-    //             }
-    //         })
-    //         menuItemElement.addEventListener('mouseup', event => {
-    //             isGrabbing = false;
-    //             menuItemElement.style.cursor = 'pointer';
-    //             let xDiff = event.clientX - grabStartX;
-    //             let yDiff = event.clientY - grabStartY;
-    //             let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-    //             if (distance < 10) {
-    //                 if (!screenFocused) {
-    //                     screenFocused = true;
-
-    //                     blanket.classList.add('blanket-focused');
-    //                     exitBtn.classList.add('exit-focused');
-    //                     document.body.style.overflow = 'hidden';
-
-    //                     let itemFocus = menuItemElement.cloneNode(true);
-    //                     itemFocus.classList.add('item-focus');
-    //                     itemFocus.setAttribute('style', 'visibility:visible;')
-
-    //                     let description = document.createElement('div');
-    //                     description.classList.add('description-focus');                        
-    //                     description.innerHTML = product.descripcion;
-    //                     description.innerHTML += '<br><br>';
-    //                     description.innerHTML += '<em>S/. ' + product.precio + '</em>';
-
-                    
-    //                     blanket.appendChild(itemFocus);
-    //                     blanket.appendChild(description);
-    //                     setTimeout(() => {
-    //                         itemFocus.classList.add('item-in-focus');
-    //                         description.classList.add('description-in-focus');
-    //                     }, 1);
-
-
-    //                     exitBtn.addEventListener('click', () => {
-    //                         blanket.classList.remove('blanket-focused');
-    //                         exitBtn.classList.remove('exit-focused');
-    //                         document.body.style.overflow = 'auto';
-    //                         document.body.style.overflowX = 'hidden';
-    //                         blanket.removeChild(itemFocus);  
-    //                         blanket.removeChild(description);  
-    //                         screenFocused = false;
-    //                     });
-    //                 }
-    //             }
-    //         });
-    //     })
-    // })
-    // .catch(error => {
+    //     menuContainer.appendChild(carouselItem);
         
-    //     console.log(`there was an error:: ${error}`)
+
+    //     // Handle the onclick logic
+    //     let grabStartX, grabStartY;
+
+    //     carouselItem.addEventListener('mousedown', event => {
+    //         grabStartX = event.clientX;
+    //         grabStartY = event.clientY;
+    //     });
+
+    //     carouselItem.addEventListener('mouseup', event => {
+        
+    //         const xDiff = event.clientX - grabStartX;
+    //         const yDiff = event.clientY - grabStartY;
+    //         const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    //         if (distance < 10) {
+    //             if (!screenFocused) {
+    //                 screenFocused = true;
+
+    //                 blanket.classList.add('blanket-focused');
+    //                 exitBtn.classList.add('exit-focused');
+    //                 document.body.style.overflow = 'hidden';
+
+    //                 const itemFocus = carouselItem.cloneNode(true);
+    //                 itemFocus.classList.add('item-focus');
+    //                 itemFocus.setAttribute('style', 'visibility:visible;')
+
+    //                 const description = document.createElement('div');
+    //                 description.classList.add('description-focus');                        
+    //                 description.innerHTML = product.descripcion;
+    //                 description.innerHTML += '<br><br>';
+    //                 description.innerHTML += '<em>S/. ' + product.precio + '</em>';
+
+                
+    //                 blanket.appendChild(itemFocus);
+    //                 blanket.appendChild(description);
+    //                 setTimeout(() => {
+    //                     itemFocus.classList.add('item-in-focus');
+    //                     description.classList.add('description-in-focus');
+    //                 }, 100);
+    //             }
+    //         }
+    //     });
     // })
+
+
+
+
+
+
+
+
+
+ 
     const querySnapshot = await query.get()
 
     const downloadUrlPromises = querySnapshot.docs.map(async doc => {
@@ -218,6 +172,8 @@ async function loadMenuItems(collectionPath) {
     })
     const downloadUrls =  await Promise.all(downloadUrlPromises)
 
+    menuContainer.innerHTML = ''
+
     querySnapshot.docs.forEach(async (doc, index) => {
 
         const carouselItem = createItemElement(doc, index)
@@ -226,68 +182,15 @@ async function loadMenuItems(collectionPath) {
         const loadPromise = getLoadPromise(itemImg, downloadUrls[index])
         loadPromises.push(loadPromise)
 
-        // Parent element for a carousel item
-        // const menuItemElement = document.createElement('div');
-        // menuItemElement.classList.add('carousel-item');
-        // if (index === 0) {
-        //     // The first product (alphabetically) starts at the center of the carousel
-        //     menuItemElement.classList.add('active');
-        // }
-        // index++;
-
-        // // Relation element for the title, 0 hight, allows the Y translation of the title
-        // const itemTitleContainer = document.createElement('div');
-        // itemTitleContainer.classList.add('item-title-container');
-
-        // // The title of the product
-        // const menuItemTitle = document.createElement('div');
-        // menuItemTitle.classList.add('item-title');
-        // menuItemTitle.innerHTML = documentSnapshot.get('nombre');
-
-        // // Image element, get the img path and load it to the img
-        // const menuItemImage = document.createElement('img');
-        // menuItemImage.alt = documentSnapshot.get('nombre');
-
-        // const imagePath = documentSnapshot.get('image') ? documentSnapshot.get('image') : 'lg.png'
-
-        // downloadImage(imagePath, menuItemImage)
-
-        // menuItemImage.addEventListener('load', () => {
-        //     imagesLoaded++
-            
-        //     // When the last img is loaded, display the whole carousel
-        //     if (imagesLoaded === querySnapshot.size) {
-        //         menuContainer.setAttribute('style', 'opacity:1;')
-        //         loader_anim.setAttribute('style', 'opacity: 0;')
-        //     }
-        // })
-
-        // // Create the item's elements hierarchy and append it to the carousel container
-        // itemTitleContainer.appendChild(menuItemTitle);
-        // menuItemElement.appendChild(itemTitleContainer);
-        // menuItemElement.appendChild(menuItemImage);
         menuContainer.appendChild(carouselItem);
 
-        // Handle the onclick logic
-        // let isGrabbing = false
         carouselItem.addEventListener('mousedown', event => {
-            // isGrabbing = true;
             grabStartX = event.clientX;
             grabStartY = event.clientY;
         });
-        // carouselItem.addEventListener('mousemove', event => {
-        //     if (isGrabbing) {
-        //         const xDiff = event.clientX - grabStartX;
-        //         const yDiff = event.clientY - grabStartY;
-        //         const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-        //         if (distance > 10) {
-        //             carouselItem.setAttribute('style', 'cursor:grabbing;')
-        //         }
-        //     }
-        // })
+
         carouselItem.addEventListener('mouseup', event => {
-            // isGrabbing = false;
-            // carouselItem.setAttribute('style', 'cursor:pointer;')
+           
             const xDiff = event.clientX - grabStartX;
             const yDiff = event.clientY - grabStartY;
             const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
@@ -300,13 +203,13 @@ async function loadMenuItems(collectionPath) {
                 exitBtn.classList.add('exit-focused');
                 document.body.style.overflow = 'hidden';
 
-                let itemFocus = carouselItem.cloneNode(true);    
+                const itemFocus = carouselItem.cloneNode(true);    
                 itemFocus.classList.add('item-focus');
                 itemFocus.setAttribute('style', 'visibility:visible;')
 
-                let description = document.createElement('div');
+                const description = document.createElement('div');
                 description.classList.add('description-focus');
-                let descText = doc.data().descripcion ? doc.data().descripcion : 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
+                const descText = doc.data().descripcion ? doc.data().descripcion : 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
                 description.innerHTML = `${descText}<br><br><em>S/. ${doc.data().precio}</em>`
             
                 blanket.appendChild(itemFocus);
@@ -328,6 +231,24 @@ async function loadMenuItems(collectionPath) {
     } catch(err) {
         throw new Error("Failed to load all the images")
     }
+}
+
+
+
+
+function createItemElementSql(doc, index) {
+    const html = `
+        <div class="item-title-container">
+            <div class="item-title">${doc.nombre}</div>
+        </div>
+        <img alt="${doc.nombre}" src="${doc.imagen}">
+    `
+    const menuItemElement = document.createElement('div')
+    menuItemElement.classList.add('carousel-item')
+    if (index === 0) menuItemElement.classList.add('active')
+    menuItemElement.insertAdjacentHTML('afterbegin', html)
+
+    return menuItemElement
 }
 
 function createItemElement(documentSnapshot, index) {
