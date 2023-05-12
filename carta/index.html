@@ -9,9 +9,11 @@
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="stylesheet" href="/dist/style.css">
-    <script src="https://www.gstatic.com/firebasejs/7.22.0/firebase-app.js" ></script>
-    <script src="https://www.gstatic.com/firebasejs/7.22.0/firebase-firestore.js" ></script>
-    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-storage.js" ></script>
+    <script defer src="https://www.gstatic.com/firebasejs/7.22.0/firebase-app.js" ></script>
+    <script defer src="https://www.gstatic.com/firebasejs/7.22.0/firebase-firestore.js" ></script>
+    <script defer src="https://www.gstatic.com/firebasejs/7.19.0/firebase-storage.js" ></script>
+    <script defer src="menuDisplay.js"></script>
+
 </head>
 
 <body>
@@ -85,23 +87,23 @@
     
             <div class="categories-carousel">
                 <div class="menu-categories-container">
-                    <div class="menu-category active">Platos</div>
-                    <div class="menu-category">Piqueos</div>
-                    <div class="menu-category">Vinos</div>
-                    <div class="menu-category">Cocteles</div>
-                    <div class="menu-category">Cervezas</div>
-                    <div class="menu-category">Bebidas calientes</div>
-                    <div class="menu-category">Postres</div>
-                    <div class="menu-category">Ofertas</div>
+                    <div class="menu-category category active" data-db-path="menu/01.platos/platos">Platos</div>
+                    <div class="menu-category category" data-db-path="menu/02.piqueos/piqueos">Piqueos</div>
+                    <div class="menu-category category" data-db-path="menu/03.vinos/vinos">Vinos</div>
+                    <div class="menu-category category" data-db-path="menu/04.cocteles/cocteles">Cocteles</div>
+                    <div class="menu-category category" data-db-path="menu/05.cervezas/cervezas">Cervezas</div>
+                    <div class="menu-category category" data-db-path="menu/06.bebidas calientes/bebidas calientes">Bebidas calientes</div>
+                    <div class="menu-category category" data-db-path="menu/061.postres/postres">Postres</div>
+                    <div class="menu-category category" data-db-path="menu/07.ofertas/ofertas">Ofertas</div>
                 </div>
             </div>
     
             <div class="vinos-container hidden">
-                <div class="vino-category">Tintos</div>
-                <div class="vino-category">Blancos</div>
-                <div class="vino-category">Rosé</div>
-                <div class="vino-category">Postre</div>
-                <div class="vino-category">Copas</div>
+                <div class="vino-category category wine" data-db-path="menu/03.vinos/vinos/Vinos tintos/vinos">Tintos</div>
+                <div class="vino-category category wine" data-db-path="menu/03.vinos/vinos/Vinos blancos/vinos">Blancos</div>
+                <div class="vino-category category wine" data-db-path="menu/03.vinos/vinos/Vinos rose/vinos">Rosé</div>
+                <div class="vino-category category wine" data-db-path="menu/03.vinos/vinos/Vinos de postre/vinos">Postre</div>
+                <div class="vino-category category wine" data-db-path="menu/03.vinos/vinos/Vinos por copa/vinos">Copas</div>
             </div>
             
             <div class="carousel-container">
@@ -158,7 +160,6 @@
 
     
     <script src="/dist/all.js"></script>
-    <script src="menuDisplay.js"></script>
     <script src="menu-cat.js"></script>    
     
 </body>

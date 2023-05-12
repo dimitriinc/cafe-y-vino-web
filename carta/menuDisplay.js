@@ -80,7 +80,6 @@ async function loadMenuItems(collectionPath) {
     const collectionReference = db.collection(collectionPath)
     const query = collectionReference.where('isPresent', '==', true).orderBy('nombre')
 
-
     let grabStartX, grabStartY
     let loadPromises = []
 
