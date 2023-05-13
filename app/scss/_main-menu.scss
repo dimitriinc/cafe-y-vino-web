@@ -19,6 +19,23 @@
         transform: translateY(-100px);
         transition: transform 500ms ease-in-out;
         position: relative;
+
+        .carousel-error {
+            margin-top: 4rem;
+
+            .carousel-broken-img {
+                width: 163px;
+                height: 163px;
+                margin-bottom: 1rem;
+            }
+
+            .carousel-error-msg {
+                padding: 1rem;
+                border: 1px solid $nav_links;
+                width: fit-content;
+                max-width: 80%;
+            }
+        }
     }
 
     .translated {
