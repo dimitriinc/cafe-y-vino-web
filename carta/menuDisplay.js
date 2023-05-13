@@ -89,69 +89,69 @@ async function loadMenuItems(collectionPath) {
 
 
     
-    // const response = await fetch(`https://3067-190-238-135-197.ngrok-free.app/get-collection?table-name=${table_name}`, {
-    //     method: 'POST',
-    //     mode: 'cors'
-    // })
-    // const responseData = await response.json()
+    const response = await fetch(`https://3067-190-238-135-197.ngrok-free.app/get-collection?table-name=${table_name}`, {
+        method: 'POST',
+        mode: 'cors'
+    })
+    const responseData = await response.json()
 
-    // console.log('data received from the server');
-    // menuContainer.innerHTML = ''
+    console.log('data received from the server');
+    menuContainer.innerHTML = ''
 
-    // responseData.forEach((product, index) => {
+    responseData.forEach((product, index) => {
 
-    //     // Create the parent item element
-    //     const carouselItem = createItemElementSql(product, index)
+        // Create the parent item element
+        const carouselItem = createItemElementSql(product, index)
 
-    //     const itemImg = carouselItem.querySelector('img')
-    //     const loadPromise = getLoadPromise(itemImg, product.imagen)
-    //     loadPromises.push(loadPromise)
+        const itemImg = carouselItem.querySelector('img')
+        const loadPromise = getLoadPromise(itemImg, product.imagen)
+        loadPromises.push(loadPromise)
 
-    //     menuContainer.appendChild(carouselItem);
+        menuContainer.appendChild(carouselItem);
         
 
-    //     // Handle the onclick logic
-    //     let grabStartX, grabStartY;
+        // Handle the onclick logic
+        let grabStartX, grabStartY;
 
-    //     carouselItem.addEventListener('mousedown', event => {
-    //         grabStartX = event.clientX;
-    //         grabStartY = event.clientY;
-    //     });
+        carouselItem.addEventListener('mousedown', event => {
+            grabStartX = event.clientX;
+            grabStartY = event.clientY;
+        });
 
-    //     carouselItem.addEventListener('mouseup', event => {
+        carouselItem.addEventListener('mouseup', event => {
         
-    //         const xDiff = event.clientX - grabStartX;
-    //         const yDiff = event.clientY - grabStartY;
-    //         const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-    //         if (distance < 10) {
-    //             if (!screenFocused) {
-    //                 screenFocused = true;
+            const xDiff = event.clientX - grabStartX;
+            const yDiff = event.clientY - grabStartY;
+            const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+            if (distance < 10) {
+                if (!screenFocused) {
+                    screenFocused = true;
 
-    //                 blanket.classList.add('blanket-focused');
-    //                 exitBtn.classList.add('exit-focused');
-    //                 document.body.style.overflow = 'hidden';
+                    blanket.classList.add('blanket-focused');
+                    exitBtn.classList.add('exit-focused');
+                    document.body.style.overflow = 'hidden';
 
-    //                 const itemFocus = carouselItem.cloneNode(true);
-    //                 itemFocus.classList.add('item-focus');
-    //                 itemFocus.setAttribute('style', 'visibility:visible;')
+                    const itemFocus = carouselItem.cloneNode(true);
+                    itemFocus.classList.add('item-focus');
+                    itemFocus.setAttribute('style', 'visibility:visible;')
 
-    //                 const description = document.createElement('div');
-    //                 description.classList.add('description-focus');                        
-    //                 description.innerHTML = product.descripcion;
-    //                 description.innerHTML += '<br><br>';
-    //                 description.innerHTML += '<em>S/. ' + product.precio + '</em>';
+                    const description = document.createElement('div');
+                    description.classList.add('description-focus');                        
+                    description.innerHTML = product.descripcion;
+                    description.innerHTML += '<br><br>';
+                    description.innerHTML += '<em>S/. ' + product.precio + '</em>';
 
                 
-    //                 blanket.appendChild(itemFocus);
-    //                 blanket.appendChild(description);
-    //                 setTimeout(() => {
-    //                     itemFocus.classList.add('item-in-focus');
-    //                     description.classList.add('description-in-focus');
-    //                 }, 100);
-    //             }
-    //         }
-    //     });
-    // })
+                    blanket.appendChild(itemFocus);
+                    blanket.appendChild(description);
+                    setTimeout(() => {
+                        itemFocus.classList.add('item-in-focus');
+                        description.classList.add('description-in-focus');
+                    }, 100);
+                }
+            }
+        });
+    })
 
 
 

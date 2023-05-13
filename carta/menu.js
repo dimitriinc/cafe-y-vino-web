@@ -1,3 +1,13 @@
+// import { BASE_URL } from "../config"
+
+const timeout = function (s) {
+    return new Promise(function (_, reject) {
+        setTimeout(function () {
+            reject(new Error(`Request took too long! Timeout after ${s} second`))
+        }, s * 1000)
+    })
+}
+
 class Menu {
 
     _categories
@@ -134,7 +144,7 @@ class Menu {
 
             this._carousel.appendChild(carouselItem);
 
-            this._addEventListenersToItem(carouselItem, doc)
+            this._addEventListenersToItemFirestore(carouselItem, doc)
         })
 
         try {
@@ -143,6 +153,31 @@ class Menu {
         } catch(err) {
             throw new Error("Failed to load all the images.")
         }
+    }
+
+    async _loadItemsFromSql(tableName) {
+
+        const loadPromises = []
+
+        const response = await fetch(`https://3067-190-238-135-197.ngrok-free.app/get-collection?table-name=${tableName}`, {
+            method: 'POST',
+            mode: 'cors'
+        })
+        const responseData = await response.json()
+
+        this._carousel.innerHTML = ''
+
+        responseData.forEach((product, index) => {
+            const carouselItem = this._createItemElementSql(product, index)
+
+            const imgElement = carouselItem.querySelector('img')
+            const loadPromise = this._getLoadPromise(imgElement, product.imagen)
+            loadPromises.push(loadPromise)
+
+            menuContainer.appendChild(carouselItem);
+
+            this._addEventListenersToItemSql(carouselItem, product)
+        })
     }
 
     async _getQuerySnapshot(collectionPath) {
@@ -185,6 +220,21 @@ class Menu {
         return menuItemElement
     }
 
+    _createItemElementSql(product, index) {
+        const html = `
+            <div class="item-title-container">
+                <div class="item-title">${product.nombre}</div>
+            </div>
+            <img alt="${product.nombre}" src="${product.imagen}">
+        `
+        const menuItemElement = document.createElement('div')
+        menuItemElement.classList.add('carousel-item')
+        if (index === 0) menuItemElement.classList.add('active')
+        menuItemElement.insertAdjacentHTML('afterbegin', html)
+
+        return menuItemElement
+    }
+
     _getLoadPromise(imgElement, downloadUrl) {
         return new Promise(resolve => {
             imgElement.src = downloadUrl
@@ -192,7 +242,7 @@ class Menu {
         })
     }
 
-    _addEventListenersToItem(carouselItem, documentSnapshot) {
+    _addEventListenersToItemFirestore(carouselItem, documentSnapshot) {
 
         carouselItem.addEventListener('mousedown', event => {
             this._grabStartX = event.clientX;
@@ -220,6 +270,44 @@ class Menu {
                 description.classList.add('description-focus');
                 const descText = documentSnapshot.data().descripcion ? documentSnapshot.data().descripcion : 'Lo sentimos, por el momento la descripción para este producto no está disponible.'
                 description.innerHTML = `${descText}<br><br><em>S/. ${documentSnapshot.data().precio}</em>`
+            
+                this._overlay.appendChild(itemFocus);
+                this._overlay.appendChild(description);
+                setTimeout(() => {
+                    itemFocus.classList.add('item-in-focus');
+                    description.classList.add('description-in-focus');
+                }, 100);
+            }
+        })
+    }
+
+    _addEventListenersToItemSql(carouselItem, product) {
+
+        carouselItem.addEventListener('mousedown', event => {
+            this._grabStartX = event.clientX;
+            this._grabStartY = event.clientY;
+        })
+
+        carouselItem.addEventListener('mouseup', event => {
+            const xDiff = event.clientX - this._grabStartX;
+            const yDiff = event.clientY - this._grabStartY;
+            const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+            if (distance < 10) {
+                if (this._screenFocused) return
+
+                this._screenFocused = true;
+
+                this._overlay.classList.add('blanket-focused');
+                this._btnExit.classList.add('exit-focused');
+                document.body.style.overflow = 'hidden';
+
+                const itemFocus = carouselItem.cloneNode(true);    // include child nodes
+                itemFocus.classList.add('item-focus');
+                itemFocus.setAttribute('style', 'visibility:visible;')
+
+                const description = document.createElement('div');
+                description.classList.add('description-focus');
+                description.innerHTML = `${product.descripcion}<br><br><em>S/. ${product.precio}</em>`
             
                 this._overlay.appendChild(itemFocus);
                 this._overlay.appendChild(description);
