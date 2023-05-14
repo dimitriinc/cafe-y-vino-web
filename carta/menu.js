@@ -123,7 +123,7 @@ class Menu {
             await this._loadItemsFromFirestore(collectionPath)
             M.Carousel.init(this._carousel)
         } catch(error) {
-            this._displayError(error.message)
+            this._displayError('La conexión con el servidor fue interrumpida. Inténtalo de nuevo.')
         }
     }
 
@@ -178,6 +178,14 @@ class Menu {
 
             this._addEventListenersToItemSql(carouselItem, product)
         })
+
+        try {
+            await Promise.all(loadPromises)
+            this._displayCarousel()
+        } catch(err) {
+            throw new Error("Failed to load all the images.")
+        }
+
     }
 
     async _getQuerySnapshot(collectionPath) {
@@ -353,4 +361,4 @@ class Menu {
 }
 
 const menu = new Menu()
-menu.updateCarousel('menu/01.platos/platosS')
+menu.updateCarousel('menu/01.platos/platos')
