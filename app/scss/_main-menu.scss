@@ -23,6 +23,10 @@
         .carousel-error {
             margin-top: 4rem;
 
+            @include breakpoint-down(tablet) {
+                margin-top: 2rem;
+            }
+
             .carousel-broken-img {
                 width: 163px;
                 height: 163px;
