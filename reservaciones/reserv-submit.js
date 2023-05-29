@@ -1,80 +1,65 @@
 const form_element = document.getElementById('reserv-form');
-const name_element = document.getElementById('reserv-name');
-const tel_element = document.getElementById('reserv-tel');
-const email_element = document.getElementById('reserv-email');
-const comment_element = document.getElementById('reserv-comment');
-const pax_element = document.getElementById('reserv-pax');
-const fecha_element = document.getElementById('reserv-date');
-const hour_element = document.getElementById('reserv-hour');
 const submit_btn = document.getElementById('reserv-btn');
 const submit_anim = document.getElementById('loader');
 
+const renderSubmitAnimation = function() {
+    submit_btn.setAttribute('style', 'display:none;')
+    submit_anim.removeAttribute('style')
+}
+
+const renderSubmitButton = function() {
+    submit_anim.setAttribute('style', 'display:none;')
+    submit_btn.removeAttribute('style')
+}
+
 form_element.addEventListener('submit', event => {
-    event.preventDefault();
+    event.preventDefault()
 
-    sessionStorage.clear();
+    sessionStorage.clear()
 
-    submit_btn.setAttribute('style', 'display:none;');
-    submit_anim.removeAttribute('style');
+    renderSubmitAnimation()
 
-    if (fecha_element.value === '') {
-        alert('Por favor, escoge una fecha.');
-        submit_anim.setAttribute('style', 'display:none;');
-        submit_btn.removeAttribute('style');
+    // Convert form values into an object
+    const arrOfValuesArrs = [...new FormData(form_element)]
+    const formData = Object.fromEntries(arrOfValuesArrs)
+
+    // Abort if the date is empty (it's Sunday)
+    if (!formData.date) {
+        alert('Por favor, escoge una fecha.')
+        renderSubmitButton()
         return;
     }
 
-    const userName = name_element.value;
-    const userTel = tel_element.value;
-    const userEmail = email_element.value;
-    let comment = comment_element.value;
-    if (comment === '') {
-        comment = 'sin comentario';
-    }
-    const pax = pax_element.value;
-    const date = String(fecha_element.value);
-    const hour = hour_element.value;
+    formData.comment = formData.comment || 'sin comentario'
 
-    const dateTimeString = `${date.split('/').reverse().join('-')}T${hour}:00`
+    // Create a timestamp of the presumed arrival (for ordering of reservation in the admin page)
+    const dateTimeString = `${formData.date.split('/').reverse().join('-')}T${formData.hour}:00`
     const dateObj = new Date(dateTimeString)
-    const arrivalTimestamp = dateObj.getTime()
+    formData.arrivalTimestamp = dateObj.getTime()
 
-    const msg = {
-        name: userName,
-        phone: userTel,
-        email: userEmail,
-        comment: comment,
-        pax: pax,
-        date: date,
-        hour: hour,
-        arrivalTimestamp: arrivalTimestamp
-    }
-
-    fetch(`https://e58c-190-238-135-197.sa.ngrok.io/make-reservation`, {
+    fetch(`https://3103-190-238-135-197.ngrok-free.app/make-reservation`, {
         method: 'POST',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(msg)
+        body: JSON.stringify(formData)
     })
     .then(async response => {
-        const data = await response.text();
+        const data = await response.text()
         if (response.status === 201) {
-            alert(data);
-            submit_anim.setAttribute('style', 'display:none;');
-            submit_btn.removeAttribute('style');
+            alert(data)
+            renderSubmitButton()
         } else {
-            alert(data);
-            window.location.href = '/index.html';
+            alert(data)
+            window.location.href = '/index.html'
         }
     })
     
-    .catch(error => {
+    .catch(() => {
         setTimeout(() => {
-            submit_anim.setAttribute('style', 'display:none;');
-            submit_btn.removeAttribute('style');
-            alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.');
-        }, 3000 );
+            renderSubmitButton()
+            alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.')
+        }, 2000 );
     });
 });

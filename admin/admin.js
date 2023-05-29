@@ -1,13 +1,15 @@
+const BACKEND_BASE_URL = "https://3103-190-238-135-197.ngrok-free.app"
+
 const logoHead = document.getElementById('logo-res-head')
-const reservesContainer = document.querySelector('.reservations-container')
-const reservesLoader = document.getElementById('reservations-loader')
+const reservationsContainer = document.querySelector('.reservations-container')
+const reservationsLoader = document.getElementById('reservations-loader')
 const dateLabel = document.getElementById('reservations-date')
 const tomorrowBtn = document.getElementById('tomorrow-btn')
 const errorMessage = document.getElementById('res-err-msg')
-const reservesCalendar = document.getElementById('cal-res-head')
+const reservationsCalendar = document.getElementById('cal-res-head')
 const datePickerContainer = document.getElementById('res-date-picker--container')
-const reservesHeader = document.querySelector('.reservations-header')
-const reservesDatePicker = document.getElementById('res-date-picker')
+const reservationsHeader = document.querySelector('.reservations-header')
+const reservationsDatePicker = document.getElementById('res-date-picker')
 
 const today = new Date()
 let currentDate = today
@@ -17,17 +19,17 @@ if (sessionStorage.getItem('date')) {
     if (currentDate.toLocaleDateString() !== today.toLocaleDateString()) tomorrowBtn.textContent = 'hoy'
 }
 
-const loadReserves = function(date) {
+const loadReservations = function(date) {
 
     const dateFormatted = `${String(date.getDate()).padStart(2,0)}/${String(date.getMonth() + 1).padStart(2,0)}/${date.getFullYear()}`
 
-    reservesContainer.classList.remove('visible')
+    reservationsContainer.classList.remove('visible')
     errorMessage.classList.remove('visible')
-    reservesContainer.innerHTML = ''
+    reservationsContainer.innerHTML = ''
     dateLabel.textContent = dateFormatted
-    reservesLoader.classList.add('visible')
+    reservationsLoader.classList.add('visible')
 
-    fetch(`https://e58c-190-238-135-197.sa.ngrok.io/get-reservations?date=${dateFormatted}`, {
+    fetch(`${BACKEND_BASE_URL}/get-reservations?date=${dateFormatted}`, {
         method: 'POST',
         mode: 'cors'
     })
@@ -82,7 +84,7 @@ const loadReserves = function(date) {
                     `
                 }
                 item.insertAdjacentHTML('beforeend', endHtml)
-                reservesContainer.appendChild(item)
+                reservationsContainer.appendChild(item)
             })
             
         })
@@ -94,17 +96,18 @@ const loadReserves = function(date) {
         })
         .finally(() => {
             setTimeout(() => {
-                reservesLoader.classList.remove('visible')
-                reservesContainer.classList.add('visible')
+                reservationsLoader.classList.remove('visible')
+                reservationsContainer.classList.add('visible')
             }, 0)
         })
 }
 
-reservesContainer.addEventListener('click', event => {
+reservationsContainer.addEventListener('click', event => {
 
     if (event.target.innerHTML === 'Confirmar') {
 
-        console.log('CONFIRMAR pressed');
+        // The reservation is confirmed
+
         const data = event.target.dataset
         const loader = event.target.nextElementSibling
         const actionsContainer = event.target.closest('.reservation-actions')
@@ -114,7 +117,7 @@ reservesContainer.addEventListener('click', event => {
         loader.setAttribute('style', 'opacity: 1; visibility: visible;')
         btnReject.setAttribute('style', 'pointer-events: none;')
 
-        fetch(`https://e58c-190-238-135-197.sa.ngrok.io/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+        fetch(`${BACKEND_BASE_URL}/confirm-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
             method: 'POST',
             mode: 'cors'
         })
@@ -136,7 +139,8 @@ reservesContainer.addEventListener('click', event => {
 
     } else if (event.target.innerHTML === 'Rechazar') {
 
-        console.log('RECHAZAR pressed');
+        // The reservation is rejected
+
         const data = event.target.dataset
         const loader = event.target.nextElementSibling
         const actionsContainer = event.target.closest('.reservation-actions')
@@ -146,7 +150,7 @@ reservesContainer.addEventListener('click', event => {
         loader.setAttribute('style', 'opacity: 1; visibility: visible;')
         btnConfirm.setAttribute('style', 'pointer-events: none;')
 
-        fetch(`https://e58c-190-238-135-197.sa.ngrok.io/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
+        fetch(`${BACKEND_BASE_URL}/reject-reservation?email=${data.email}&name=${data.name}&date=${data.date}&hour=${data.hour}&id=${data.id}`, {
             method: 'POST',
             mode: 'cors'
         })
@@ -168,30 +172,30 @@ reservesContainer.addEventListener('click', event => {
     }
 })
 
-loadReserves(currentDate)
+loadReservations(currentDate)
 
 tomorrowBtn.addEventListener('click', () => {
     if (tomorrowBtn.textContent !== 'hoy') {
         tomorrowBtn.textContent = 'hoy'
         let tomorrow = new Date()
         tomorrow.setDate(today.getDate() + 1)
-        loadReserves(tomorrow)
+        loadReservations(tomorrow)
         sessionStorage.setItem('date', tomorrow)
     } else {
         tomorrowBtn.textContent = 'mañana'
-        loadReserves(today)
+        loadReservations(today)
         sessionStorage.setItem('date', today)
     }
 })
 
-reservesCalendar.addEventListener('click', () => {
-    reservesDatePicker.showPicker()
+reservationsCalendar.addEventListener('click', () => {
+    reservationsDatePicker.showPicker()
 })
 
-reservesDatePicker.addEventListener('change', () => {
-    const date = new Date(reservesDatePicker.value)
+reservationsDatePicker.addEventListener('change', () => {
+    const date = new Date(reservationsDatePicker.value)
     date.setHours(date.getHours()+5)
-    loadReserves(date)
+    loadReservations(date)
     sessionStorage.setItem('date', date)
     if (today.toLocaleDateString() === date.toLocaleDateString()) {
         tomorrowBtn.textContent = 'mañana'
