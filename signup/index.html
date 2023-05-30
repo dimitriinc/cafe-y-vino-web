@@ -7,7 +7,7 @@
     <title>Inscribirse | Café y Vino</title>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/dist/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="signup.js"></script>
 </head>
 
 <body>
@@ -80,13 +80,10 @@
             <form method="post" id="signup-form">
 
 
-                <input id="signup-name" type="text" class="input-control-round" name="userName" placeholder="Nombre" required>
-    
-                <input id="signup-email" type="email" class="input-control-round" name="userEmail" placeholder="Email" required>
-    
-                    <input id="signup-submit-btn" type="submit" class="button-control-round signup-btn" value="inscribirse">
-
-                    <img src="/images/loaders/broadcaster.svg" id="loader" style="display: none;">
+                <input id="signup-name" type="text" class="input-control-round" name="name" placeholder="Nombre" required>
+                <input id="signup-email" type="email" class="input-control-round" name="email" placeholder="Email" required>
+                <input id="signup-submit-btn" type="submit" class="button-control-round signup-btn" value="inscribirse">
+                <img src="/images/loaders/broadcaster.svg" id="loader" style="display: none;">
                        
             </form>
 
@@ -137,8 +134,6 @@
     </footer>
 
     <script src="/dist/all.js"></script>
-    <script src="signup.js"></script>
 
-    
 </body>
 </html>

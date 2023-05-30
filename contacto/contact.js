@@ -1,48 +1,40 @@
-const contact_form = document.getElementById('form-contact');
-const contact_name = document.getElementById('contact-name');
-const contact_msg = document.getElementById('contact-msg');
-const contact_email = document.getElementById('contact-email');
-const contact_btn = document.getElementById('contact-submit');
-const contact_loader = document.getElementById('loader');
+const contact_form = document.getElementById('form-contact')
+const contact_btn = document.getElementById('contact-submit')
+const contact_loader = document.getElementById('loader')
 
 
-contact_btn.addEventListener('click', () => {
-    
-})
+contact_form.addEventListener('submit', async event => {
+    event.preventDefault()
 
-contact_loader.addEventListener('click', () => {
-    contact_loader.setAttribute('style', 'display:none;');
-    contact_btn.removeAttribute('style');
-})
+    renderSubmitAnimation()
 
-contact_form.addEventListener('submit', event => {
-    event.preventDefault();
+    const arrOfValuesArrs = [...new FormData(contact_form)]
+    const formData = Object.fromEntries(arrOfValuesArrs)
 
-    contact_btn.setAttribute('style', 'display:none;');
-    contact_loader.removeAttribute('style');
-
-    let userName = contact_name.value;
-    let userMsg = contact_msg.value;
-    let userEmail = contact_email.value;
-
-    const msg = {
-        name: userName,
-        email: userEmail,
-        msg: userMsg
-    }
-
-    console.log(`name: ${userName}\nemail: ${userEmail}\nmessage: ${userMsg}`)
-
-    axios.post('https://d4f3-190-238-135-197.sa.ngrok.io/contact-msg', msg)
-        .then(response => {
-            alert('Gracias por tu mensaje!');
-            window.location.href = '/index.html';
+    try {
+        await fetch('https://15e9-190-238-135-197.ngrok-free.app/contact-msg', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         })
-        .catch(error => {
-            setTimeout(() => {
-                contact_loader.setAttribute('style', 'display:none;');
-                contact_btn.removeAttribute('style');
-                alert('Lo sentimos, ha ocurrido un error al procesar su mensaje.\nPor favor, inténtelo de nuevo más tarde.');
-            }, 3000);
-        });
+        alert('Gracias por tu mensaje!')
+        window.location.href = '/index.html'
+    } catch (_) {
+        setTimeout(() => {
+            renderSubmitButton()
+            alert('Lo sentimos, ha ocurrido un error al procesar su mensaje.\nPor favor, inténtelo de nuevo más tarde.')
+        }, 2000)
+    }
 })
+
+function renderSubmitAnimation() {
+    contact_btn.setAttribute('style', 'display:none;')
+    contact_loader.removeAttribute('style')
+}
+
+function renderSubmitButton() {
+    contact_loader.setAttribute('style', 'display:none;')
+    contact_btn.removeAttribute('style')
+}

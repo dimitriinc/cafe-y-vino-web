@@ -25,9 +25,9 @@ input_button.addEventListener('click', () => {
     input_file.click();
 });
 
-input_file.addEventListener('change', (e) => {
-    let file_name = input_file.files[0].name;
-    let file_extension = file_name.split('.').pop().toLowerCase();
+input_file.addEventListener('change', () => {
+    const file_name = input_file.files[0].name;
+    const file_extension = file_name.split('.').pop().toLowerCase();
 
     if (file_extension === 'pdf') {
         input_display.innerHTML = `<em>${file_name}</em>`;
@@ -43,8 +43,8 @@ input_file.addEventListener('change', (e) => {
     }
 });
 
-form_jobs.addEventListener('submit', (event) => {
-    event.preventDefault();
+form_jobs.addEventListener('submit', async event => {
+    event.preventDefault()
 
     if (input_file.value == '') {
 
@@ -54,38 +54,32 @@ form_jobs.addEventListener('submit', (event) => {
         return;
     }
 
-    jobs_submit_btn.setAttribute('style', 'display:none;');
-    jobs_loader.removeAttribute('style');
+    renderSubmitAnimation()
 
-    let userName = jobs_name.value;
-    let userTel = jobs_tel.value;
-    let position = select.value;
-    let cover_letter = jobs_carta.value;
-    let cv_file = input_file.files[0];
+    const formData = new FormData(form_jobs)
+    console.dir(formData)
 
-    let form_data = new FormData();
-    form_data.append('name', userName);
-    form_data.append('tel', userTel);
-    form_data.append('position', position);
-    form_data.append('letter', cover_letter);
-    form_data.append('cv', cv_file);
-
-    // !focacciaFRAGMENTADA8
-
-    axios.post('https://832f-190-238-135-197.sa.ngrok.io', form_data, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    })
-        .then(response => {
-            alert('Gracias por tu solicitud! Nos contactaremos pronto.');
-            window.location.href = '/index.html';
+    try {
+        await fetch('https://15e9-190-238-135-197.ngrok-free.app/job-application', {
+            method: 'POST',
+            body: formData
         })
-        .catch(error => {
-            setTimeout(() => {
-                jobs_loader.setAttribute('style', 'display:none;');
-                jobs_submit_btn.removeAttribute('style');
-                alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.');
-            }, 3000);
-        });
-});
+        alert('Gracias por tu solicitud! Nos contactaremos pronto.')
+        window.location.href = '/index.html'
+    } catch (_) {
+        setTimeout(() => {
+            renderSubmitButton()
+            alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.')
+        }, 2000)
+    }
+})
+
+function renderSubmitAnimation() {
+    jobs_submit_btn.setAttribute('style', 'display:none;')
+    jobs_loader.removeAttribute('style')
+}
+
+function renderSubmitButton() {
+    jobs_loader.setAttribute('style', 'display:none;')
+    jobs_submit_btn.removeAttribute('style')
+}

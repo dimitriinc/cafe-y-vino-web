@@ -7,7 +7,8 @@
     <title>Carreras | Café y Vino</title>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/dist/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer type="module" src="jobs.js"></script>
+
 </head>
 <body>
 
@@ -79,9 +80,9 @@
     
             <form id="form-jobs" method="post">
     
-                <input id="jobs-name" type="text" name="userName" placeholder="Nombre" class="input-control" required>
+                <input id="jobs-name" type="text" name="name" placeholder="Nombre" class="input-control" required>
     
-                <input id="jobs-tel" type="tel" name="userPhone" placeholder="Número de teléfono" class="input-control" required>
+                <input id="jobs-tel" type="tel" name="tel" placeholder="Número de teléfono" class="input-control" required>
     
                 <select name="position" class="input-control" required>
                     <option value="" selected disabled hidden>Posición deseada</option>
@@ -90,7 +91,7 @@
                     <option value="cocinero">Cocinero</option>
                 </select>
     
-                <textarea id="jobs-carta" name="cover-letter" placeholder="Carta titular" rows="10" class="input-control" required></textarea>
+                <textarea id="jobs-carta" name="letter" placeholder="Carta titular" rows="10" class="input-control" required></textarea>
     
                 <div class="input-file">
                     
@@ -168,7 +169,6 @@
     </footer>
 
     <script src="/dist/all.js"></script>
-    <script src="jobs.js"></script>
     
 </body>
 </html>

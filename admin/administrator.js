@@ -31,8 +31,7 @@ class Administrator {
 
         try {
             const response = await fetch(`${BACKEND_BASE_URL}/get-reservations?date=${dateFormatted}`, {
-                method: 'POST',
-                mode: 'cors'
+                method: 'POST'
             })
             const data = await response.json()
     

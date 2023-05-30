@@ -1,43 +1,50 @@
-const form = document.getElementById('signup-form');
-const nameInput = document.getElementById('signup-name');
-const emailInput = document.getElementById('signup-email');
+const form = document.getElementById('signup-form')
+const submit_btn = document.getElementById('signup-submit-btn')
+const submit_anim = document.getElementById('loader')
 
-const submit_btn = document.getElementById('signup-submit-btn');
-const submit_anim = document.getElementById('loader');
+form.addEventListener('submit', signupUserForEmailList)
 
-form.addEventListener('submit', signupUserForEmailList);
+async function signupUserForEmailList(event) {
+    event.preventDefault()
 
-function signupUserForEmailList(event) {
-    event.preventDefault();
+    renderSubmitAnimation()
 
-    submit_btn.setAttribute('style', 'display:none;');
-    submit_anim.removeAttribute('style');
+    const arrOfValuesArrs = [...new FormData(form)]
+    const formData = Object.fromEntries(arrOfValuesArrs)
 
-    let userName = nameInput.value;
-    let userEmail = emailInput.value;
-
-    const msg = {
-        name: userName, 
-        email: userEmail
-    }
-
-
-    axios.post('https://d4f3-190-238-135-197.sa.ngrok.io/signup', msg)
-        .then(response => {
-            if (response.status === 201) {
-                alert(response.data);
-                submit_anim.setAttribute('style', 'display:none;');
-                submit_btn.removeAttribute('style');
-            } else {
-                alert(response.data);
-                window.location.href = '/index.html';
-            }
+    try {
+        const response = await fetch('https://15e9-190-238-135-197.ngrok-free.app/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         })
-        .catch(error => {
-            setTimeout(() => {
-                submit_anim.setAttribute('style', 'display:none;');
-                submit_btn.removeAttribute('style');
-                alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.');
-            }, 3000);
-        });
+
+        const text = await response.text()
+
+        if (response.status === 201) {
+            alert(text)
+            renderSubmitButton()
+        } else {
+            alert(text)
+            window.location.href = '/index.html'
+        }
+        
+    } catch (_) {
+        setTimeout(() => {
+            renderSubmitButton()
+            alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.')
+        }, 2000)
+    }
+}
+
+function renderSubmitAnimation() {
+    submit_btn.setAttribute('style', 'display:none;')
+    submit_anim.removeAttribute('style')
+}
+
+function renderSubmitButton() {
+    submit_anim.setAttribute('style', 'display:none;')
+    submit_btn.removeAttribute('style')
 }

@@ -39,7 +39,6 @@ form_element.addEventListener('submit', event => {
 
     fetch(`https://3103-190-238-135-197.ngrok-free.app/make-reservation`, {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },
