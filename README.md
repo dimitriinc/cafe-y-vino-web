@@ -27,10 +27,12 @@ Apart from providing a general informatin  about the restaurant, a visitor can d
 - Gulp 4.0.2
 - jQuery 3.6.0
 - Moment 2.29.1
+- Leaflet 1.6.0
 - Sass 1.56.1
-- Postcss 8.4.19
-- Cssnano 5.1.14
-- Autoprefixer 10.4.13
+- Concat 2.6.1
+- Clean CSS 4.3.0
+- Autoprefixer 8.0.0
+- Terser 2.1.0
 
 ## Deployment
 

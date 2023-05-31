@@ -3,14 +3,11 @@ const { src, dest, series, parallel, watch } = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat');
 const terser = require('gulp-terser');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const replace = require('gulp-replace');
-const sourcemaps = require('gulp-sourcemaps');
+const autoprefixer = require('gulp-autoprefixer');
 const browsersync = require('browser-sync').create();
 const babel = require('gulp-babel')
 const modRewrite = require('connect-modrewrite')
+const cleanCss = require('gulp-clean-css')
 
 // File paths
 const files = {
@@ -21,21 +18,17 @@ const files = {
 // Sass task: compiles .scss to .css
 function scssTask() {
     return src(files.scssPath)
-        .pipe(sourcemaps.init())
-        .pipe(sass())   // Compiles to .css
-        .pipe(postcss([autoprefixer({
-            config: {
-                path: '.browserslistrc'
-            }
-        }), cssnano()])) // Optimize with postprocessor
-        .pipe(sourcemaps.write('.'))
-        .pipe(dest('dist')); // Put final CSS in dist folder
+        .pipe(sass())
+        .pipe(autoprefixer())
+        .pipe(cleanCss())
+        .pipe(concat('styles.css'))
+        .pipe(dest('dist'))
 }
 
 // JS task: transpiles and minifies scripts
 function jsTask() {
     return src(files.jsPath)
-        // .pipe(babel())
+        .pipe(babel())
         .pipe(terser())
         .pipe(dest('dist'))
 }
