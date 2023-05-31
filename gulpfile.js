@@ -9,6 +9,8 @@ const cssnano = require('cssnano');
 const replace = require('gulp-replace');
 const sourcemaps = require('gulp-sourcemaps');
 const browsersync = require('browser-sync').create();
+const babel = require('gulp-babel')
+const modRewrite = require('connect-modrewrite')
 
 // File paths
 const files = {
@@ -30,12 +32,12 @@ function scssTask() {
         .pipe(dest('dist')); // Put final CSS in dist folder
 }
 
-// JS task: concatenates and minifies scripts
+// JS task: transpiles and minifies scripts
 function jsTask() {
     return src(files.jsPath)
-        .pipe(concat('all.js'))
+        // .pipe(babel())
         .pipe(terser())
-        .pipe(dest('dist'));
+        .pipe(dest('dist'))
 }
 
 
@@ -48,10 +50,16 @@ function browserSyncServe(cb) {
         },
         notify: {
             styles: {
-                top: 'auto',
-                bottom: 0,
+                top: 0,
+                bottom:'auto',
             },
         },
+        middleware: [
+            modRewrite([
+                // Set MIME type for JavaScript files
+                '^/dist/.*\\.js$ - [T=application/javascript]'
+            ])
+        ]
     });
     cb();
 }

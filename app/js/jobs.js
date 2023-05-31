@@ -86,10 +86,11 @@ class Recruiter {
         const formData = new FormData(formJobs)
     
         try {
-            await fetch('https://c6e2-190-238-135-197.ngrok-free.app/job-application', {
+            await fetch(`https://2ee1-190-238-135-197.ngrok-free.app/job-application`, {
                 method: 'POST',
                 body: formData
             })
+
             alert('Gracias por tu solicitud! Nos contactaremos pronto.')
             window.location.href = '/index.html'
         } catch (_) {

@@ -1,6 +1,7 @@
-const form_element = document.getElementById('reserv-form');
-const submit_btn = document.getElementById('reserv-btn');
-const submit_anim = document.getElementById('loader');
+const form_element = document.getElementById('reserv-form')
+const inputTime = document.querySelector('input[type="time"]')
+const submit_btn = document.getElementById('reserv-btn')
+const submit_anim = document.getElementById('loader')
 
 const renderSubmitAnimation = function() {
     submit_btn.setAttribute('style', 'display:none;')
@@ -11,6 +12,14 @@ const renderSubmitButton = function() {
     submit_anim.setAttribute('style', 'display:none;')
     submit_btn.removeAttribute('style')
 }
+
+inputTime.addEventListener('input', () => {
+    if (inputTime.value < '14:00' || inputTime.value > '21:00') {
+      inputTime.setCustomValidity('Por favor ingresa la hora entre 2:00 PM y 9:00 PM');
+    } else {
+      inputTime.setCustomValidity('');
+    }
+})
 
 form_element.addEventListener('submit', event => {
     event.preventDefault()
