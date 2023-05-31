@@ -1,85 +1,104 @@
-const input_file = document.getElementById('file-pdf');
-const input_button = document.querySelector('.input-file-receiver-btn');
-const input_display = document.querySelector('.input-file-receiver-selected');
-const select = document.querySelector('select');
-const form_jobs = document.getElementById('form-jobs');
-const jobs_name = document.getElementById('jobs-name');
-const jobs_tel = document.getElementById('jobs-tel');
-const jobs_carta = document.getElementById('jobs-carta');
+const inputFileHidden = document.getElementById('file-pdf')
+const inputButton = document.querySelector('.input-file-receiver-btn')
+const inputDisplay = document.querySelector('.input-file-receiver-selected')
+const jobPositionSelector = document.querySelector('select')
+const formJobs = document.getElementById('form-jobs')
 
-const jobs_submit_btn = document.getElementById('jobs-submit');
-const jobs_loader = document.getElementById('loader');
-
-if (input_file.value !== '') {
-    input_display.innerHTML = `<em>${input_file.files[0].name}</em>`;
-}
-
-if (select.value == '') {
-    select.setAttribute('style', 'color:grey');
-}
-select.addEventListener('change', () => {
-    select.setAttribute('style', 'color:#160b17')
-});
-
-input_button.addEventListener('click', () => {
-    input_file.click();
-});
-
-input_file.addEventListener('change', () => {
-    const file_name = input_file.files[0].name;
-    const file_extension = file_name.split('.').pop().toLowerCase();
-
-    if (file_extension === 'pdf') {
-        input_display.innerHTML = `<em>${file_name}</em>`;
-    } else {
-        input_display.innerHTML = `<em>Por favor, selecciona un archivo PDF</em>`;
-        input_file.value = '';
-        return;
-    }
-
-    if (input_file.files[0].size > 5242880) {
-        input_display.innerHTML = `<em>El tamaño no puede ser más de 5MB</em>`;
-        input_file.value = '';
-    }
-});
-
-form_jobs.addEventListener('submit', async event => {
-    event.preventDefault()
-
-    if (input_file.value == '') {
-
-        if (input_display.innerHTML === '') {
-            input_display.innerHTML = '<em>El archivo no está seleccionado</em>';
-        }
-        return;
-    }
-
-    renderSubmitAnimation()
-
-    const formData = new FormData(form_jobs)
-    console.dir(formData)
-
-    try {
-        await fetch('https://15e9-190-238-135-197.ngrok-free.app/job-application', {
-            method: 'POST',
-            body: formData
-        })
-        alert('Gracias por tu solicitud! Nos contactaremos pronto.')
-        window.location.href = '/index.html'
-    } catch (_) {
-        setTimeout(() => {
-            renderSubmitButton()
-            alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.')
-        }, 2000)
-    }
-})
+const jobsSubmitButton = document.getElementById('jobs-submit')
+const jobsSubmitAnimation = document.getElementById('loader')
 
 function renderSubmitAnimation() {
-    jobs_submit_btn.setAttribute('style', 'display:none;')
-    jobs_loader.removeAttribute('style')
+    jobsSubmitButton.setAttribute('style', 'display:none;')
+    jobsSubmitAnimation.removeAttribute('style')
 }
 
 function renderSubmitButton() {
-    jobs_loader.setAttribute('style', 'display:none;')
-    jobs_submit_btn.removeAttribute('style')
+    jobsSubmitAnimation.setAttribute('style', 'display:none;')
+    jobsSubmitButton.removeAttribute('style')
 }
+
+class Recruiter {
+
+    constructor() {
+        this._checkFileSelected()
+        this._setPositionSelectorColor()
+        this._addEventListeners()
+    }
+
+    _checkFileSelected() {
+        if (inputFileHidden.value !== '') {
+            inputDisplay.innerHTML = `<em>${inputFileHidden.files[0].name}</em>`
+        }
+    }
+
+    _setPositionSelectorColor() {
+        if (jobPositionSelector.value == '') {
+            jobPositionSelector.setAttribute('style', 'color:grey')
+        }
+    }
+
+    _addEventListeners() {
+
+        jobPositionSelector.addEventListener('change', () => {
+            jobPositionSelector.setAttribute('style', 'color:#160b17')
+        })
+
+        inputButton.addEventListener('click', () => {
+            inputFileHidden.click()
+        })
+
+        inputFileHidden.addEventListener('change', this._onFileSelectedChange)
+
+        formJobs.addEventListener('submit', this._submitApplication)
+    }
+
+    _onFileSelectedChange() {
+        const fileName = inputFileHidden.files[0].name
+        const fileExtension = fileName.split('.').pop().toLowerCase()
+    
+        if (fileExtension === 'pdf') {
+            inputDisplay.innerHTML = `<em>${fileName}</em>`
+        } else {
+            inputDisplay.innerHTML = `<em>Por favor, selecciona un archivo PDF</em>`
+            inputFileHidden.value = ''
+            return
+        }
+    
+        if (inputFileHidden.files[0].size > 5242880) {
+            inputDisplay.innerHTML = `<em>El tamaño no puede ser más de 5MB</em>`
+            inputFileHidden.value = ''
+        }
+    }
+
+    async _submitApplication(event) {
+        event.preventDefault()
+
+        if (inputFileHidden.value == '') {
+    
+            if (inputDisplay.innerHTML === '') {
+                inputDisplay.innerHTML = '<em>El archivo no está seleccionado</em>'
+            }
+            return
+        }
+    
+        renderSubmitAnimation()
+    
+        const formData = new FormData(formJobs)
+    
+        try {
+            await fetch('https://c6e2-190-238-135-197.ngrok-free.app/job-application', {
+                method: 'POST',
+                body: formData
+            })
+            alert('Gracias por tu solicitud! Nos contactaremos pronto.')
+            window.location.href = '/index.html'
+        } catch (_) {
+            setTimeout(() => {
+                renderSubmitButton()
+                alert('Lo sentimos, ha ocurrido un error al procesar su solicitud.\nPor favor, inténtelo de nuevo más tarde.')
+            }, 2000)
+        }
+    }
+}
+
+new Recruiter()
