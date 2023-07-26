@@ -1,4 +1,4 @@
-const BACKEND_BASE_URL = 'https://3103-190-238-135-197.ngrok-free.app'
+const BACKEND_BASE_URL = 'https://5222-190-238-135-197.ngrok-free.app'
 
 const logoHead = document.getElementById('logo-res-head')
 const reservationsContainer = document.querySelector('.reservations-container')
