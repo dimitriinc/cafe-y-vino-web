@@ -46,7 +46,7 @@ form_element.addEventListener('submit', event => {
     const dateObj = new Date(dateTimeString)
     formData.arrivalTimestamp = dateObj.getTime()
 
-    fetch(`https://3103-190-238-135-197.ngrok-free.app/make-reservation`, {
+    fetch(`https://5222-190-238-135-197.ngrok-free.app/make-reservation`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
