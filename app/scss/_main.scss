@@ -19,11 +19,12 @@ main {
 
         &__image {
             background-image: url(/images/cathedralScene.png);
-            background-size: cover;
+            background-size:contain ;
             background-repeat: no-repeat;
             background-position: center;
             min-height: 90%;
             width: 100%;
+            position: relative;
 
             @include breakpoint-up(laptop) {
                 background-image: url(/images/throwaway_image.png);
