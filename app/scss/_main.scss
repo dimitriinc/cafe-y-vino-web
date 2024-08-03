@@ -18,14 +18,16 @@ main {
         }
 
         &__image {
-            background-image: url(/images/throwaway_image.png);
-            background-size: cover;
+            background-image: url(/images/cathedralScene.png);
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             min-height: 75%;
             width: 100%;
 
             @include breakpoint-up(laptop) {
+                background-image: url(/images/throwaway_image.png);
+                background-size: cover;
                 top: auto;
                 bottom: 0;
                 left: 0;
@@ -34,6 +36,28 @@ main {
                 margin-bottom: .6rem;
                 width: 80%;
                 min-height: 100%;
+            }
+
+            .filler {
+                position: absolute;
+                height: 100%;
+                width: 25px;
+                top: 0;
+                z-index: 100;
+
+                @include breakpoint-up(laptop) {
+                    width: 100px;
+                }
+            }
+
+            #filler-left {
+                left:0;
+                background: linear-gradient(to right, #fcfaeb 0%, #fcfaeb 32%, rgba(252,250,235,0.85) 70%, rgba(252,250,235,0.82) 71%, rgba(252,250,235,0) 100%);
+            }
+
+            #filler-right {
+                right:0;
+                background: linear-gradient(to left, #fcfaeb 0%, #fcfaeb 32%, rgba(252,250,235,0.85) 70%, rgba(252,250,235,0.82) 71%, rgba(252,250,235,0) 100%);
             }
         }
     }
