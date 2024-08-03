@@ -19,10 +19,10 @@ main {
 
         &__image {
             background-image: url(/images/cathedralScene.png);
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            min-height: 75%;
+            min-height: 90%;
             width: 100%;
 
             @include breakpoint-up(laptop) {
@@ -41,7 +41,7 @@ main {
             .filler {
                 position: absolute;
                 height: 100%;
-                width: 25px;
+                width: 40px;
                 top: 0;
                 z-index: 100;
 
